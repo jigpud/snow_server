@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### config file ###
+/src/main/resources/application.yml
+/src/main/resources/application-dev.yml
+/src/main/resources/application-test.yml
+/src/main/resources/application-pro.yml
+
+### .sql ###
+/src/main/resources/database/data.sql
