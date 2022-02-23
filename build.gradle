@@ -37,6 +37,9 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
+	// aliyun sms verify code
+	implementation 'com.aliyun:dysmsapi20170525:2.0.9'
+
 	// unit test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.projectlombok:lombok:1.18.22'

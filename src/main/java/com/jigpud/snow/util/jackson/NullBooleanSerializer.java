@@ -6,6 +6,10 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
+/**
+ * @author jigpud
+ * 空Boolean使用"false"代替
+ */
 public class NullBooleanSerializer extends JsonSerializer<Object> {
     @Override
     public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {

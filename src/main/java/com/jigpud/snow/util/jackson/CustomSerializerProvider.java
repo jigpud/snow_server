@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
 import com.fasterxml.jackson.databind.ser.SerializerFactory;
 
+/**
+ * @author jigpud
+ * 自定义Jackson处理空值
+ */
 public class CustomSerializerProvider extends DefaultSerializerProvider {
     public CustomSerializerProvider() {}
 
