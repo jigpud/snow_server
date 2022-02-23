@@ -39,6 +39,15 @@ public class VerificationCodeRepositoryImpl implements VerificationCodeRepositor
         return "";
     }
 
+    @Override
+    public void deleteVerificationCode(String phoneNumber, String verificationCode) {
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        String currentVerificationCode = operations.getAndDelete(keyOf(phoneNumber));
+        if (currentVerificationCode != null && !currentVerificationCode.isEmpty()) {
+            operations.getAndDelete(keyOf(phoneNumber));
+        }
+    }
+
     private String keyOf(String phoneNumber) {
         return "verificationCode:" + phoneNumber;
     }

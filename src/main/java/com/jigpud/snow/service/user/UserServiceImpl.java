@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean hasRegistered(String username) {
+        User user = userRepository.getUserByUsername(username);
+        return username != null && username.equals(user.getUsername());
+    }
+
+    @Override
     public String login(String username, String password) {
         User user = userRepository.getUserByUsername(username);
         if (Encryptor.hmacSHA256Encrypt(password, user.getSalt()).equals(user.getPassword())) {

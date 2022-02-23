@@ -11,7 +11,7 @@ public interface VerificationCodeService {
      * @param verificationCode 短信验证码
      * @return 发送是否成功
      */
-    boolean sendVerifyCode(String phoneNumber, String verificationCode);
+    boolean sendVerificationCode(String phoneNumber, String verificationCode);
 
     /**
      * 获取一个新的短信验证码
@@ -27,4 +27,11 @@ public interface VerificationCodeService {
      * @return 是否有效
      */
     boolean verify(String phoneNumber, String verificationCode);
+
+    /**
+     * 销毁指定短信验证码
+     * @param phoneNumber 手机号码
+     * @param verificationCode 短信验证码
+     */
+    void expire(String phoneNumber, String verificationCode);
 }

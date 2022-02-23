@@ -33,7 +33,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     }
 
     @Override
-    public boolean sendVerifyCode(String phoneNumber, String verificationCode) {
+    public boolean sendVerificationCode(String phoneNumber, String verificationCode) {
         JsonObject params = new JsonObject();
         params.addProperty("code", verificationCode);
         SendSmsRequest sendSmsRequest = new SendSmsRequest()
@@ -65,5 +65,10 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
             return realVerificationCode.equals(verificationCode);
         }
         return false;
+    }
+
+    @Override
+    public void expire(String phoneNumber, String verificationCode) {
+        verificationCodeRepository.deleteVerificationCode(phoneNumber, verificationCode);
     }
 }

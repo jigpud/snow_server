@@ -14,6 +14,6 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties("test-verification-code-service")
-public class TestVerificationCodeServiceConfig {
+public class VerificationCodeServiceTestConfig {
     private String phoneNumber;
 }

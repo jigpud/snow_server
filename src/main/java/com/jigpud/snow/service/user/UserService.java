@@ -13,6 +13,13 @@ public interface UserService {
     void register(String username, String password);
 
     /**
+     * 是否已经注册过
+     * @param username 电话号码
+     * @return 是否已注册
+     */
+    boolean hasRegistered(String username);
+
+    /**
      * 登录
      * @param username 电话号码
      * @param password 密码

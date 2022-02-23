@@ -10,12 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @Slf4j
 @SpringBootTest
-public class TestVerificationCodeService {
-    private final TestVerificationCodeServiceConfig testConfig;
+public class VerificationCodeServiceTest {
+    private final VerificationCodeServiceTestConfig testConfig;
     private final VerificationCodeService verificationCodeService;
 
     @Autowired
-    TestVerificationCodeService(TestVerificationCodeServiceConfig testConfig, VerificationCodeService verificationCodeService) {
+    VerificationCodeServiceTest(VerificationCodeServiceTestConfig testConfig, VerificationCodeService verificationCodeService) {
         this.testConfig = testConfig;
         this.verificationCodeService = verificationCodeService;
     }
@@ -25,7 +25,7 @@ public class TestVerificationCodeService {
         String phoneNumber = testConfig.getPhoneNumber();
         String verificationCode = verificationCodeService.newVerificationCode(phoneNumber);
         log.debug("phoneNumber: {}, verificationCode: {}", phoneNumber, verificationCode);
-        boolean isSuccess = verificationCodeService.sendVerifyCode(phoneNumber, verificationCode);
+        boolean isSuccess = verificationCodeService.sendVerificationCode(phoneNumber, verificationCode);
         log.debug("isSuccess: {}", isSuccess);
     }
 

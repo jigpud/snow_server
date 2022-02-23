@@ -9,4 +9,7 @@ public class PathConstant {
 
     public static final String ADMIN_LOGIN = "/admin/login";
     public static final String ADMIN_LOGOUT = "/admin/logout";
+
+    public static final String VERIFICATION_CODE = "/verificationCode";
+    public static final String REGISTER = "/register";
 }

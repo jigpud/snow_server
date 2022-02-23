@@ -28,6 +28,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // token验证
         registry.addInterceptor(tokenCheckInterceptor)
                 .addPathPatterns("/**")
+                .excludePathPatterns(PathConstant.VERIFICATION_CODE)
+                .excludePathPatterns(PathConstant.REGISTER)
                 .excludePathPatterns(PathConstant.USER_LOGIN)
                 .excludePathPatterns(PathConstant.USER_LOGOUT)
                 .excludePathPatterns(PathConstant.ADMIN_LOGIN)

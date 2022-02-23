@@ -18,4 +18,11 @@ public interface VerificationCodeRepository {
      * @return 验证码
      */
     String getVerificationCode(String phoneNumber);
+
+    /**
+     * 删除指定短信验证码
+     * @param phoneNumber 手机号码
+     * @param verificationCode 短信验证码
+     */
+    void deleteVerificationCode(String phoneNumber, String verificationCode);
 }
