@@ -1,29 +1,24 @@
 package com.jigpud.snow.service.user;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.model.User;
-import com.jigpud.snow.repository.admin.AdminRepository;
 import com.jigpud.snow.repository.user.UserRepository;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.encrypt.Encryptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author : jigpud
  */
-@Component
+@Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final AdminRepository adminRepository;
     private final TokenService tokenService;
 
     @Autowired
-    UserServiceImpl(
-            UserRepository userRepository,
-            AdminRepository adminRepository,
-            TokenService tokenService) {
+    UserServiceImpl(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
-        this.adminRepository = adminRepository;
         this.tokenService = tokenService;
     }
 
@@ -38,9 +33,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean hasRegistered(String username) {
+    public boolean haveUsernameIs(String username) {
+        if (username == null || username.isEmpty()) {
+            return false;
+        }
         User user = userRepository.getUserByUsername(username);
-        return username != null && username.equals(user.getUsername());
+        return user != null && username.equals(user.getUsername());
     }
 
     @Override
@@ -48,10 +46,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getUserByUsername(username);
         if (Encryptor.hmacSHA256Encrypt(password, user.getSalt()).equals(user.getPassword())) {
             // 密码验证成功
-            String token = tokenService.createToken(user.getUserid());
-            tokenService.markLogin(token);
-            tokenService.markUser(token);
-            return token;
+            return tokenService.createRefreshToken(user.getUserid());
         } else {
             // 密码验证失败
             return "";
@@ -59,41 +54,112 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String adminLogin(String username, String password) {
+    public void update(User user) {
+        userRepository.updateUser(user);
+    }
+
+    @Override
+    public void updateSignature(String userid, String newSignature) {
+        User user = userRepository.getUserByUserid(userid);
+        user.setSignature(newSignature);
+        userRepository.updateUser(user);
+    }
+
+    @Override
+    public void updateNickname(String userid, String newNickname) {
+        User user = userRepository.getUserByUserid(userid);
+        user.setNickname(newNickname);
+        userRepository.updateUser(user);
+    }
+
+    @Override
+    public void updatePassword(String userid, String newPassword) {
+        User user = userRepository.getUserByUserid(userid);
+        String encryptedPassword = Encryptor.hmacSHA256Encrypt(newPassword, user.getSalt());
+        user.setPassword(encryptedPassword);
+        userRepository.updateUser(user);
+    }
+
+    @Override
+    public void updateAvatar(String userid, String newAvatar) {
+        User user = userRepository.getUserByUserid(userid);
+        user.setAvatar(newAvatar);
+        userRepository.updateUser(user);
+    }
+
+    @Override
+    public void incrementLikes(String userid) {
+        User user = userRepository.getUserByUserid(userid);
+        user.setLikes(user.getLikes() + 1);
+        userRepository.updateUser(user);
+    }
+
+    @Override
+    public boolean haveUseridIs(String userid) {
+        if (userid == null || userid.isEmpty()) {
+            return false;
+        }
+        User user = userRepository.getUserByUserid(userid);
+        return user != null && userid.equals(user.getUserid());
+    }
+
+    @Override
+    public void deleteUserByUsername(String username) {
+        userRepository.deleteUserByUsername(username);
+    }
+
+    @Override
+    public void deleteUserByUserid(String userid) {
+        userRepository.deleteUserByUserid(userid);
+    }
+
+    @Override
+    public String getUserid(String username) {
         User user = userRepository.getUserByUsername(username);
         if (user != null) {
-            // admin权限验证通过
-            if (adminRepository.isAdmin(user.getUserid())) {
-                String token = login(username, password);
-                if (tokenService.verify(token) && tokenService.isLogin(token)) {
-                    tokenService.markAdmin(token);
-                    if (tokenService.isLogin(token) && tokenService.isAdmin(token)) {
-                        return token;
-                    }
-                }
-            }
+            return user.getUserid();
+        } else {
+            return "";
         }
-        return "";
     }
 
     @Override
-    public void logout(String token) {
-        tokenService.markLogout(token);
+    public String getUsername(String userid) {
+        User user = userRepository.getUserByUserid(userid);
+        if (user != null) {
+            return user.getUsername();
+        } else {
+            return "";
+        }
     }
 
     @Override
-    public void adminLogout(String token) {
-        tokenService.markUser(token);
-        tokenService.markLogout(token);
+    public User getUserByUsername(String username) {
+        return userRepository.getUserByUsername(username);
     }
 
     @Override
-    public boolean isLogin(String token) {
-        return tokenService.isLogin(token);
+    public User getUserByUserid(String userid) {
+        return userRepository.getUserByUserid(userid);
     }
 
     @Override
-    public boolean isAdmin(String token) {
-        return tokenService.isAdmin(token);
+    public Page<User> usersUsernameLike(String username, long pageCount, long page) {
+        return userRepository.usersUsernameLike(username, pageCount, page);
+    }
+
+    @Override
+    public Page<User> usersNicknameLike(String nickname, long pageCount, long page) {
+        return userRepository.usersNicknameLike(nickname, pageCount, page);
+    }
+
+    @Override
+    public Page<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page) {
+        return userRepository.usersUsernameAndNicknameLike(username, nickname, pageCount, page);
+    }
+
+    @Override
+    public Page<User> users(long pageCount, long page) {
+        return userRepository.users(pageCount, page);
     }
 }

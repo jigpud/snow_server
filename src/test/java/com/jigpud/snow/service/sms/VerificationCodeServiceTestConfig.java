@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Data
 @Component
-@ConfigurationProperties("test-verification-code-service")
+@ConfigurationProperties("verification-code-service-test")
 public class VerificationCodeServiceTestConfig {
     private String phoneNumber;
 }

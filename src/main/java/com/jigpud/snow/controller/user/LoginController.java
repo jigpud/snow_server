@@ -1,29 +1,28 @@
 package com.jigpud.snow.controller.user;
 
+import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
-import com.jigpud.snow.util.constant.HeaderConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author jigpud
- * 普通用户登录
+ * 使用用户名+密码登陆
  */
 @Slf4j
-@Component("LoginController")
 @RestController
-public class LoginController {
+public class LoginController extends BaseController {
     private final UserService userService;
     private final TokenService tokenService;
 
@@ -33,20 +32,28 @@ public class LoginController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping(PathConstant.USER_LOGIN)
+    @PostMapping(PathConstant.LOGIN)
     ResponseBody<?> login(
             @RequestParam(FormDataConstant.USERNAME) String username,
-            @RequestParam(FormDataConstant.PASSWORD) String password,
-            HttpServletResponse response
+            @RequestParam(FormDataConstant.PASSWORD) String password
     ) {
-        String token =  userService.login(username, password);
-        if (tokenService.verify(token)) {
+        String refreshToken =  userService.login(username, password);
+        String token = tokenService.createToken(refreshToken);
+        log.debug("refreshToken: {}, token: {}", refreshToken, token);
+        if (tokenService.verifyRefreshToken(refreshToken) && tokenService.verify(token)) {
             log.debug("login success!");
-            response.addHeader(HeaderConstant.AUTHORIZATION, "Bearer " + token);
-            return Response.responseSuccess();
+            return Response.responseSuccess(new LoginResponse(token, refreshToken));
         } else {
             log.debug("login failed!");
-            return Response.responseFailed("login failed!");
+            return Response.responseFailed("用户名或密码错误！");
         }
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    static class LoginResponse {
+        private String token;
+        private String refreshToken;
     }
 }

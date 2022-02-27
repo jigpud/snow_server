@@ -9,13 +9,13 @@ import com.jigpud.snow.repository.sms.VerificationCodeRepository;
 import com.jigpud.snow.util.sms.VerificationCodeGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author : jigpud
  */
 @Slf4j
-@Component
+@Service
 public class VerificationCodeServiceImpl implements VerificationCodeService {
     private final SMSConfig smsConfig;
     private final Client aliyunSmsClient;

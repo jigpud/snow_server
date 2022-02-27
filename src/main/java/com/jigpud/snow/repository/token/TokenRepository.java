@@ -5,48 +5,22 @@ package com.jigpud.snow.repository.token;
  */
 public interface TokenRepository {
     /**
-     * 标记为登录状态
-     * @param token token
+     * 保存当前有效的refreshToken
      * @param userid userid
-     * @param expiration expiration, unit: seconds
+     * @param refreshToken refreshToken
      */
-    void markLogin(String token, String userid, long expiration);
+    void saveRefreshToken(String userid, String refreshToken);
 
     /**
-     * 标记为未登录状态
-     * @param token token
+     * 获取当前有效的refreshToken
      * @param userid userid
+     * @return refreshToken
      */
-    void markLogout(String token, String userid);
+    String getRefreshToken(String userid);
 
     /**
-     * 标记为admin用户
-     * @param token token
-     * @param userid userid
-     * @param expiration expiration, unit: seconds
-     */
-    void markAdmin(String token, String userid, long expiration);
-
-    /**
-     * 标记为普通用户
-     * @param token token
+     * 删除refreshToken
      * @param userid userid
      */
-    void markUser(String token, String userid);
-
-    /**
-     * 是否已登录
-     * @param token token
-     * @param userid userid
-     * @return 是否已登录
-     */
-    boolean isLogin(String token, String userid);
-
-    /**
-     * 是否是admin
-     * @param token token
-     * @param userid userid
-     * @return 是否是admin
-     */
-    boolean isAdmin(String token, String userid);
+    void removeRefreshToken(String userid);
 }

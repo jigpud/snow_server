@@ -1,14 +1,16 @@
 package com.jigpud.snow.repository.user;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.mapper.UserMapper;
 import com.jigpud.snow.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author : jigpud
  */
-@Component
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     private final UserMapper userMapper;
 
@@ -19,30 +21,67 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void saveUser(User user) {
-
+        userMapper.insert(user);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return userMapper.getUserByUsername(username);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return userMapper.selectOne(queryWrapper);
     }
 
     @Override
     public User getUserByUserid(String userid) {
-        return userMapper.getUserByUserid(userid);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid", userid);
+        return userMapper.selectOne(queryWrapper);
     }
 
     @Override
     public void updateUser(User user) {
-
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", user.getUsername());
+        userMapper.update(user, queryWrapper);
     }
 
     @Override
-    public boolean haveUserNamed(String username) {
-        if (username == null || username.isEmpty()) {
-            return false;
-        }
-        User maybe = getUserByUsername(username);
-        return maybe != null && username.equals(maybe.getUsername());
+    public Page<User> users(long pageCount, long page) {
+        return userMapper.selectPage(new Page<>(page, pageCount), new QueryWrapper<>());
+    }
+
+    @Override
+    public Page<User> usersUsernameLike(String username, long pageCount, long page) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("username", username);
+        return userMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
+    }
+
+    @Override
+    public Page<User> usersNicknameLike(String nickname, long pageCount, long page) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("nickname", nickname);
+        return userMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
+    }
+
+    @Override
+    public Page<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("username", username).like("nickname", nickname);
+        return userMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
+    }
+
+    @Override
+    public void deleteUserByUsername(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        userMapper.delete(queryWrapper);
+    }
+
+    @Override
+    public void deleteUserByUserid(String userid) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid", userid);
+        userMapper.delete(queryWrapper);
     }
 }

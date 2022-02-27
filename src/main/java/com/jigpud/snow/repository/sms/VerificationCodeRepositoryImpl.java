@@ -4,7 +4,7 @@ import com.jigpud.snow.config.SMSConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author : jigpud
  *
  */
-@Component
+@Repository
 public class VerificationCodeRepositoryImpl implements VerificationCodeRepository {
     private final SMSConfig smsConfig;
     private final StringRedisTemplate stringRedisTemplate;

@@ -5,6 +5,7 @@ import com.aliyun.teaopenapi.models.Config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
  * 阿里云短信验证码配置
  */
 @Data
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "aliyun.sms")
 public class SMSConfig {
     private String id;

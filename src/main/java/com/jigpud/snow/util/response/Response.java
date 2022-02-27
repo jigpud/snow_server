@@ -1,5 +1,7 @@
 package com.jigpud.snow.util.response;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 /**
  * @author : jigpud
  */
@@ -32,5 +34,13 @@ public class Response {
 
     public static <T> ResponseBody<T> responseFailed() {
         return response(RESPONSE_CODE_FAILED, RESPONSE_MESSAGE_FAILED);
+    }
+
+    public static <T> PageData<T> pageData(Page<T> page) {
+        PageData<T> pageData = new PageData<>();
+        pageData.setRecords(page.getRecords());
+        pageData.setPages(page.getPages());
+        pageData.setCurrent(page.getCurrent());
+        return pageData;
     }
 }

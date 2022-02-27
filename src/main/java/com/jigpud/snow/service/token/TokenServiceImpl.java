@@ -8,7 +8,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * @author : jigpud
  */
-@Component
+@Service
 public class TokenServiceImpl implements TokenService {
     private final AudienceConfig audience;
     private final TokenRepository tokenRepository;
@@ -30,8 +30,8 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String createToken(String userid) {
-        String encryptedUserid = Encryptor.base64Encode(userid);
+    public String createToken(String refreshToken) {
+        String encryptedUserid = Encryptor.base64Encode(getUserid(refreshToken));
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         byte[] secretBytes = DatatypeConverter.parseBase64Binary(audience.getSecret());
         Key singingKey = new SecretKeySpec(secretBytes, signatureAlgorithm.getJcaName());
@@ -39,9 +39,41 @@ public class TokenServiceImpl implements TokenService {
         JwtBuilder jwtBuilder = Jwts.builder()
                 .setSubject(encryptedUserid)
                 .setAudience(audience.getName())
+                .setIssuedAt(new Date())
                 .setExpiration(expiration)
                 .signWith(singingKey);
         return jwtBuilder.compact();
+    }
+
+    @Override
+    public String createRefreshToken(String userid) {
+        String encryptedUserid = Encryptor.base64Encode(userid);
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+        byte[] secretBytes = DatatypeConverter.parseBase64Binary(audience.getSecret());
+        Key singingKey = new SecretKeySpec(secretBytes, signatureAlgorithm.getJcaName());
+        JwtBuilder jwtBuilder = Jwts.builder()
+                .setSubject(encryptedUserid)
+                .setAudience(audience.getName())
+                .setIssuedAt(new Date())
+                .signWith(singingKey);
+        String refreshToken = jwtBuilder.compact();
+        tokenRepository.saveRefreshToken(userid, refreshToken);
+        return refreshToken;
+    }
+
+    @Override
+    public boolean verifyRefreshToken(String refreshToken) {
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            return false;
+        }
+        String userid = getUserid(refreshToken);
+        String availableRefreshToken = tokenRepository.getRefreshToken(userid);
+        return refreshToken.equals(availableRefreshToken);
+    }
+
+    @Override
+    public String refresh(String refreshToken) {
+        return createToken(refreshToken);
     }
 
     @Override
@@ -88,34 +120,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public void markLogin(String token) {
-        long expiration = (getExpiration(token).getTime() - System.currentTimeMillis()) / 1000;
-        tokenRepository.markLogin(token, getUserid(token), expiration);
-    }
-
-    @Override
-    public void markLogout(String token) {
-        tokenRepository.markLogout(token, getUserid(token));
-    }
-
-    @Override
-    public void markAdmin(String token) {
-        long expiration = (getExpiration(token).getTime() - System.currentTimeMillis()) / 1000;
-        tokenRepository.markAdmin(token, getUserid(token), expiration);
-    }
-
-    @Override
-    public void markUser(String token) {
-        tokenRepository.markUser(token, getUserid(token));
-    }
-
-    @Override
-    public boolean isLogin(String token) {
-        return tokenRepository.isLogin(token, getUserid(token));
-    }
-
-    @Override
-    public boolean isAdmin(String token) {
-        return tokenRepository.isAdmin(token, getUserid(token));
+    public void expireRefreshToken(String userid) {
+        tokenRepository.removeRefreshToken(userid);
     }
 }

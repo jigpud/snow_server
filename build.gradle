@@ -21,6 +21,7 @@ dependencies {
 
 	// spring mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.1'
 
 	// spring redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -39,6 +40,9 @@ dependencies {
 
 	// aliyun sms verify code
 	implementation 'com.aliyun:dysmsapi20170525:2.0.9'
+
+	// shiro
+	implementation 'org.apache.shiro:shiro-spring-boot-web-starter:1.8.0'
 
 	// unit test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -2,16 +2,16 @@ package com.jigpud.snow.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author : jigpud
  */
 @Data
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "audience")
 public class AudienceConfig {
     private String secret;
     private String name;
-    private long expire;
+    private Long expire;
 }

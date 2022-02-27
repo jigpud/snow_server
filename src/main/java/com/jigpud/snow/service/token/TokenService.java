@@ -10,11 +10,32 @@ import java.util.Date;
  */
 public interface TokenService {
     /**
-     * 根据用户Id和用户名创建token
-     * @param userid userid
+     * 根据refreshToken和用户名创建token
+     * @param refreshToken refreshToken
      * @return token
      */
-    String createToken(String userid);
+    String createToken(String refreshToken);
+
+    /**
+     * 根据token创建refreshToken
+     * @param userid userid
+     * @return refreshToken
+     */
+    String createRefreshToken(String userid);
+
+    /**
+     * 验证refreshToken是否有效
+     * @param refreshToken refreshToken
+     * @return 是否有效
+     */
+    boolean verifyRefreshToken(String refreshToken);
+
+    /**
+     * 刷新token
+     * @param refreshToken refreshToken
+     * @return 新token
+     */
+    String refresh(String refreshToken);
 
     /**
      * 解析token
@@ -45,47 +66,15 @@ public interface TokenService {
     boolean isExpiration(String token);
 
     /**
-     * 验证token是否可用
+     * 验证token是否可用，仅验证token格式是否正确与是否过期
      * @param token token
      * @return 是否可用
      */
     boolean verify(String token);
 
     /**
-     * 标记为已登录
-     * @param token token
+     * 销毁refreshToken
+     * @param userid userid
      */
-    void markLogin(String token);
-
-    /**
-     * 标记为未登录
-     * @param token token
-     */
-    void markLogout(String token);
-
-    /**
-     * 标记为admin
-     * @param token token
-     */
-    void markAdmin(String token);
-
-    /**
-     * 标记为非admin
-     * @param token token
-     */
-    void markUser(String token);
-
-    /**
-     * 是否已登录
-     * @param token token
-     * @return 是否已登录
-     */
-    boolean isLogin(String token);
-
-    /**
-     * 是否是admin
-     * @param token token
-     * @return 是否是admin
-     */
-    boolean isAdmin(String token);
+    void expireRefreshToken(String userid);
 }
