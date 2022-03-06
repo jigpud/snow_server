@@ -68,6 +68,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put(PathConstant.REFRESH_TOKEN, "anon");
         filterChainDefinitionMap.put(PathConstant.RETRIEVE_PASSWORD, "anon");
         filterChainDefinitionMap.put(PathConstant.LOGIN_WITH_VERIFICATION_CODE, "anon");
+        filterChainDefinitionMap.put(PathConstant.ADMIN_LOGIN, "anon");
         filterChainDefinitionMap.put(PathConstant.LOGOUT, "jwt,jwtLogout");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 

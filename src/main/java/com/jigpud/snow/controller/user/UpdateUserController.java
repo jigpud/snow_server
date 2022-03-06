@@ -6,6 +6,7 @@ import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.constant.PermissionsConstant;
 import com.jigpud.snow.util.constant.RolesConstant;
+import com.jigpud.snow.util.encrypt.Encryptor;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,12 @@ public class UpdateUserController extends BaseController {
             User user = userService.getUserByUsername(username);
             if (user != null && username.equals(user.getUsername())) {
                 // 用户存在
+
+                // update password
+                if (update.getPassword() != null) {
+                    String salt = user.getSalt();
+                    user.setPassword(Encryptor.hmacSHA256Encrypt(update.getPassword(), salt));
+                }
 
                 // update nickname
                 if (update.getNickname() != null) {

@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(String username, String password) {
         User user = userRepository.getUserByUsername(username);
-        if (Encryptor.hmacSHA256Encrypt(password, user.getSalt()).equals(user.getPassword())) {
+        if (user != null && Encryptor.hmacSHA256Encrypt(password, user.getSalt()).equals(user.getPassword())) {
             // 密码验证成功
             return tokenService.createRefreshToken(user.getUserid());
         } else {

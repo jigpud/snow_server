@@ -7,6 +7,8 @@ public class PathConstant {
     // 账号密码登陆
     public static final String LOGIN = "/login";
 
+    public static final String ADMIN_LOGIN = "/adminLogin";
+
     // 短信验证码登陆
     public static final String LOGIN_WITH_VERIFICATION_CODE = "/loginWithVC";
 

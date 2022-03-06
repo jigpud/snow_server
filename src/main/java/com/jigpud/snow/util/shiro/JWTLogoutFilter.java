@@ -2,12 +2,14 @@ package com.jigpud.snow.util.shiro;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jigpud.snow.util.response.Response;
+import com.jigpud.snow.util.response.ResponseBody;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
+import org.springframework.http.HttpMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author : jigpud
@@ -21,12 +23,15 @@ public class JWTLogoutFilter extends LogoutFilter {
     }
 
     @Override
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws IOException {
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        CorsSupport.support(request, response);
+        if (HttpMethod.OPTIONS.matches(((HttpServletRequest) request).getMethod())) {
+            return false;
+        }
         Subject subject = getSubject(request, response);
         subject.logout();
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        response.getWriter().print(objectMapper.writeValueAsString(Response.responseSuccess()));
-        return false;
+        ResponseBody<?> logoutSuccess = Response.responseSuccess();
+        response.getWriter().print(objectMapper.writeValueAsString(logoutSuccess));
+        return super.preHandle(request, response);
     }
 }

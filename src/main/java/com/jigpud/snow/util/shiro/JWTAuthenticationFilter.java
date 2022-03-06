@@ -7,9 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * @author : jigpud
@@ -21,6 +24,15 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
 
     public JWTAuthenticationFilter(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+    }
+
+    @Override
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        CorsSupport.support(request, response);
+        if (HttpMethod.OPTIONS.matches(((HttpServletRequest) request).getMethod())) {
+            return false;
+        }
+        return super.preHandle(request, response);
     }
 
     @Override
@@ -36,6 +48,17 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
     }
 
     @Override
+    protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
+        ResponseBody<?> authFailed = Response.response(401, "认证失败！");
+        try {
+            response.getWriter().print(objectMapper.writeValueAsString(authFailed));
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
         log.debug("executeLogin");
         try {
@@ -44,10 +67,6 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
             subject.login(authenticationToken);
             return true;
         } catch (Exception e) {
-            ResponseBody<?> authFailed = Response.response(401, "认证失败！");
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json");
-            response.getWriter().print(objectMapper.writeValueAsString(authFailed));
             return false;
         }
     }

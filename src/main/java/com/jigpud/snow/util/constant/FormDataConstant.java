@@ -7,7 +7,7 @@ public class FormDataConstant {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String VERIFICATION_CODE = "verificationCode";
-    public static final String USER = "user";
+    public static final String VERIFICATION_CODE_TARGET = "user";
     public static final String USERID = "userid";
     public static final String NICKNAME = "nickname";
     public static final String AVATAR = "avatar";
