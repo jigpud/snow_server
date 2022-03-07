@@ -1,0 +1,60 @@
+# jwt audience
+audience:
+  secret: xxx
+  name: xxx
+  expire: 0
+
+# aliyun
+aliyun:
+  sms:
+    id: xxx
+    secret: xxx
+    endpoint: xxx
+    sign-name: xxx
+    template-code: xxx
+    verification-code-length: 0
+    expiration: 0
+
+# spring
+spring:
+  ## redis
+  redis:
+    host: xxx
+    port: 0
+    password: xxx
+
+  ## mysql
+  datasource:
+    url: xxx
+    username: xxx
+    password: xxx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+
+  ## database initialization
+  sql:
+    init:
+      platform: mysql
+      mode: always
+      schema-locations: classpath:database/schema.sql
+      data-locations: classpath:database/data.sql
+      encoding: UTF-8
+
+# mybatis plus
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# logback
+logging:
+  level:
+    root: debug
+    com.jigpud.snow: debug
+
+# 短信验证码发送服务单元测试配置
+verification-code-service-test:
+  phone-number: xxx
+
+# 用户服务单元测试配置
+user-service-test:
+  username: xxx
