@@ -16,7 +16,7 @@ import java.io.IOException;
 
 /**
  * @author : jigpud
- * 自定义shiro的登陆拦截
+ * 自定义shiro的登录拦截
  */
 @Slf4j
 public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {

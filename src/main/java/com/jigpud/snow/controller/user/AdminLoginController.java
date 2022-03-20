@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author : jigpud
- * 后台管理系统登陆
+ * 后台管理系统登录
  */
 @Slf4j
 @RestController
@@ -70,7 +70,7 @@ public class AdminLoginController {
             return Response.responseFailed("短信验证码错误！");
         }
         log.debug("admin login failed!");
-        return Response.responseFailed("登陆失败！");
+        return Response.responseFailed("登录失败！");
     }
 
     @NoArgsConstructor

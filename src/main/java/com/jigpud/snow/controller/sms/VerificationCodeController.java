@@ -42,7 +42,7 @@ public class VerificationCodeController {
             return Response.responseFailed("手机号不能为空！");
         }
         if ((TARGET_LOGIN.equals(target) || TARGET_RETRIEVE_PASSWORD.equals(target)) && !userService.haveUsernameIs(username)) {
-            // 如果是登陆和找回密码场景但用户名不存在就不发验证码了
+            // 如果是登录和找回密码场景但用户名不存在就不发验证码了
             return Response.responseSuccess();
         }
         String verificationCode = verificationCodeService.newVerificationCode(username);

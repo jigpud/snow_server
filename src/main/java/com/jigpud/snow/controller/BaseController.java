@@ -1,10 +1,13 @@
 package com.jigpud.snow.controller;
 
+import com.jigpud.snow.util.constant.HeaderConstant;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author : jigpud
@@ -36,5 +39,9 @@ public class BaseController {
     @ExceptionHandler({Exception.class})
     ResponseBody<?> handleException() {
         return Response.response(500, "出错啦！");
+    }
+
+    protected String getToken(HttpServletRequest request) {
+        return request.getHeader(HeaderConstant.AUTHORIZATION);
     }
 }

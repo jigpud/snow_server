@@ -45,9 +45,9 @@ public class RefreshTokenController extends BaseController {
                 return Response.responseSuccess(new RefreshTokenResponse(token));
             }
         } else {
-            // 登陆已经过期
+            // 登录已经过期
             log.debug("refresh token is expired!");
-            return Response.response(401, "登陆已过期！");
+            return Response.response(401, "登录已过期！");
         }
         return Response.responseFailed("token刷新失败！");
     }

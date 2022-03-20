@@ -4,16 +4,47 @@ package com.jigpud.snow.util.constant;
  * @author : jigpud
  */
 public class PathConstant {
-    // 账号密码登陆
+    /*
+    通用接口
+     */
+
+    // 获取短信验证码
+    public static final String VERIFICATION_CODE = "/verificationCode";
+
+    // 注册
+    public static final String REGISTER = "/register";
+
+    // token刷新
+    public static final String REFRESH_TOKEN = "/refreshToken";
+
+    // 账号密码登录
     public static final String LOGIN = "/login";
 
-    public static final String ADMIN_LOGIN = "/adminLogin";
-
-    // 短信验证码登陆
+    // 短信验证码登录
     public static final String LOGIN_WITH_VERIFICATION_CODE = "/loginWithVC";
 
-    // 退出登陆
+    // 退出登录
     public static final String LOGOUT = "/logout";
+
+    /*
+    普通用户相关接口
+     */
+
+    // 找回密码
+    public static final String RETRIEVE_PASSWORD = "/retrievePassword";
+
+    // 更新个人信息
+    public static final String UPDATE_INFORMATION = "/updateInfo";
+
+    // 获取个人信息
+    public static final String GET_USER_INFORMATION = "/userInfo";
+
+    /*
+    admin相关接口
+     */
+
+    // admin登录
+    public static final String ADMIN_LOGIN = "/adminLogin";
 
     // 获取用户列表
     public static final String GET_USER_LIST = "/users";
@@ -29,16 +60,4 @@ public class PathConstant {
 
     // 查询用户
     public static final String QUERY_USER = "/user/query";
-
-    // 获取短信验证码
-    public static final String VERIFICATION_CODE = "/verificationCode";
-
-    // 注册
-    public static final String REGISTER = "/register";
-
-    // token刷新
-    public static final String REFRESH_TOKEN = "/refreshToken";
-
-    // 找回密码
-    public static final String RETRIEVE_PASSWORD = "/retrievePassword";
 }

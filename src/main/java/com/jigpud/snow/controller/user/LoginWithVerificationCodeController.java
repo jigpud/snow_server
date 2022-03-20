@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author : jigpud
- * 短信验证码登陆
+ * 短信验证码登录
  */
 @Slf4j
 @RestController
@@ -57,7 +57,7 @@ public class LoginWithVerificationCodeController extends BaseController {
             String refreshToken = tokenService.createRefreshToken(userid);
             String token = tokenService.createToken(refreshToken);
             if (tokenService.verifyRefreshToken(refreshToken) && tokenService.verify(token)) {
-                // 登陆成功
+                // 登录成功
                 log.debug("login success!");
                 return Response.responseSuccess(new LoginResponse(token, refreshToken));
             }
@@ -66,7 +66,7 @@ public class LoginWithVerificationCodeController extends BaseController {
             log.debug("verification code illegal!");
             return Response.responseFailed("短信验证码错误！");
         }
-        return Response.responseFailed("登陆失败！");
+        return Response.responseFailed("登录失败！");
     }
 
     @NoArgsConstructor
