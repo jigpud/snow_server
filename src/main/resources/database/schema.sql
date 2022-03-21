@@ -7,11 +7,9 @@ create table if not exists user(
     salt varchar(255) not null,
     avatar varchar(2083) not null default '',
     userid varchar(255) not null unique,
-    likes int(11) not null default 0,
     gender varchar(10) not null default '',
     age int(3) not null default 0,
-    id int(11) auto_increment primary key,
-    version int(11) not null default 0
+    id int(11) auto_increment primary key
 );
 
 -- role
@@ -26,4 +24,31 @@ create table if not exists permission(
     id int(11) auto_increment primary key,
     userid varchar(255) not null unique,
     permissions varchar(255) not null default 'read'
+);
+
+-- story
+create table if not exists story(
+    id int(11) auto_increment primary key,
+    story_id varchar(255) not null unique,
+    author_id varchar(255) not null,
+    title varchar(255) not null,
+    content text not null,
+    release_time int(11) not null,
+    release_location varchar(255) not null,
+    pictures mediumtext  not null,
+    attraction_id varchar(255) not null
+);
+
+-- likes
+create table if not exists likes(
+    id int(11) auto_increment primary key,
+    userid varchar(255) not null,
+    story_id varchar(255)
+);
+
+-- follow
+create table if not exists follow(
+    id int(11) auto_increment primary key,
+    userid varchar(255) not null,
+    follower_id varchar(255) not null
 );

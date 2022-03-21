@@ -43,7 +43,16 @@ public class SelfInformationController extends BaseController {
         String token = getToken(request);
         String userid = tokenService.getUserid(token);
         User user = userService.getUserByUserid(userid);
-        SelfInformationResponse info = SelfInformationResponse.from(user);
+        SelfInformationResponse info = new SelfInformationResponse();
+        info.setUserid(user.getUserid());
+        info.setAvatar(user.getAvatar());
+        info.setNickname(user.getNickname());
+        info.setGender(user.getGender());
+        info.setAge(user.getAge());
+        info.setSignature(user.getSignature());
+        info.setLikes(userService.likes(userid));
+        info.setFollowers(userService.followerCount(userid));
+        info.setFollowed(userService.followedCount(userid));
         log.debug("get self information success! info: {}", info);
         return Response.responseSuccess(info);
     }
@@ -53,23 +62,13 @@ public class SelfInformationController extends BaseController {
     @Data
     static class SelfInformationResponse {
         private String avatar;
-        private String username;
+        private String userid;
         private String nickname;
         private String gender;
         private Integer age;
         private String signature;
         private Long likes;
-
-        public static SelfInformationResponse from(User user) {
-            SelfInformationResponse info = new SelfInformationResponse();
-            info.setUsername(user.getUsername());
-            info.setAvatar(user.getAvatar());
-            info.setNickname(user.getNickname());
-            info.setGender(user.getGender());
-            info.setAge(user.getAge());
-            info.setSignature(user.getSignature());
-            info.setLikes(user.getLikes());
-            return info;
-        }
+        private Long followers;
+        private Long followed;
     }
 }

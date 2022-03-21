@@ -41,6 +41,6 @@ public class UserListController extends BaseController {
     ) {
         log.debug("ADMIN : get user list with pageCount {}", pageCount);
         log.debug("ADMIN : get user list with page {}", page);
-        return Response.responseSuccess(Response.pageData(userService.users(pageCount, page)));
+        return Response.responseSuccess(userService.users(pageCount, page));
     }
 }

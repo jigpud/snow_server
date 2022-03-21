@@ -1,10 +1,14 @@
 package com.jigpud.snow.service.user;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jigpud.snow.model.Follow;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.repository.follow.FollowRepository;
+import com.jigpud.snow.repository.likes.LikesRepository;
 import com.jigpud.snow.repository.user.UserRepository;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.encrypt.Encryptor;
+import com.jigpud.snow.util.response.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +19,20 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenService tokenService;
+    private final LikesRepository likesRepository;
+    private final FollowRepository followRepository;
 
     @Autowired
-    UserServiceImpl(UserRepository userRepository, TokenService tokenService) {
+    UserServiceImpl(
+            UserRepository userRepository,
+            TokenService tokenService,
+            LikesRepository likesRepository,
+            FollowRepository followRepository
+    ) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
+        this.likesRepository = likesRepository;
+        this.followRepository = followRepository;
     }
 
     @Override
@@ -88,13 +101,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void incrementLikes(String userid) {
-        User user = userRepository.getUserByUserid(userid);
-        user.setLikes(user.getLikes() + 1);
-        userRepository.updateUser(user);
-    }
-
-    @Override
     public boolean haveUseridIs(String userid) {
         if (userid == null || userid.isEmpty()) {
             return false;
@@ -144,22 +150,66 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> usersUsernameLike(String username, long pageCount, long page) {
-        return userRepository.usersUsernameLike(username, pageCount, page);
+    public PageData<User> usersUsernameLike(String username, long pageCount, long page) {
+        return PageData.fromPage(userRepository.usersUsernameLike(username, pageCount, page));
     }
 
     @Override
-    public Page<User> usersNicknameLike(String nickname, long pageCount, long page) {
-        return userRepository.usersNicknameLike(nickname, pageCount, page);
+    public PageData<User> usersNicknameLike(String nickname, long pageCount, long page) {
+        return PageData.fromPage(userRepository.usersNicknameLike(nickname, pageCount, page));
     }
 
     @Override
-    public Page<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page) {
-        return userRepository.usersUsernameAndNicknameLike(username, nickname, pageCount, page);
+    public PageData<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page) {
+        return PageData.fromPage(userRepository.usersUsernameAndNicknameLike(username, nickname, pageCount, page));
     }
 
     @Override
-    public Page<User> users(long pageCount, long page) {
-        return userRepository.users(pageCount, page);
+    public PageData<User> users(long pageCount, long page) {
+        return PageData.fromPage(userRepository.users(pageCount, page));
+    }
+
+    @Override
+    public void follow(String follower, String userid) {
+        followRepository.add(follower, userid);
+    }
+
+    @Override
+    public void unfollow(String follower, String userid) {
+        followRepository.remove(follower, userid);
+    }
+
+    @Override
+    public long followerCount(String userid) {
+        return followRepository.followerCount(userid);
+    }
+
+    @Override
+    public PageData<String> followerList(String userid, long pageCount, long page) {
+        return mapFollowToString(followRepository.followerList(userid, pageCount, page), Follow::getFollowerId);
+    }
+
+    @Override
+    public long followedCount(String userid) {
+        return followRepository.followedCount(userid);
+    }
+
+    @Override
+    public PageData<String> followedList(String userid, long pageCount, long page) {
+        return mapFollowToString(followRepository.followedList(userid, pageCount, page), Follow::getUserid);
+    }
+
+    @Override
+    public long likes(String userid) {
+        return likesRepository.userLikes(userid);
+    }
+
+    @Override
+    public boolean haveFollowed(String follower, String userid) {
+        return followRepository.have(follower, userid);
+    }
+
+    private PageData<String> mapFollowToString(Page<Follow> origin, PageData.RecordsMapper<Follow, String> mapper) {
+        return PageData.fromPage(origin, mapper);
     }
 }

@@ -14,4 +14,5 @@ public class FormDataConstant {
     public static final String PAGE = "page";
     public static final String PAGE_COUNT = "pageCount";
     public static final String REFRESH_TOKEN = "refreshToken";
+    public static final String STORY_ID = "storyId";
 }

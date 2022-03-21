@@ -86,13 +86,6 @@ public class UpdateUserController extends BaseController {
                     user.setAge(0);
                 }
 
-                // update likes
-                if (update.getLikes() != null) {
-                    user.setLikes(update.getLikes());
-                } else {
-                    user.setLikes(0L);
-                }
-
                 // 更新用户信息
                 log.debug("update user information success!");
                 userService.update(user);

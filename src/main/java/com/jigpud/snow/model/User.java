@@ -3,7 +3,6 @@ package com.jigpud.snow.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,18 +37,11 @@ public class User {
     // 唯一用户id
     private String userid;
 
-    // 获赞
-    private Long likes;
-
     // 性别
     private String gender;
 
     // 年龄
     private Integer age;
-
-    // 版本
-    @Version
-    private Long version;
 
     // 主键
     @TableId(type = IdType.AUTO)

@@ -1,7 +1,7 @@
 package com.jigpud.snow.service.user;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.util.response.PageData;
 
 /**
  * @author : jigpud
@@ -98,19 +98,13 @@ public interface UserService {
     void updateAvatar(String userid, String newAvatar);
 
     /**
-     * 增加获赞数
-     * @param userid userid
-     */
-    void incrementLikes(String userid);
-
-    /**
      * 根据username模糊查询用户列表
      * @param username username
      * @param pageCount 单页大小
      * @param page 页码
      * @return 用户列表分页
      */
-    Page<User> usersUsernameLike(String username, long pageCount, long page);
+    PageData<User> usersUsernameLike(String username, long pageCount, long page);
 
     /**
      * 根据username获取用户信息
@@ -133,7 +127,7 @@ public interface UserService {
      * @param page 页码
      * @return 用户列表分页
      */
-    Page<User> usersNicknameLike(String nickname, long pageCount, long page);
+    PageData<User> usersNicknameLike(String nickname, long pageCount, long page);
 
     /**
      * 根据username和nickname模糊查询用户列表
@@ -143,7 +137,7 @@ public interface UserService {
      * @param page 页码
      * @return 用户列表分页
      */
-    Page<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page);
+    PageData<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page);
 
     /**
      * 获取用户列表
@@ -151,5 +145,66 @@ public interface UserService {
      * @param page 页码
      * @return 用户列表分页
      */
-    Page<User> users(long pageCount, long page);
+    PageData<User> users(long pageCount, long page);
+
+    /**
+     * 关注一个用户
+     * @param follower 自己
+     * @param userid 被关注的人
+     */
+    void follow(String follower, String userid);
+
+    /**
+     * 取消关注一个用户
+     * @param follower 自己
+     * @param userid 被关注的人
+     */
+    void unfollow(String follower, String userid);
+
+    /**
+     * 获取粉丝总数
+     * @param userid 用户
+     * @return 粉丝总数
+     */
+    long followerCount(String userid);
+
+    /**
+     * 获取用户的粉丝列表
+     * @param userid 用户
+     * @param pageCount 分页大小
+     * @param page 页码
+     * @return 粉丝列表分页
+     */
+    PageData<String> followerList(String userid, long pageCount, long page);
+
+    /**
+     * 获取用户的关注数
+     * @param userid 用户
+     * @return 关注数
+     */
+    long followedCount(String userid);
+
+    /**
+     * 获取用户的关注列表
+     * @param userid 用户
+     * @param pageCount 分页大小
+     * @param page 页码
+     * @return 关注列表分页
+     */
+    PageData<String> followedList(String userid, long pageCount, long page);
+
+    /**
+     * 是否关注了该用户
+     * @param follower 自己
+     * @param userid 关注
+     * @return 是否关注了
+     */
+    boolean haveFollowed(String follower, String userid);
+
+    /**
+     * 获取获赞数
+     * @param userid 自己
+     * @return 获赞数
+     */
+    long likes(String userid);
 }

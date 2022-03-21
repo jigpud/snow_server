@@ -39,6 +39,27 @@ public class PathConstant {
     // 获取个人信息
     public static final String GET_USER_INFORMATION = "/userInfo";
 
+    // 获取用户的所有游记
+    public static final String GET_STORY_LIST = "/stories";
+
+    // 发布游记
+    public static final String RELEASE_STORY = "/story/release";
+
+    // 获取用户动态的所有游记
+    public static final String GET_MOMENTS_STORY_LIST = "/story/moments";
+
+    // 点赞游记
+    public static final String LIKE_STORY = "/story/like";
+
+    // 取消游记点赞
+    public static final String UNLIKE_STORY = "/story/unlike";
+
+    // 关注
+    public static final String FOLLOW = "/user/follow";
+
+    // 取消关注
+    public static final String UNFOLLOW = "/user/unfollow";
+
     /*
     admin相关接口
      */

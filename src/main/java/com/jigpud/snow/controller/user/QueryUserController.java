@@ -45,8 +45,7 @@ public class QueryUserController extends BaseController {
         log.debug("ADMIN : query user with pageCount {}", pageCount);
         log.debug("ADMIN : query user with page {}", page);
 
-        PageData<User> pageData =
-                Response.pageData(userService.usersUsernameAndNicknameLike(username, nickname, pageCount, page));
+        PageData<User> pageData = userService.usersUsernameAndNicknameLike(username, nickname, pageCount, page);
         return Response.responseSuccess(pageData);
     }
 }
