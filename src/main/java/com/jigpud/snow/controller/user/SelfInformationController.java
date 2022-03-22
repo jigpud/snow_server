@@ -44,6 +44,7 @@ public class SelfInformationController extends BaseController {
         String userid = tokenService.getUserid(token);
         User user = userService.getUserByUserid(userid);
         SelfInformationResponse info = new SelfInformationResponse();
+        info.setUsername(user.getUsername());
         info.setUserid(user.getUserid());
         info.setAvatar(user.getAvatar());
         info.setNickname(user.getNickname());
@@ -61,6 +62,7 @@ public class SelfInformationController extends BaseController {
     @AllArgsConstructor
     @Data
     static class SelfInformationResponse {
+        private String username;
         private String avatar;
         private String userid;
         private String nickname;
