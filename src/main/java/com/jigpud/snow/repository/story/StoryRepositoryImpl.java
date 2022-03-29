@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
 @Slf4j
 @Repository

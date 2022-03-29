@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * @author jigpud
+ * @author : jigpud
  * 游记
  */
 @TableName(value = "story", autoResultMap = true)

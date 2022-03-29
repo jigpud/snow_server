@@ -1,26 +1,26 @@
 package com.jigpud.snow.service.story;
 
 import com.jigpud.snow.model.Story;
-import com.jigpud.snow.repository.likes.LikesRepository;
 import com.jigpud.snow.repository.story.StoryRepository;
+import com.jigpud.snow.repository.storylikes.StoryLikesRepository;
 import com.jigpud.snow.util.response.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
 @Slf4j
 @Service
 public class StoryServiceImpl implements StoryService {
     private final StoryRepository storyRepository;
-    private final LikesRepository likesRepository;
+    private final StoryLikesRepository storyLikesRepository;
 
     @Autowired
-    StoryServiceImpl(StoryRepository storyRepository, LikesRepository likesRepository) {
+    StoryServiceImpl(StoryRepository storyRepository, StoryLikesRepository storyLikesRepository) {
         this.storyRepository = storyRepository;
-        this.likesRepository = likesRepository;
+        this.storyLikesRepository = storyLikesRepository;
     }
 
     @Override
@@ -45,21 +45,21 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public void like(String storyId, String userid) {
-        likesRepository.add(storyId, userid);
+        storyLikesRepository.add(storyId, userid);
     }
 
     @Override
     public void unlike(String storyId, String userid) {
-        likesRepository.remove(storyId, userid);
+        storyLikesRepository.remove(storyId, userid);
     }
 
     @Override
     public long likes(String storyId) {
-        return likesRepository.storyLikes(storyId);
+        return storyLikesRepository.storyLikes(storyId);
     }
 
     @Override
     public boolean haveLiked(String storyId, String userid) {
-        return likesRepository.have(storyId, userid);
+        return storyLikesRepository.have(storyId, userid);
     }
 }

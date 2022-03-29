@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.model.Follow;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
 public interface FollowRepository {
     /**

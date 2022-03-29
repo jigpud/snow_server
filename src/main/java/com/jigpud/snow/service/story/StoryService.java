@@ -4,7 +4,7 @@ import com.jigpud.snow.model.Story;
 import com.jigpud.snow.util.response.PageData;
 
 /**
- * @author jigpud
+ * @author : jigpud
  * 游记相关服务
  */
 public interface StoryService {

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.model.Follow;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.repository.follow.FollowRepository;
-import com.jigpud.snow.repository.likes.LikesRepository;
+import com.jigpud.snow.repository.storylikes.StoryLikesRepository;
 import com.jigpud.snow.repository.user.UserRepository;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.encrypt.Encryptor;
@@ -19,19 +19,19 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenService tokenService;
-    private final LikesRepository likesRepository;
+    private final StoryLikesRepository storyLikesRepository;
     private final FollowRepository followRepository;
 
     @Autowired
     UserServiceImpl(
             UserRepository userRepository,
             TokenService tokenService,
-            LikesRepository likesRepository,
+            StoryLikesRepository storyLikesRepository,
             FollowRepository followRepository
     ) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
-        this.likesRepository = likesRepository;
+        this.storyLikesRepository = storyLikesRepository;
         this.followRepository = followRepository;
     }
 
@@ -201,7 +201,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long likes(String userid) {
-        return likesRepository.userLikes(userid);
+        return storyLikesRepository.userLikes(userid);
     }
 
     @Override

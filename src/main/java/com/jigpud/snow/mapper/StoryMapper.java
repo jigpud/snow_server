@@ -5,7 +5,7 @@ import com.jigpud.snow.model.Story;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
 @Mapper
 public interface StoryMapper extends BaseMapper<Story> {

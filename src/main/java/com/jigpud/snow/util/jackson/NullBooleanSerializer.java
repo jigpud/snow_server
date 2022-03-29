@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
- * @author jigpud
+ * @author : jigpud
  * 空Boolean使用"false"代替
  */
 public class NullBooleanSerializer extends JsonSerializer<Object> {

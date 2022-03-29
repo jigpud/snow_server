@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 
 /**
- * @author jigpud
+ * @author : jigpud
  * 空数字使用"0"代替
  */
 public class NullNumberSerializer extends JsonSerializer<Object> {

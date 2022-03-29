@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
 @MappedTypes(List.class)
 @MappedJdbcTypes(JdbcType.LONGVARCHAR)

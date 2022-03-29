@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author jigpud
+ * @author : jigpud
  * 用户
  */
 @TableName("user")

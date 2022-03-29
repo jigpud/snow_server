@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author jigpud
+ * @author : jigpud
  * 使用用户名+密码登录
  */
 @Slf4j

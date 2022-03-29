@@ -11,33 +11,33 @@ public class PathConstant {
     // 获取短信验证码
     public static final String VERIFICATION_CODE = "/verificationCode";
 
-    // 注册
-    public static final String REGISTER = "/register";
-
     // token刷新
     public static final String REFRESH_TOKEN = "/refreshToken";
-
-    // 账号密码登录
-    public static final String LOGIN = "/login";
-
-    // 短信验证码登录
-    public static final String LOGIN_WITH_VERIFICATION_CODE = "/loginWithVC";
-
-    // 退出登录
-    public static final String LOGOUT = "/logout";
 
     /*
     普通用户相关接口
      */
 
+    // 注册
+    public static final String REGISTER = "/user/register";
+
+    // 账号密码登录
+    public static final String LOGIN = "/user/login";
+
+    // 短信验证码登录
+    public static final String LOGIN_WITH_VERIFICATION_CODE = "/user/loginWithVC";
+
+    // 退出登录
+    public static final String LOGOUT = "/user/logout";
+
     // 找回密码
-    public static final String RETRIEVE_PASSWORD = "/retrievePassword";
+    public static final String RETRIEVE_PASSWORD = "/user/retrievePassword";
 
     // 更新个人信息
-    public static final String UPDATE_INFORMATION = "/updateInfo";
+    public static final String UPDATE_INFORMATION = "/user/updateInfo";
 
     // 获取个人信息
-    public static final String GET_USER_INFORMATION = "/userInfo";
+    public static final String GET_USER_INFORMATION = "/user/info";
 
     // 获取用户的所有游记
     public static final String GET_STORY_LIST = "/stories";
@@ -54,6 +54,24 @@ public class PathConstant {
     // 取消游记点赞
     public static final String UNLIKE_STORY = "/story/unlike";
 
+    // 评论
+    public static final String COMMENT_STORY = "/story/comment";
+
+    // 游记的评论列表
+    public static final String STORY_COMMENT_LIST = "/story/comment/list";
+
+    // 点赞评论
+    public static final String LIKE_COMMENT = "/story/comment/like";
+
+    // 取消评论点赞
+    public static final String UNLIKE_COMMENT = "/story/comment/unlike";
+
+    // 回复评论
+    public static final String REPLY_COMMENT = "/story/comment/reply";
+
+    // 评论的回复列表
+    public static final String COMMENT_REPLY_LIST = "/story/comment/reply/list";
+
     // 关注
     public static final String FOLLOW = "/user/follow";
 
@@ -61,11 +79,11 @@ public class PathConstant {
     public static final String UNFOLLOW = "/user/unfollow";
 
     /*
-    admin相关接口
+    admin用户相关接口
      */
 
     // admin登录
-    public static final String ADMIN_LOGIN = "/adminLogin";
+    public static final String ADMIN_LOGIN = "/admin/login";
 
     // 获取用户列表
     public static final String GET_USER_LIST = "/users";

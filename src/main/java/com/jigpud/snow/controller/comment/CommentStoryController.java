@@ -1,6 +1,7 @@
-package com.jigpud.snow.controller.story;
+package com.jigpud.snow.controller.comment;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.service.comment.CommentService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -24,35 +25,41 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class UnlikeStoryController extends BaseController {
-    private final TokenService tokenService;
+public class CommentStoryController extends BaseController {
     private final StoryService storyService;
+    private final CommentService commentService;
+    private final TokenService tokenService;
 
     @Autowired
-    UnlikeStoryController(TokenService tokenService, StoryService storyService) {
-        this.tokenService = tokenService;
+    CommentStoryController(
+            StoryService storyService,
+            CommentService commentService,
+            TokenService tokenService
+    ) {
         this.storyService = storyService;
+        this.commentService = commentService;
+        this.tokenService = tokenService;
     }
 
-    @PostMapping(PathConstant.UNLIKE_STORY)
+    @PostMapping(PathConstant.COMMENT_STORY)
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_WRITE)
-    ResponseBody<?> unlikeStory(
+    ResponseBody<?> commentStory(
             @RequestParam(value = FormDataConstant.STORY_ID, required = false, defaultValue = "") String storyId,
+            @RequestParam(value = FormDataConstant.CONTENT, required = false, defaultValue = "") String content,
             HttpServletRequest request
     ) {
-        String userid = tokenService.getUserid(getToken(request));
-        if (storyService.getStory(storyId) != null) {
-            storyService.unlike(storyId, userid);
-            if (!storyService.haveLiked(storyId, userid)) {
-                log.debug("unlike story success!");
+        if (!storyId.isEmpty() && storyService.getStory(storyId) != null) {
+            if (!content.isEmpty()) {
+                String userid = tokenService.getUserid(getToken(request));
+                commentService.comment(storyId, userid, content);
                 return Response.responseSuccess();
             } else {
-                log.debug("unlike story failed!");
-                return Response.responseFailed("取消点赞失败！");
+                log.debug("content can not be empty!");
+                return Response.responseFailed("评论不能为空！");
             }
         } else {
-            log.debug("story not exists, story id: {}", storyId);
+            log.debug("story {} not exists!", storyId);
             return Response.responseFailed("游记不存在！");
         }
     }

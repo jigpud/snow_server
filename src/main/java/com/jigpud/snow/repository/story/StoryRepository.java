@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.model.Story;
 
 /**
- * @author jigpud
+ * @author : jigpud
  * 游记
  */
 public interface StoryRepository {

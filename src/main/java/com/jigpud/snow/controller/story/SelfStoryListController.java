@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
 @Slf4j
 @RestController

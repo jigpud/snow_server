@@ -10,18 +10,27 @@ import lombok.NoArgsConstructor;
 /**
  * @author : jigpud
  */
-@TableName("follow")
+@TableName("comment")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Follow {
-    // 自己
-    private String userid;
-
-    // 关注者
-    private String followerId;
-
+public class Comment {
     // 主键
     @TableId(type = IdType.AUTO)
     private Long id;
+
+    // 用户id
+    private String authorId;
+
+    // 评论id
+    private String commentId;
+
+    // 所属的游记
+    private String storyId;
+
+    // 回复的评论
+    private String pid;
+
+    // 评论内容
+    private String content;
 }

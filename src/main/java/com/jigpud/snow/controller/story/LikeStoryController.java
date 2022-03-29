@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
 @Slf4j
 @RestController

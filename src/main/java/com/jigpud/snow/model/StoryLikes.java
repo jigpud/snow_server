@@ -8,17 +8,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author jigpud
+ * @author : jigpud
  */
-@TableName("likes")
+@TableName("story_likes")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Likes {
-    // story id
+public class StoryLikes {
+    // 游记id
     private String storyId;
 
-    // userid
+    // 用户id
     private String userid;
 
     // 主键

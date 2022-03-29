@@ -39,11 +39,18 @@ create table if not exists story(
     attraction_id varchar(255) not null
 );
 
--- likes
-create table if not exists likes(
+-- story_likes
+create table if not exists story_likes(
     id int(11) auto_increment primary key,
     userid varchar(255) not null,
     story_id varchar(255)
+);
+
+-- comment_likes
+create table if not exists comment_likes(
+    id int(11) auto_increment primary key,
+    userid varchar(255) not null,
+    comment_id varchar(255)
 );
 
 -- follow
@@ -51,4 +58,14 @@ create table if not exists follow(
     id int(11) auto_increment primary key,
     userid varchar(255) not null,
     follower_id varchar(255) not null
+);
+
+-- comment
+create table if not exists comment(
+    id int(11) auto_increment primary key,
+    story_id varchar(255) not null,
+    author_id varchar(255) not null,
+    comment_id varchar(255) not null,
+    pid varchar(255) not null default '',
+    content mediumtext not null
 );
