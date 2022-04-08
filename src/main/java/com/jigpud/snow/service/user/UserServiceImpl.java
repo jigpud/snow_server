@@ -209,6 +209,11 @@ public class UserServiceImpl implements UserService {
         return followRepository.have(follower, userid);
     }
 
+    @Override
+    public PageData<User> search(String keyWords, long pageCount, long page) {
+        return PageData.fromPage(userRepository.blurSearch(keyWords, pageCount, page));
+    }
+
     private PageData<String> mapFollowToString(Page<Follow> origin, PageData.RecordsMapper<Follow, String> mapper) {
         return PageData.fromPage(origin, mapper);
     }

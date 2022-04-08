@@ -63,4 +63,13 @@ public interface StoryService {
      * @return 是否点赞
      */
     boolean haveLiked(String storyId, String userid);
+
+    /**
+     * 根据关键词搜索游记
+     * @param keyWords 关键词
+     * @param pageCount 分页大小
+     * @param page 页码
+     * @return 搜索结果分页
+     */
+    PageData<Story> searchStory(String keyWords, long pageCount, long page);
 }

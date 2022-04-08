@@ -6,16 +6,12 @@ import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
-import com.jigpud.snow.util.constant.PermissionsConstant;
-import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +35,6 @@ public class UserInformationController extends BaseController {
     }
 
     @PostMapping(PathConstant.GET_USER_INFORMATION)
-    @RequiresRoles(RolesConstant.USER)
-    @RequiresPermissions(PermissionsConstant.USER_READ)
     ResponseBody<UserInformationResponse> getUserInformation(
             @RequestParam(value = FormDataConstant.USERID, required = false, defaultValue = "") String userid,
             HttpServletRequest request
@@ -50,6 +44,8 @@ public class UserInformationController extends BaseController {
             User user = userService.getUserByUserid(userid);
             UserInformationResponse info = new UserInformationResponse();
             info.setUserid(user.getUserid());
+            info.setNickname(user.getNickname());
+            info.setBackground(user.getBackground());
             info.setGender(user.getGender());
             info.setAge(user.getAge());
             info.setSignature(user.getSignature());
@@ -70,6 +66,7 @@ public class UserInformationController extends BaseController {
     static class UserInformationResponse {
         private String userid;
         private String nickname;
+        private String background;
         private String gender;
         private Integer age;
         private String signature;

@@ -207,4 +207,13 @@ public interface UserService {
      * @return 获赞数
      */
     long likes(String userid);
+
+    /**
+     * 根据关键词搜索用户
+     * @param keyWords 关键词
+     * @param pageCount 分页大小
+     * @param page 页码
+     * @return 搜索结果分页
+     */
+    PageData<User> search(String keyWords, long pageCount, long page);
 }

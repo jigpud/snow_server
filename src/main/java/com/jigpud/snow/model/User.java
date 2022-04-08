@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class User {
-    // 手机号 + salt => hmac
+    // 手机号
     private String username;
 
     // 昵称
@@ -42,6 +42,9 @@ public class User {
 
     // 年龄
     private Integer age;
+
+    // 资料卡片背景
+    private String background;
 
     // 主键
     @TableId(type = IdType.AUTO)

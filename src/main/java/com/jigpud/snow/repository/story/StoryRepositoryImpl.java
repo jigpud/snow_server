@@ -28,23 +28,44 @@ public class StoryRepositoryImpl implements StoryRepository {
 
     @Override
     public Story getStory(String storyId) {
-        QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("story_id", storyId);
-        return storyMapper.selectOne(queryWrapper);
+        return storyMapper.selectOne(storyQueryWrapper(storyId));
     }
 
     @Override
     public Page<Story> getUserStoryList(String userid, long pageCount, long page) {
-        QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("author_id", userid);
+        QueryWrapper<Story> queryWrapper = authorQueryWrapper(userid);
+        queryWrapper.orderByDesc("release_time");
         return storyMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
     }
 
     @Override
     public void update(Story story) {
         String storyId = story.getStoryId();
+        storyMapper.update(story, storyQueryWrapper(storyId));
+    }
+
+    @Override
+    public Page<Story> blurSearch(String keyWords, long pageCount, long page) {
+        return storyMapper.selectPage(new Page<>(page, pageCount), blurQueryWrapper(keyWords));
+    }
+
+    private QueryWrapper<Story> storyQueryWrapper(String storyId) {
         QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("story_id", storyId);
-        storyMapper.update(story, queryWrapper);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<Story> authorQueryWrapper(String authorId) {
+        QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("author_id", authorId);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<Story> blurQueryWrapper(String keyWords) {
+        QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("title", keyWords)
+                .or()
+                .like("content", keyWords);
+        return queryWrapper;
     }
 }

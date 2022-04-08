@@ -62,4 +62,9 @@ public class StoryServiceImpl implements StoryService {
     public boolean haveLiked(String storyId, String userid) {
         return storyLikesRepository.have(storyId, userid);
     }
+
+    @Override
+    public PageData<Story> searchStory(String keyWords, long pageCount, long page) {
+        return PageData.fromPage(storyRepository.blurSearch(keyWords, pageCount, page));
+    }
 }

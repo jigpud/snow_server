@@ -44,6 +44,9 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
         log.debug("createToken");
         String token = getAuthzHeader(request);
+        if (token == null) {
+            token = "";
+        }
         return new JWTToken(token);
     }
 

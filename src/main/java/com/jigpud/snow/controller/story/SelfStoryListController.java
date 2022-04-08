@@ -40,7 +40,7 @@ public class SelfStoryListController extends BaseController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping(PathConstant.GET_STORY_LIST)
+    @PostMapping(PathConstant.GET_SELF_STORY_LIST)
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_READ)
     ResponseBody<PageData<SelfStoryListResponse>> getStoryList(
@@ -51,8 +51,8 @@ public class SelfStoryListController extends BaseController {
         log.debug("get user story list with pageCount: {}", pageCount);
         log.debug("get user story list with page: {}", page);
         String token = getToken(request);
-        String userid = tokenService.getUserid(token);
-        PageData<Story> stories = storyService.getUserStoryList(userid, pageCount, page);
+        String selfUserid = tokenService.getUserid(token);
+        PageData<Story> stories = storyService.getUserStoryList(selfUserid, pageCount, page);
         PageData<SelfStoryListResponse> responsePageData = PageData.fromPageData(stories, story -> {
             String storyId = story.getStoryId();
             SelfStoryListResponse selfStoryListResponse = new SelfStoryListResponse();
@@ -64,7 +64,7 @@ public class SelfStoryListController extends BaseController {
             selfStoryListResponse.setReleaseTime(story.getReleaseTime());
             selfStoryListResponse.setReleaseLocation(story.getReleaseLocation());
             selfStoryListResponse.setAttractionId(story.getAttractionId());
-            selfStoryListResponse.setLiked(storyService.haveLiked(storyId, userid));
+            selfStoryListResponse.setLiked(storyService.haveLiked(storyId, selfUserid));
             selfStoryListResponse.setLikes(storyService.likes(storyId));
             return selfStoryListResponse;
         });

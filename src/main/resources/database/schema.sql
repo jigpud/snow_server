@@ -9,7 +9,8 @@ create table if not exists user(
     userid varchar(255) not null unique,
     gender varchar(10) not null default '',
     age int(3) not null default 0,
-    id int(11) auto_increment primary key
+    id int(11) auto_increment primary key,
+    background varchar(2083) not null default ''
 );
 
 -- role

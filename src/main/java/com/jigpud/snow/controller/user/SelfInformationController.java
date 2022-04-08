@@ -54,6 +54,7 @@ public class SelfInformationController extends BaseController {
         info.setLikes(userService.likes(userid));
         info.setFollowers(userService.followerCount(userid));
         info.setFollowed(userService.followedCount(userid));
+        info.setBackground(user.getBackground());
         log.debug("get self information success! info: {}", info);
         return Response.responseSuccess(info);
     }
@@ -72,5 +73,6 @@ public class SelfInformationController extends BaseController {
         private Long likes;
         private Long followers;
         private Long followed;
+        private String background;
     }
 }

@@ -39,14 +39,26 @@ public class PathConstant {
     // 获取个人信息
     public static final String GET_USER_INFORMATION = "/user/info";
 
-    // 获取用户的所有游记
-    public static final String GET_STORY_LIST = "/stories";
+    // 获取用户自己的所有游记
+    public static final String GET_SELF_STORY_LIST = "/story/self";
+
+    // 获取用户的游记
+    public static final String GET_USER_STORY_LIST = "/story/list";
 
     // 发布游记
     public static final String RELEASE_STORY = "/story/release";
 
-    // 获取用户动态的所有游记
-    public static final String GET_MOMENTS_STORY_LIST = "/story/moments";
+    // 获取用户自己动态的所有游记
+    public static final String GET_MOMENTS_STORY_LIST = "/story/moments/self";
+
+    // 根据关键词模糊查询游记
+    public static final String SEARCH_STORY = "/search/story";
+
+    // 根据关键词模糊查询用户
+    public static final String SEARCH_USER = "/search/user";
+
+    // 根据关键词模糊查询景点
+    public static final String SEARCH_ATTRACTION = "/search/attraction";
 
     // 点赞游记
     public static final String LIKE_STORY = "/story/like";

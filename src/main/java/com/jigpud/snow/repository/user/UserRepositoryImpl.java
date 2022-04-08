@@ -26,23 +26,18 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserByUsername(String username) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", username);
-        return userMapper.selectOne(queryWrapper);
+        return userMapper.selectOne(usernameQueryWrapper(username));
     }
 
     @Override
     public User getUserByUserid(String userid) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("userid", userid);
-        return userMapper.selectOne(queryWrapper);
+        return userMapper.selectOne(useridQueryWrapper(userid));
     }
 
     @Override
     public void updateUser(User user) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", user.getUsername());
-        userMapper.update(user, queryWrapper);
+        String userid = user.getUserid();
+        userMapper.update(user, useridQueryWrapper(userid));
     }
 
     @Override
@@ -52,36 +47,67 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Page<User> usersUsernameLike(String username, long pageCount, long page) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("username", username);
-        return userMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
+        return userMapper.selectPage(new Page<>(page, pageCount), usernameLikeQueryWrapper(username));
     }
 
     @Override
     public Page<User> usersNicknameLike(String nickname, long pageCount, long page) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("nickname", nickname);
-        return userMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
+        return userMapper.selectPage(new Page<>(page, pageCount), nicknameLikeQueryWrapper(nickname));
     }
 
     @Override
     public Page<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("username", username).like("nickname", nickname);
-        return userMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
+        return userMapper.selectPage(new Page<>(page, pageCount), usernameAndNicknameLikeQueryWrapper(username, nickname));
     }
 
     @Override
     public void deleteUserByUsername(String username) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", username);
-        userMapper.delete(queryWrapper);
+        userMapper.delete(usernameQueryWrapper(username));
     }
 
     @Override
     public void deleteUserByUserid(String userid) {
+        userMapper.delete(useridQueryWrapper(userid));
+    }
+
+    @Override
+    public Page<User> blurSearch(String keyWords, long pageCount, long page) {
+        return userMapper.selectPage(new Page<>(page, pageCount), blurQueryWrapper(keyWords));
+    }
+
+    private QueryWrapper<User> usernameQueryWrapper(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<User> useridQueryWrapper(String userid) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", userid);
-        userMapper.delete(queryWrapper);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<User> usernameLikeQueryWrapper(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("username", username);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<User> nicknameLikeQueryWrapper(String nickname) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("nickname", nickname);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<User> usernameAndNicknameLikeQueryWrapper(String username, String nickname) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("username", username)
+                .or()
+                .like("nickname", nickname);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<User> blurQueryWrapper(String keyWords) {
+        return nicknameLikeQueryWrapper(keyWords);
     }
 }
