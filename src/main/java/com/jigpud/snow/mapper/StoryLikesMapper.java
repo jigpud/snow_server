@@ -9,4 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface StoryLikesMapper extends BaseMapper<StoryLikes> {
+    void insertIgnore(StoryLikes storyLikes);
 }

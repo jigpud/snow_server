@@ -44,21 +44,24 @@ create table if not exists story(
 create table if not exists story_likes(
     id int(11) auto_increment primary key,
     userid varchar(255) not null,
-    story_id varchar(255)
+    story_id varchar(255) not null,
+    unique key likes(userid, story_id)
 );
 
 -- comment_likes
 create table if not exists comment_likes(
     id int(11) auto_increment primary key,
     userid varchar(255) not null,
-    comment_id varchar(255)
+    comment_id varchar(255) not null,
+    unique key likes(userid, comment_id)
 );
 
 -- follow
 create table if not exists follow(
     id int(11) auto_increment primary key,
     userid varchar(255) not null,
-    follower_id varchar(255) not null
+    follower_id varchar(255) not null,
+    unique key follow(userid, follower_id)
 );
 
 -- comment

@@ -25,7 +25,7 @@ public class StoryLikesRepositoryImpl implements StoryLikesRepository {
         StoryLikes likes = new StoryLikes();
         likes.setStoryId(storyId);
         likes.setUserid(userid);
-        storyLikesMapper.insert(likes);
+        storyLikesMapper.insertIgnore(likes);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class StoryLikesRepositoryImpl implements StoryLikesRepository {
 
     @Override
     public boolean have(String storyId, String userid) {
-        return storyLikesMapper.selectOne(storyAndUserQueryWrapper(storyId, userid)) != null;
+        return storyLikesMapper.exists(storyAndUserQueryWrapper(storyId, userid));
     }
 
     @Override

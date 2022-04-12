@@ -3,6 +3,7 @@ package com.jigpud.snow.controller;
 import com.jigpud.snow.util.constant.HeaderConstant;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author : jigpud
  * 异常处理
  */
+@Slf4j
 public class BaseController {
     /**
      * shiro未授权错误处理
@@ -37,7 +39,8 @@ public class BaseController {
      * @return internal error
      */
     @ExceptionHandler({Exception.class})
-    ResponseBody<?> handleException() {
+    ResponseBody<?> handleException(Exception e) {
+        log.error("handleException: {}", e.toString());
         return Response.response(500, "出错啦！");
     }
 

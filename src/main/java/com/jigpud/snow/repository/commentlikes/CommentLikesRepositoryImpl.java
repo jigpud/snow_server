@@ -25,7 +25,7 @@ public class CommentLikesRepositoryImpl implements CommentLikesRepository{
         CommentLikes commentLikes = new CommentLikes();
         commentLikes.setCommentId(commentId);
         commentLikes.setUserid(userid);
-        commentLikesMapper.insert(commentLikes);
+        commentLikesMapper.insertIgnore(commentLikes);
     }
 
     @Override

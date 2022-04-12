@@ -23,12 +23,10 @@ public class FollowRepositoryImpl implements FollowRepository {
 
     @Override
     public void add(String follower, String userid) {
-        if (!have(follower, userid)) {
-            Follow follow = new Follow();
-            follow.setFollowerId(follower);
-            follow.setUserid(userid);
-            followMapper.insert(follow);
-        }
+        Follow follow = new Follow();
+        follow.setFollowerId(follower);
+        follow.setUserid(userid);
+        followMapper.insertIgnore(follow);
     }
 
     @Override
