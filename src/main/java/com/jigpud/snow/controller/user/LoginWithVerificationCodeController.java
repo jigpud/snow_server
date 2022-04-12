@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.response.LoginResponse;
 import com.jigpud.snow.service.sms.VerificationCodeService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
@@ -67,12 +68,5 @@ public class LoginWithVerificationCodeController extends BaseController {
             return Response.responseFailed("短信验证码错误！");
         }
         return Response.responseFailed("登录失败！");
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor@Data
-    static class LoginResponse {
-        private String token;
-        private String refreshToken;
     }
 }

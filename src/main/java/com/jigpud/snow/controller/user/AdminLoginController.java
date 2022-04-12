@@ -1,5 +1,6 @@
 package com.jigpud.snow.controller.user;
 
+import com.jigpud.snow.response.LoginResponse;
 import com.jigpud.snow.service.role.RoleService;
 import com.jigpud.snow.service.sms.VerificationCodeService;
 import com.jigpud.snow.service.token.TokenService;
@@ -44,7 +45,7 @@ public class AdminLoginController {
     }
 
     @PostMapping(PathConstant.ADMIN_LOGIN)
-    ResponseBody<AdminLoginResponse> login(
+    ResponseBody<LoginResponse> login(
             @RequestParam(value = FormDataConstant.USERNAME, required = false, defaultValue = "") String username,
             @RequestParam(value = FormDataConstant.VERIFICATION_CODE, required = false, defaultValue = "") String verificationCode
     ) {
@@ -59,7 +60,7 @@ public class AdminLoginController {
                     String refreshToken = tokenService.createRefreshToken(userid);
                     String token = tokenService.createToken(refreshToken);
                     log.debug("admin login success!");
-                    return Response.responseSuccess(new AdminLoginResponse(refreshToken, token));
+                    return Response.responseSuccess(new LoginResponse(refreshToken, token));
                 } else {
                     log.debug("user not admin!");
                     return Response.response(401,"用户不是管理员！");
@@ -71,13 +72,5 @@ public class AdminLoginController {
         }
         log.debug("admin login failed!");
         return Response.responseFailed("登录失败！");
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class AdminLoginResponse {
-        private String refreshToken;
-        private String token;
     }
 }

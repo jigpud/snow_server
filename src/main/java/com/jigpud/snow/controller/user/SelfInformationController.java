@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.response.SelfInformationResponse;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
@@ -9,9 +10,6 @@ import com.jigpud.snow.util.constant.PermissionsConstant;
 import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -39,7 +37,9 @@ public class SelfInformationController extends BaseController {
     @GetMapping(PathConstant.GET_USER_INFORMATION)
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_READ)
-    ResponseBody<?> getSelfInformation(HttpServletRequest request) {
+    ResponseBody<SelfInformationResponse> getSelfInformation(
+            HttpServletRequest request
+    ) {
         String token = getToken(request);
         String userid = tokenService.getUserid(token);
         User user = userService.getUserByUserid(userid);
@@ -57,22 +57,5 @@ public class SelfInformationController extends BaseController {
         info.setBackground(user.getBackground());
         log.debug("get self information success! info: {}", info);
         return Response.responseSuccess(info);
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class SelfInformationResponse {
-        private String username;
-        private String avatar;
-        private String userid;
-        private String nickname;
-        private String gender;
-        private Integer age;
-        private String signature;
-        private Long likes;
-        private Long followers;
-        private Long followed;
-        private String background;
     }
 }

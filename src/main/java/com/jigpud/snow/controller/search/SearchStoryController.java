@@ -2,8 +2,11 @@ package com.jigpud.snow.controller.search;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
+import com.jigpud.snow.model.User;
+import com.jigpud.snow.response.StoryResponse;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
+import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.response.PageData;
@@ -29,15 +32,21 @@ import java.util.List;
 public class SearchStoryController extends BaseController {
     private final StoryService storyService;
     private final TokenService tokenService;
+    private final UserService userService;
 
     @Autowired
-    SearchStoryController(StoryService storyService, TokenService tokenService) {
+    SearchStoryController(
+            StoryService storyService,
+            TokenService tokenService,
+            UserService userService
+    ) {
         this.storyService = storyService;
         this.tokenService = tokenService;
+        this.userService = userService;
     }
 
     @PostMapping(PathConstant.SEARCH_STORY)
-    ResponseBody<PageData<SearchStoryResponse>> searchStory(
+    ResponseBody<PageData<StoryResponse>> searchStory(
             @RequestParam(value = FormDataConstant.KEY_WORDS, required = false, defaultValue = "") String keyWords,
             @RequestParam(value = FormDataConstant.PAGE_COUNT, required = false, defaultValue = "0") Long pageCount,
             @RequestParam(value = FormDataConstant.PAGE, required = false, defaultValue = "0") Long page,
@@ -46,41 +55,28 @@ public class SearchStoryController extends BaseController {
         if (!keyWords.isEmpty()) {
             String selfUserid = tokenService.getUserid(getToken(request));
             PageData<Story> storyPageData = storyService.searchStory(keyWords, pageCount, page);
-            PageData<SearchStoryResponse> searchStoryResponsePageData = PageData.fromPageData(storyPageData, story -> {
+            PageData<StoryResponse> searchStoryResponsePageData = PageData.fromPageData(storyPageData, story -> {
                 String storyId = story.getStoryId();
-                SearchStoryResponse searchStoryResponse = new SearchStoryResponse();
-                searchStoryResponse.setStoryId(storyId);
-                searchStoryResponse.setAuthorId(story.getAuthorId());
-                searchStoryResponse.setTitle(story.getTitle());
-                searchStoryResponse.setContent(story.getContent());
-                searchStoryResponse.setPictures(story.getPictures());
-                searchStoryResponse.setReleaseTime(story.getReleaseTime());
-                searchStoryResponse.setReleaseLocation(story.getReleaseLocation());
-                searchStoryResponse.setAttractionId(story.getAttractionId());
-                searchStoryResponse.setLiked(storyService.haveLiked(storyId, selfUserid));
-                searchStoryResponse.setLikes(storyService.likes(story.getStoryId()));
-                return searchStoryResponse;
+                User author = userService.getUserByUserid(story.getAuthorId());
+                StoryResponse storyResponse = new StoryResponse();
+                storyResponse.setStoryId(storyId);
+                storyResponse.setAuthorId(author.getUserid());
+                storyResponse.setAuthorNickname(author.getNickname());
+                storyResponse.setAuthorAvatar(author.getAvatar());
+                storyResponse.setTitle(story.getTitle());
+                storyResponse.setContent(story.getContent());
+                storyResponse.setPictures(story.getPictures());
+                storyResponse.setReleaseTime(story.getReleaseTime());
+                storyResponse.setReleaseLocation(story.getReleaseLocation());
+                storyResponse.setAttractionId(story.getAttractionId());
+                storyResponse.setLiked(storyService.haveLiked(storyId, selfUserid));
+                storyResponse.setLikes(storyService.likes(story.getStoryId()));
+                return storyResponse;
             });
             return Response.responseSuccess(searchStoryResponsePageData);
         } else {
             log.debug("searchStory: keyWords is empty!");
             return Response.responseFailed("关键词不能为空！");
         }
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class SearchStoryResponse {
-        private String storyId;
-        private String authorId;
-        private String title;
-        private String content;
-        private Long likes;
-        private List<String> pictures;
-        private Long releaseTime;
-        private String releaseLocation;
-        private Boolean liked;
-        private String attractionId;
     }
 }

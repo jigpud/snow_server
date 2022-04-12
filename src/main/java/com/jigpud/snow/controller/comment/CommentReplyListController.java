@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.comment;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.response.CommentReplyResponse;
 import com.jigpud.snow.service.comment.CommentService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
@@ -9,9 +10,6 @@ import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.response.PageData;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +40,7 @@ public class CommentReplyListController extends BaseController {
     }
 
     @PostMapping(PathConstant.COMMENT_REPLY_LIST)
-    ResponseBody<PageData<CommentReplyListResponse>> commentReplyList(
+    ResponseBody<PageData<CommentReplyResponse>> commentReplyList(
             @RequestParam(value = FormDataConstant.COMMENT_ID, required = false, defaultValue = "") String commentId,
             @RequestParam(value = FormDataConstant.PAGE_COUNT, required = false, defaultValue = "0") Long pageCount,
             @RequestParam(value = FormDataConstant.PAGE, required = false, defaultValue = "0") Long page,
@@ -50,19 +48,19 @@ public class CommentReplyListController extends BaseController {
     ) {
         if (!commentId.isEmpty() && commentService.getComment(commentId) != null) {
             String userid = tokenService.getUserid(getToken(request));
-            PageData<CommentReplyListResponse> commentReplyList = PageData.fromPage(
+            PageData<CommentReplyResponse> commentReplyList = PageData.fromPage(
                     commentService.commentReplyList(commentId, pageCount, page),
                     comment -> {
                         String authorNickname = userService.getUserByUserid(comment.getAuthorId()).getNickname();
-                        CommentReplyListResponse commentReplyListResponse = new CommentReplyListResponse();
-                        commentReplyListResponse.setCommentId(comment.getCommentId());
-                        commentReplyListResponse.setReplyTo(comment.getPid());
-                        commentReplyListResponse.setAuthorId(comment.getAuthorId());
-                        commentReplyListResponse.setAuthorNickname(authorNickname);
-                        commentReplyListResponse.setContent(comment.getContent());
-                        commentReplyListResponse.setLikes(commentService.likes(comment.getCommentId()));
-                        commentReplyListResponse.setLiked(commentService.haveLiked(comment.getCommentId(), userid));
-                        return commentReplyListResponse;
+                        CommentReplyResponse commentReplyResponse = new CommentReplyResponse();
+                        commentReplyResponse.setCommentId(comment.getCommentId());
+                        commentReplyResponse.setReplyTo(comment.getPid());
+                        commentReplyResponse.setAuthorId(comment.getAuthorId());
+                        commentReplyResponse.setAuthorNickname(authorNickname);
+                        commentReplyResponse.setContent(comment.getContent());
+                        commentReplyResponse.setLikes(commentService.likes(comment.getCommentId()));
+                        commentReplyResponse.setLiked(commentService.haveLiked(comment.getCommentId(), userid));
+                        return commentReplyResponse;
                     }
             );
             return Response.responseSuccess(commentReplyList);
@@ -70,19 +68,5 @@ public class CommentReplyListController extends BaseController {
             log.debug("comment {} not exists!", commentId);
             return Response.responseFailed("评论不存在！");
         }
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class CommentReplyListResponse {
-        private String commentId;
-        private String storyId;
-        private String replyTo;
-        private String authorId;
-        private String authorNickname;
-        private String content;
-        private Long likes;
-        private Boolean liked;
     }
 }

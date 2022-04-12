@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.response.UserInformationResponse;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
@@ -8,9 +9,6 @@ import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,21 +56,5 @@ public class UserInformationController extends BaseController {
         }
         log.debug("user not exists, userid: {}", userid);
         return Response.responseFailed("用户不存在！");
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class UserInformationResponse {
-        private String userid;
-        private String nickname;
-        private String background;
-        private String gender;
-        private Integer age;
-        private String signature;
-        private Long likes;
-        private Long followers;
-        private Long followed;
-        private Boolean haveFollowed;
     }
 }

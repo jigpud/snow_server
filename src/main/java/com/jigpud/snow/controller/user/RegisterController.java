@@ -44,10 +44,14 @@ public class RegisterController extends BaseController {
 
     @PostMapping(PathConstant.REGISTER)
     ResponseBody<?> register(
-            @RequestParam(FormDataConstant.USERNAME) String username,
-            @RequestParam(FormDataConstant.PASSWORD) String password,
-            @RequestParam(FormDataConstant.VERIFICATION_CODE) String verificationCode
+            @RequestParam(value = FormDataConstant.USERNAME, required = false, defaultValue = "") String username,
+            @RequestParam(value = FormDataConstant.PASSWORD, required = false, defaultValue = "") String password,
+            @RequestParam(value = FormDataConstant.VERIFICATION_CODE, required = false, defaultValue = "") String verificationCode
     ) {
+        if (username.isEmpty() || password.isEmpty() || verificationCode.isEmpty()) {
+            log.debug("username, password or verification code is empty!");
+            return Response.responseFailed("用户名、密码或短信验证码不能为空！");
+        }
         if (verificationCodeService.verify(username, verificationCode)) {
             if (!userService.haveUsernameIs(username)) {
                 userService.register(username, password);

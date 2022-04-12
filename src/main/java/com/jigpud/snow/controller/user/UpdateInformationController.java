@@ -2,6 +2,7 @@ package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.request.UpdateUserInfoRequest;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -41,7 +42,7 @@ public class UpdateInformationController extends BaseController {
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_WRITE)
     ResponseBody<?> updateInformation(
-            @RequestBody UpdateInformationRequest updateInformationRequest,
+            @RequestBody UpdateUserInfoRequest updateInformationRequest,
             HttpServletRequest request
     ) {
         String token = getToken(request);
@@ -85,16 +86,5 @@ public class UpdateInformationController extends BaseController {
             return Response.responseSuccess();
         }
         return Response.responseFailed("更新个人信息失败！");
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class UpdateInformationRequest {
-        private String nickname;
-        private String gender;
-        private Integer age;
-        private String signature;
-        private String avatar;
     }
 }

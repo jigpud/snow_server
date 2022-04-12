@@ -2,6 +2,7 @@ package com.jigpud.snow.controller.story;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
+import com.jigpud.snow.request.ReleaseStoryRequest;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -43,21 +44,21 @@ public class ReleaseStoryController extends BaseController {
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_WRITE)
     ResponseBody<?> releaseStory(
-            @RequestBody ReleaseStoryRequestBody releaseStoryRequestBody,
+            @RequestBody ReleaseStoryRequest releaseStoryRequest,
             HttpServletRequest request
     ) {
-        if (verifyStory(releaseStoryRequestBody)) {
+        if (verifyStory(releaseStoryRequest)) {
             String userid = tokenService.getUserid(getToken(request));
             String storyId = Encryptor.uuid();
             Story story = new Story();
             story.setStoryId(storyId);
             story.setAuthorId(userid);
-            story.setAttractionId(releaseStoryRequestBody.getAttractionId());
-            story.setTitle(releaseStoryRequestBody.getTitle());
-            story.setContent(releaseStoryRequestBody.getContent());
-            story.setPictures(releaseStoryRequestBody.getPictures());
-            story.setReleaseTime(releaseStoryRequestBody.getReleaseTime());
-            story.setReleaseLocation(releaseStoryRequestBody.getReleaseLocation());
+            story.setAttractionId(releaseStoryRequest.getAttractionId());
+            story.setTitle(releaseStoryRequest.getTitle());
+            story.setContent(releaseStoryRequest.getContent());
+            story.setPictures(releaseStoryRequest.getPictures());
+            story.setReleaseTime(releaseStoryRequest.getReleaseTime());
+            story.setReleaseLocation(releaseStoryRequest.getReleaseLocation());
             storyService.releaseStory(story);
             if (storyService.getStory(storyId) != null) {
                 log.debug("release story success!");
@@ -72,24 +73,12 @@ public class ReleaseStoryController extends BaseController {
         }
     }
 
-    private boolean verifyStory(ReleaseStoryRequestBody releaseStoryRequestBody) {
-        return releaseStoryRequestBody != null &&
-                releaseStoryRequestBody.getTitle() != null && !releaseStoryRequestBody.getTitle().isEmpty() &&
-                releaseStoryRequestBody.getContent() != null && !releaseStoryRequestBody.getContent().isEmpty() &&
-                releaseStoryRequestBody.getReleaseTime() != null &&
-                releaseStoryRequestBody.getReleaseLocation() != null &&
-                releaseStoryRequestBody.getAttractionId() != null && !releaseStoryRequestBody.getAttractionId().isEmpty();
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class ReleaseStoryRequestBody {
-        private String title;
-        private String content;
-        private List<String> pictures;
-        private String releaseLocation;
-        private Long releaseTime;
-        private String attractionId;
+    private boolean verifyStory(ReleaseStoryRequest releaseStoryRequest) {
+        return releaseStoryRequest != null &&
+                releaseStoryRequest.getTitle() != null && !releaseStoryRequest.getTitle().isEmpty() &&
+                releaseStoryRequest.getContent() != null && !releaseStoryRequest.getContent().isEmpty() &&
+                releaseStoryRequest.getReleaseTime() != null &&
+                releaseStoryRequest.getReleaseLocation() != null &&
+                releaseStoryRequest.getAttractionId() != null && !releaseStoryRequest.getAttractionId().isEmpty();
     }
 }

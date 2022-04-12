@@ -2,6 +2,7 @@ package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.request.UpdateUserRequest;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.constant.PermissionsConstant;
@@ -37,12 +38,14 @@ public class UpdateUserController extends BaseController {
     @PostMapping(PathConstant.UPDATE_USER)
     @RequiresRoles(RolesConstant.ADMIN)
     @RequiresPermissions(PermissionsConstant.ADMIN_WRITE)
-    ResponseBody<?> updateUser(@RequestBody UpdateUserRequest update) {
+    ResponseBody<?> updateUser(
+            @RequestBody UpdateUserRequest update
+    ) {
         log.debug("updateUser: {}", update);
-        if (update != null && update.getUsername() != null && !update.getUsername().isEmpty()) {
-            String username = update.getUsername();
-            User user = userService.getUserByUsername(username);
-            if (user != null && username.equals(user.getUsername())) {
+        if (update != null && update.getUserid() != null && !update.getUserid().isEmpty()) {
+            String userid = update.getUserid();
+            User user = userService.getUserByUserid(userid);
+            if (user != null && userid.equals(user.getUserid())) {
                 // 用户存在
 
                 // update password
@@ -86,6 +89,13 @@ public class UpdateUserController extends BaseController {
                     user.setAge(0);
                 }
 
+                // update background
+                if (update.getBackground() != null) {
+                    user.setBackground(update.getBackground());
+                } else {
+                    user.setBackground("");
+                }
+
                 // 更新用户信息
                 log.debug("update user information success!");
                 userService.update(user);
@@ -94,19 +104,5 @@ public class UpdateUserController extends BaseController {
         }
         log.debug("ADMIN : update user failed!");
         return Response.responseFailed("更新用户信息失败！");
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class UpdateUserRequest {
-        private String username;
-        private String password;
-        private String nickname;
-        private String avatar;
-        private String signature;
-        private String gender;
-        private Integer age;
-        private Long likes;
     }
 }

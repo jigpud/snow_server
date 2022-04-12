@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.response.RefreshTokenResponse;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -50,12 +51,5 @@ public class RefreshTokenController extends BaseController {
             return Response.response(401, "登录已过期！");
         }
         return Response.responseFailed("token刷新失败！");
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class RefreshTokenResponse {
-        private String token;
     }
 }

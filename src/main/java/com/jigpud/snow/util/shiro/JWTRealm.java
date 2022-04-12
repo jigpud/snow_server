@@ -62,6 +62,9 @@ public class JWTRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String jwtToken = token.getCredentials().toString();
         log.debug("doGetAuthenticationInfo: {}", jwtToken);
+        if (!tokenService.verify(jwtToken)) {
+            jwtToken = "";
+        }
         return new SimpleAuthenticationInfo(jwtToken, jwtToken, "jwtRealm");
     }
 

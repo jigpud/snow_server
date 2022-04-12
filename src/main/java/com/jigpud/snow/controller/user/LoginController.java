@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.response.LoginResponse;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -34,9 +35,13 @@ public class LoginController extends BaseController {
 
     @PostMapping(PathConstant.LOGIN)
     ResponseBody<?> login(
-            @RequestParam(FormDataConstant.USERNAME) String username,
-            @RequestParam(FormDataConstant.PASSWORD) String password
+            @RequestParam(value = FormDataConstant.USERNAME, required = false, defaultValue = "") String username,
+            @RequestParam(value = FormDataConstant.PASSWORD, required = false, defaultValue = "") String password
     ) {
+        if (username.isEmpty() || password.isEmpty()) {
+            log.debug("username or password is empty!");
+            return Response.responseFailed("用户名或密码不能为空！");
+        }
         String refreshToken =  userService.login(username, password);
         String token = tokenService.createToken(refreshToken);
         log.debug("refreshToken: {}, token: {}", refreshToken, token);
@@ -47,13 +52,5 @@ public class LoginController extends BaseController {
             log.debug("login failed!");
             return Response.responseFailed("用户名或密码错误！");
         }
-    }
-
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    static class LoginResponse {
-        private String token;
-        private String refreshToken;
     }
 }
