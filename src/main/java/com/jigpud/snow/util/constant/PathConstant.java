@@ -60,6 +60,9 @@ public class PathConstant {
     // 根据关键词模糊查询景点
     public static final String SEARCH_ATTRACTION = "/search/attraction";
 
+    // 获取游记详情
+    public static final String GET_STORY = "/story";
+
     // 点赞游记
     public static final String LIKE_STORY = "/story/like";
 
