@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class LoginResponse {
-    private String refreshToken;
     private String token;
+    private String refreshToken;
 }

@@ -1,8 +1,8 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
-import com.jigpud.snow.response.UserInformationResponse;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.response.UserInformationResponse;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -44,6 +44,7 @@ public class UserInformationController extends BaseController {
             info.setUserid(user.getUserid());
             info.setNickname(user.getNickname());
             info.setBackground(user.getBackground());
+            info.setAvatar(user.getAvatar());
             info.setGender(user.getGender());
             info.setAge(user.getAge());
             info.setSignature(user.getSignature());
