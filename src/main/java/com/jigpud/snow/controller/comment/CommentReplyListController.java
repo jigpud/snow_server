@@ -3,6 +3,7 @@ package com.jigpud.snow.controller.comment;
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.response.CommentReplyResponse;
 import com.jigpud.snow.service.comment.CommentService;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -27,16 +28,19 @@ public class CommentReplyListController extends BaseController {
     private final CommentService commentService;
     private final TokenService tokenService;
     private final UserService userService;
+    private final LikeService likeService;
 
     @Autowired
     CommentReplyListController(
             CommentService commentService,
             TokenService tokenService,
-            UserService userService
+            UserService userService,
+            LikeService likeService
     ) {
         this.commentService = commentService;
         this.tokenService = tokenService;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.COMMENT_REPLY_LIST)
@@ -58,8 +62,8 @@ public class CommentReplyListController extends BaseController {
                         commentReplyResponse.setAuthorId(comment.getAuthorId());
                         commentReplyResponse.setAuthorNickname(authorNickname);
                         commentReplyResponse.setContent(comment.getContent());
-                        commentReplyResponse.setLikes(commentService.likes(comment.getCommentId()));
-                        commentReplyResponse.setLiked(commentService.haveLiked(comment.getCommentId(), userid));
+                        commentReplyResponse.setLikes(likeService.commentLikes(comment.getCommentId()));
+                        commentReplyResponse.setLiked(likeService.haveLikedComment(userid, comment.getCommentId()));
                         return commentReplyResponse;
                     }
             );

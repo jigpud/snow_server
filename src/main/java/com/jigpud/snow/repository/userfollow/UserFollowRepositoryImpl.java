@@ -1,9 +1,9 @@
-package com.jigpud.snow.repository.follow;
+package com.jigpud.snow.repository.userfollow;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jigpud.snow.mapper.FollowMapper;
-import com.jigpud.snow.model.Follow;
+import com.jigpud.snow.mapper.UserFollowMapper;
+import com.jigpud.snow.model.UserFollow;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,20 +13,20 @@ import org.springframework.stereotype.Repository;
  */
 @Slf4j
 @Repository
-public class FollowRepositoryImpl implements FollowRepository {
-    private final FollowMapper followMapper;
+public class UserFollowRepositoryImpl implements UserFollowRepository {
+    private final UserFollowMapper followMapper;
 
     @Autowired
-    FollowRepositoryImpl(FollowMapper followMapper) {
+    UserFollowRepositoryImpl(UserFollowMapper followMapper) {
         this.followMapper = followMapper;
     }
 
     @Override
     public void add(String follower, String userid) {
-        Follow follow = new Follow();
-        follow.setFollowerId(follower);
-        follow.setUserid(userid);
-        followMapper.insertIgnore(follow);
+        UserFollow userFollow = new UserFollow();
+        userFollow.setFollowerId(follower);
+        userFollow.setUserid(userid);
+        followMapper.insertIgnore(userFollow);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FollowRepositoryImpl implements FollowRepository {
     }
 
     @Override
-    public Page<Follow> followerList(String userid, long pageCount, long page) {
+    public Page<UserFollow> followerList(String userid, long pageCount, long page) {
         return followMapper.selectPage(new Page<>(page, pageCount), userQueryWrapper(userid));
     }
 
@@ -50,30 +50,30 @@ public class FollowRepositoryImpl implements FollowRepository {
     }
 
     @Override
-    public Page<Follow> followedList(String userid, long pageCount, long page) {
+    public Page<UserFollow> followingList(String userid, long pageCount, long page) {
         return followMapper.selectPage(new Page<>(page, pageCount), followerQueryWrapper(userid));
     }
 
     @Override
-    public long followedCount(String userid) {
+    public long followingCount(String userid) {
         return followMapper.selectCount(followerQueryWrapper(userid));
     }
 
-    private QueryWrapper<Follow> followerAndUserQueryWrapper(String follower, String userid) {
-        QueryWrapper<Follow> queryWrapper = new QueryWrapper<>();
+    private QueryWrapper<UserFollow> followerAndUserQueryWrapper(String follower, String userid) {
+        QueryWrapper<UserFollow> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", userid);
         queryWrapper.eq("follower_id", follower);
         return queryWrapper;
     }
 
-    private QueryWrapper<Follow> followerQueryWrapper(String follower) {
-        QueryWrapper<Follow> queryWrapper = new QueryWrapper<>();
+    private QueryWrapper<UserFollow> followerQueryWrapper(String follower) {
+        QueryWrapper<UserFollow> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("follower_id", follower);
         return queryWrapper;
     }
 
-    private QueryWrapper<Follow> userQueryWrapper(String userid) {
-        QueryWrapper<Follow> queryWrapper = new QueryWrapper<>();
+    private QueryWrapper<UserFollow> userQueryWrapper(String userid) {
+        QueryWrapper<UserFollow> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", userid);
         return queryWrapper;
     }

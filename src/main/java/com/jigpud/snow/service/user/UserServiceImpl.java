@@ -1,10 +1,6 @@
 package com.jigpud.snow.service.user;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jigpud.snow.model.Follow;
 import com.jigpud.snow.model.User;
-import com.jigpud.snow.repository.follow.FollowRepository;
-import com.jigpud.snow.repository.storylikes.StoryLikesRepository;
 import com.jigpud.snow.repository.user.UserRepository;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.encrypt.Encryptor;
@@ -19,20 +15,11 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenService tokenService;
-    private final StoryLikesRepository storyLikesRepository;
-    private final FollowRepository followRepository;
 
     @Autowired
-    UserServiceImpl(
-            UserRepository userRepository,
-            TokenService tokenService,
-            StoryLikesRepository storyLikesRepository,
-            FollowRepository followRepository
-    ) {
+    UserServiceImpl(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
-        this.storyLikesRepository = storyLikesRepository;
-        this.followRepository = followRepository;
     }
 
     @Override
@@ -167,54 +154,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageData<User> users(long pageCount, long page) {
         return PageData.fromPage(userRepository.users(pageCount, page));
-    }
-
-    @Override
-    public void follow(String follower, String userid) {
-        followRepository.add(follower, userid);
-    }
-
-    @Override
-    public void unfollow(String follower, String userid) {
-        followRepository.remove(follower, userid);
-    }
-
-    @Override
-    public long followerCount(String userid) {
-        return followRepository.followerCount(userid);
-    }
-
-    @Override
-    public PageData<String> followerList(String userid, long pageCount, long page) {
-        return mapFollowToString(followRepository.followerList(userid, pageCount, page), Follow::getFollowerId);
-    }
-
-    @Override
-    public long followedCount(String userid) {
-        return followRepository.followedCount(userid);
-    }
-
-    @Override
-    public PageData<String> followedList(String userid, long pageCount, long page) {
-        return mapFollowToString(followRepository.followedList(userid, pageCount, page), Follow::getUserid);
-    }
-
-    @Override
-    public long likes(String userid) {
-        return storyLikesRepository.userLikes(userid);
-    }
-
-    @Override
-    public boolean haveFollowed(String follower, String userid) {
-        return followRepository.have(follower, userid);
-    }
-
-    @Override
-    public PageData<User> search(String keyWords, long pageCount, long page) {
-        return PageData.fromPage(userRepository.blurSearch(keyWords, pageCount, page));
-    }
-
-    private PageData<String> mapFollowToString(Page<Follow> origin, PageData.RecordsMapper<Follow, String> mapper) {
-        return PageData.fromPage(origin, mapper);
     }
 }

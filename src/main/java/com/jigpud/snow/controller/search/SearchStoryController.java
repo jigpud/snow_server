@@ -4,7 +4,8 @@ import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.StoryResponse;
-import com.jigpud.snow.service.story.StoryService;
+import com.jigpud.snow.service.like.LikeService;
+import com.jigpud.snow.service.search.SearchService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -12,9 +13,6 @@ import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.response.PageData;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author : jigpud
@@ -30,19 +27,22 @@ import java.util.List;
 @Slf4j
 @RestController
 public class SearchStoryController extends BaseController {
-    private final StoryService storyService;
+    private final SearchService searchService;
     private final TokenService tokenService;
     private final UserService userService;
+    private final LikeService likeService;
 
     @Autowired
     SearchStoryController(
-            StoryService storyService,
+            SearchService searchService,
             TokenService tokenService,
-            UserService userService
+            UserService userService,
+            LikeService likeService
     ) {
-        this.storyService = storyService;
+        this.searchService = searchService;
         this.tokenService = tokenService;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.SEARCH_STORY)
@@ -54,7 +54,7 @@ public class SearchStoryController extends BaseController {
     ) {
         if (!keyWords.isEmpty()) {
             String selfUserid = tokenService.getUserid(getToken(request));
-            PageData<Story> storyPageData = storyService.searchStory(keyWords, pageCount, page);
+            PageData<Story> storyPageData = searchService.searchStory(keyWords, pageCount, page);
             PageData<StoryResponse> searchStoryResponsePageData = PageData.fromPageData(storyPageData, story -> {
                 String storyId = story.getStoryId();
                 User author = userService.getUserByUserid(story.getAuthorId());
@@ -69,8 +69,8 @@ public class SearchStoryController extends BaseController {
                 storyResponse.setReleaseTime(story.getReleaseTime());
                 storyResponse.setReleaseLocation(story.getReleaseLocation());
                 storyResponse.setAttractionId(story.getAttractionId());
-                storyResponse.setLiked(storyService.haveLiked(storyId, selfUserid));
-                storyResponse.setLikes(storyService.likes(story.getStoryId()));
+                storyResponse.setLikes(likeService.storyLikes(story.getStoryId()));
+                storyResponse.setLiked(likeService.haveLikedStory(selfUserid, storyId));
                 return storyResponse;
             });
             return Response.responseSuccess(searchStoryResponsePageData);

@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.story;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -27,11 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 public class LikeStoryController extends BaseController {
     private final TokenService tokenService;
     private final StoryService storyService;
+    private final LikeService likeService;
 
     @Autowired
-    LikeStoryController(TokenService tokenService, StoryService storyService) {
+    LikeStoryController(
+            TokenService tokenService,
+            StoryService storyService,
+            LikeService likeService
+    ) {
         this.tokenService = tokenService;
         this.storyService = storyService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.LIKE_STORY)
@@ -43,8 +50,8 @@ public class LikeStoryController extends BaseController {
     ) {
         String userid = tokenService.getUserid(getToken(request));
         if (storyService.getStory(storyId) != null) {
-            storyService.like(storyId, userid);
-            if (storyService.haveLiked(storyId, userid)) {
+            likeService.likeStory(userid, storyId);
+            if (likeService.haveLikedStory(userid, storyId)) {
                 log.debug("like story success!");
                 return Response.responseSuccess();
             } else {

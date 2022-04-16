@@ -10,16 +10,16 @@ import lombok.NoArgsConstructor;
 /**
  * @author : jigpud
  */
-@TableName("story_likes")
+@TableName("user_follow")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class StoryLikes {
-    // 游记id
-    private String storyId;
-
-    // 用户id
+public class UserFollow {
+    // 自己
     private String userid;
+
+    // 关注者
+    private String followerId;
 
     // 主键
     @TableId(type = IdType.AUTO)

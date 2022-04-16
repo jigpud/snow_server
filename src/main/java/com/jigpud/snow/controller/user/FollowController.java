@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -27,11 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 public class FollowController extends BaseController {
     private final UserService userService;
     private final TokenService tokenService;
+    private final FollowService followService;
 
     @Autowired
-    FollowController(UserService userService, TokenService tokenService) {
+    FollowController(
+            UserService userService,
+            TokenService tokenService,
+            FollowService followService
+    ) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.followService = followService;
     }
 
     @PostMapping(PathConstant.FOLLOW)
@@ -43,8 +50,8 @@ public class FollowController extends BaseController {
     ) {
         String selfUserid = tokenService.getUserid(getToken(request));
         if (userService.haveUseridIs(userid)) {
-            userService.follow(selfUserid, userid);
-            if (userService.haveFollowed(selfUserid, userid)) {
+            followService.followUser(selfUserid, userid);
+            if (followService.haveFollowingUser(selfUserid, userid)) {
                 log.debug("follow success!");
                 return Response.responseSuccess();
             } else {

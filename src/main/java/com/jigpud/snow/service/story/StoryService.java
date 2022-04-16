@@ -38,38 +38,4 @@ public interface StoryService {
      * @param story 游记
      */
     void releaseStory(Story story);
-
-    /**
-     * 获取点赞数
-     * @param storyId 游记
-     * @return 点赞数
-     */
-    long likes(String storyId);
-
-    /**
-     * 减少点赞数
-     */
-    void like(String storyId, String userid);
-
-    /**
-     * 增加点赞数
-     */
-    void unlike(String storyId, String userid);
-
-    /**
-     * 用户是否点赞
-     * @param storyId 游记
-     * @param userid 用户
-     * @return 是否点赞
-     */
-    boolean haveLiked(String storyId, String userid);
-
-    /**
-     * 根据关键词搜索游记
-     * @param keyWords 关键词
-     * @param pageCount 分页大小
-     * @param page 页码
-     * @return 搜索结果分页
-     */
-    PageData<Story> searchStory(String keyWords, long pageCount, long page);
 }

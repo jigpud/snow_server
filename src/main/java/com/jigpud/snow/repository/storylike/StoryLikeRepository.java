@@ -1,9 +1,9 @@
-package com.jigpud.snow.repository.storylikes;
+package com.jigpud.snow.repository.storylike;
 
 /**
  * @author : jigpud
  */
-public interface StoryLikesRepository {
+public interface StoryLikeRepository {
     /**
      * 增加一个点赞关系
      * @param storyId 游记

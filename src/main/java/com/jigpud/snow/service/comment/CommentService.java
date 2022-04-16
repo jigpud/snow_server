@@ -57,33 +57,4 @@ public interface CommentService {
      * @param content 回复的内容
      */
     void reply(String replyTo, String userid, String content);
-
-    /**
-     * 获取评论的点赞数
-     * @param commentId 评论
-     * @return 点赞数
-     */
-    long likes(String commentId);
-
-    /**
-     * 点赞一条评论
-     * @param commentId 评论
-     * @param userid 用户
-     */
-    void like(String commentId, String userid);
-
-    /**
-     * 取消点赞一条评论
-     * @param commentId 评论
-     * @param userid 用户
-     */
-    void unlike(String commentId, String userid);
-
-    /**
-     * 用户是否点赞某条评论
-     * @param commentId 评论
-     * @param userid 用户
-     * @return 是否点赞
-     */
-    boolean haveLiked(String commentId, String userid);
 }

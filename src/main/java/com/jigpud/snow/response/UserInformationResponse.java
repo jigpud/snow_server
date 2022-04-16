@@ -20,6 +20,6 @@ public class UserInformationResponse {
     private Integer age;
     private Long likes;
     private Long followers;
-    private Long followed;
-    private Boolean haveFollowed;
+    private Long following;
+    private Boolean haveFollowing;
 }

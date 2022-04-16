@@ -2,6 +2,7 @@ package com.jigpud.snow.controller.comment;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.service.comment.CommentService;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -27,11 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 public class UnlikeCommentController extends BaseController {
     private final CommentService commentService;
     private final TokenService tokenService;
+    private final LikeService likeService;
 
     @Autowired
-    UnlikeCommentController(CommentService commentService, TokenService tokenService) {
+    UnlikeCommentController(
+            CommentService commentService,
+            TokenService tokenService,
+            LikeService likeService
+    ) {
         this.commentService = commentService;
         this.tokenService = tokenService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.UNLIKE_COMMENT)
@@ -43,7 +50,7 @@ public class UnlikeCommentController extends BaseController {
     ) {
         if (!commentId.isEmpty() && commentService.getComment(commentId) != null) {
             String userid = tokenService.getUserid(getToken(request));
-            commentService.unlike(commentId, userid);
+            likeService.unlikeComment(userid, commentId);
         } else {
             log.debug("unlikeComment: comment {} not exists!", commentId);
             return Response.responseFailed("评论不存在！");

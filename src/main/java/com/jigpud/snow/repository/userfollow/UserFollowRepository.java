@@ -1,12 +1,12 @@
-package com.jigpud.snow.repository.follow;
+package com.jigpud.snow.repository.userfollow;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jigpud.snow.model.Follow;
+import com.jigpud.snow.model.UserFollow;
 
 /**
  * @author : jigpud
  */
-public interface FollowRepository {
+public interface UserFollowRepository {
     /**
      * 增加一个关注关系
      * @param follower 关注者
@@ -36,7 +36,7 @@ public interface FollowRepository {
      * @param page 页码
      * @return 关注者列表分页
      */
-    Page<Follow> followerList(String userid, long pageCount, long page);
+    Page<UserFollow> followerList(String userid, long pageCount, long page);
 
     /**
      * 获取关注者数量
@@ -52,12 +52,12 @@ public interface FollowRepository {
      * @param page 页码
      * @return 关注列表分页
      */
-    Page<Follow> followedList(String userid, long pageCount, long page);
+    Page<UserFollow> followingList(String userid, long pageCount, long page);
 
     /**
      * 获取关注数量
      * @param userid 自己
      * @return 关注数量
      */
-    long followedCount(String userid);
+    long followingCount(String userid);
 }

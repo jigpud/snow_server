@@ -4,6 +4,7 @@ import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.StoryResponse;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
@@ -14,9 +15,6 @@ import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.response.PageData;
 import com.jigpud.snow.util.response.Response;
 import com.jigpud.snow.util.response.ResponseBody;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author : jigpud
@@ -37,16 +34,19 @@ public class SelfStoryListController extends BaseController {
     private final StoryService storyService;
     private final TokenService tokenService;
     private final UserService userService;
+    private final LikeService likeService;
 
     @Autowired
     SelfStoryListController(
             StoryService storyService,
             TokenService tokenService,
-            UserService userService
+            UserService userService,
+            LikeService likeService
     ) {
         this.storyService = storyService;
         this.tokenService = tokenService;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.GET_SELF_STORY_LIST)
@@ -76,8 +76,8 @@ public class SelfStoryListController extends BaseController {
             storyResponse.setReleaseTime(story.getReleaseTime());
             storyResponse.setReleaseLocation(story.getReleaseLocation());
             storyResponse.setAttractionId(story.getAttractionId());
-            storyResponse.setLiked(storyService.haveLiked(storyId, selfUserid));
-            storyResponse.setLikes(storyService.likes(storyId));
+            storyResponse.setLiked(likeService.haveLikedStory(selfUserid, storyId));
+            storyResponse.setLikes(likeService.storyLikes(storyId));
             return storyResponse;
         });
         return Response.responseSuccess(responsePageData);

@@ -1,8 +1,10 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
-import com.jigpud.snow.response.SelfInformationResponse;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.response.SelfInformationResponse;
+import com.jigpud.snow.service.favorite.FavoriteService;
+import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -27,11 +29,20 @@ import javax.servlet.http.HttpServletRequest;
 public class SelfInformationController extends BaseController {
     private final UserService userService;
     private final TokenService tokenService;
+    private final FavoriteService favoriteService;
+    private final FollowService followService;
 
     @Autowired
-    SelfInformationController(UserService userService, TokenService tokenService) {
+    SelfInformationController(
+            UserService userService,
+            TokenService tokenService,
+            FavoriteService favoriteService,
+            FollowService followService
+    ) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.favoriteService = favoriteService;
+        this.followService = followService;
     }
 
     @GetMapping(PathConstant.GET_USER_INFORMATION)
@@ -51,9 +62,9 @@ public class SelfInformationController extends BaseController {
         info.setGender(user.getGender());
         info.setAge(user.getAge());
         info.setSignature(user.getSignature());
-        info.setLikes(userService.likes(userid));
-        info.setFollowers(userService.followerCount(userid));
-        info.setFollowed(userService.followedCount(userid));
+        info.setFavorites(favoriteService.favorites(userid));
+        info.setFollowers(followService.followerCount(userid));
+        info.setFollowing(followService.followingCount(userid));
         info.setBackground(user.getBackground());
         log.debug("get self information success! info: {}", info);
         return Response.responseSuccess(info);

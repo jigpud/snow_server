@@ -1,9 +1,9 @@
-package com.jigpud.snow.repository.commentlikes;
+package com.jigpud.snow.repository.commentlike;
 
 /**
  * @author : jigpud
  */
-public interface CommentLikesRepository {
+public interface CommentLikeRepository {
     /**
      * 点赞一条评论
      * @param commentId 评论
@@ -32,4 +32,11 @@ public interface CommentLikesRepository {
      * @return 评论的点赞数
      */
     long commentLikes(String commentId);
+
+    /**
+     * 获取用户获赞总数
+     * @param userid 用户
+     * @return 获赞总数
+     */
+    long userLikes(String userid);
 }

@@ -3,8 +3,10 @@ package com.jigpud.snow.controller.search;
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.UserInformationResponse;
+import com.jigpud.snow.service.follow.FollowService;
+import com.jigpud.snow.service.like.LikeService;
+import com.jigpud.snow.service.search.SearchService;
 import com.jigpud.snow.service.token.TokenService;
-import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.response.PageData;
@@ -24,13 +26,22 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 public class SearchUserController extends BaseController {
-    private final UserService userService;
     private final TokenService tokenService;
+    private final SearchService searchService;
+    private final FollowService followService;
+    private final LikeService likeService;
 
     @Autowired
-    SearchUserController(UserService userService, TokenService tokenService) {
-        this.userService = userService;
+    SearchUserController(
+            TokenService tokenService,
+            SearchService searchService,
+            FollowService followService,
+            LikeService likeService
+    ) {
         this.tokenService = tokenService;
+        this.searchService = searchService;
+        this.followService = followService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.SEARCH_USER)
@@ -42,7 +53,7 @@ public class SearchUserController extends BaseController {
     ) {
         if (!keyWords.isEmpty()) {
             String selfUserid = tokenService.getUserid(getToken(request));
-            PageData<User> userPageData = userService.search(keyWords, pageCount, page);
+            PageData<User> userPageData = searchService.searchUser(keyWords, pageCount, page);
             PageData<UserInformationResponse> searchUserResponsePageData = PageData.fromPageData(userPageData, user -> {
                 String userid = user.getUserid();
                 UserInformationResponse userInformationResponse = new UserInformationResponse();
@@ -53,10 +64,10 @@ public class SearchUserController extends BaseController {
                 userInformationResponse.setGender(user.getGender());
                 userInformationResponse.setAge(user.getAge());
                 userInformationResponse.setSignature(user.getSignature());
-                userInformationResponse.setLikes(userService.likes(userid));
-                userInformationResponse.setFollowers(userService.followerCount(userid));
-                userInformationResponse.setFollowed(userService.followedCount(userid));
-                userInformationResponse.setHaveFollowed(userService.haveFollowed(selfUserid, userid));
+                userInformationResponse.setLikes(likeService.likes(userid));
+                userInformationResponse.setFollowers(followService.followerCount(userid));
+                userInformationResponse.setFollowing(followService.followingCount(userid));
+                userInformationResponse.setHaveFollowing(followService.haveFollowingUser(selfUserid, userid));
                 return userInformationResponse;
             });
             return Response.responseSuccess(searchUserResponsePageData);

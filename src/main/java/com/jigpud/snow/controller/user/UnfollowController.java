@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -27,11 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 public class UnfollowController extends BaseController {
     private final UserService userService;
     private final TokenService tokenService;
+    private final FollowService followService;
 
     @Autowired
-    UnfollowController(UserService userService, TokenService tokenService) {
+    UnfollowController(
+            UserService userService,
+            TokenService tokenService,
+            FollowService followService
+    ) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.followService = followService;
     }
 
     @PostMapping(PathConstant.UNFOLLOW)
@@ -43,8 +50,8 @@ public class UnfollowController extends BaseController {
     ) {
         String selfUserid = tokenService.getUserid(getToken(request));
         if (userService.haveUseridIs(userid)) {
-            userService.unfollow(selfUserid, userid);
-            if (!userService.haveFollowed(selfUserid, userid)) {
+            followService.unfollowUser(selfUserid, userid);
+            if (!followService.haveFollowingUser(selfUserid, userid)) {
                 log.debug("unfollow success!");
                 return Response.responseSuccess();
             } else {

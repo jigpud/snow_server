@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.story;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -27,11 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 public class UnlikeStoryController extends BaseController {
     private final TokenService tokenService;
     private final StoryService storyService;
+    private final LikeService likeService;
 
     @Autowired
-    UnlikeStoryController(TokenService tokenService, StoryService storyService) {
+    UnlikeStoryController(
+            TokenService tokenService,
+            StoryService storyService,
+            LikeService likeService
+    ) {
         this.tokenService = tokenService;
         this.storyService = storyService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.UNLIKE_STORY)
@@ -43,8 +50,8 @@ public class UnlikeStoryController extends BaseController {
     ) {
         String userid = tokenService.getUserid(getToken(request));
         if (storyService.getStory(storyId) != null) {
-            storyService.unlike(storyId, userid);
-            if (!storyService.haveLiked(storyId, userid)) {
+            likeService.unlikeStory(userid, storyId);
+            if (!likeService.haveLikedStory(userid, storyId)) {
                 log.debug("unlike story success!");
                 return Response.responseSuccess();
             } else {

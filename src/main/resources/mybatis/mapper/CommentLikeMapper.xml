@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jigpud.snow.mapper.StoryLikesMapper">
+<mapper namespace="com.jigpud.snow.mapper.CommentLikeMapper">
     <select id="insertIgnore">
-        insert ignore into story_likes (userid, story_id) values (#{userid}, #{storyId});
+        insert ignore into comment_like (userid, comment_id) values (#{userid}, #{commentId});
     </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.jigpud.snow.controller.comment;
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.response.CommentResponse;
 import com.jigpud.snow.service.comment.CommentService;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
@@ -29,18 +30,21 @@ public class StoryCommentListController extends BaseController {
     private final CommentService commentService;
     private final TokenService tokenService;
     private final UserService userService;
+    private final LikeService likeService;
     
     @Autowired
     StoryCommentListController(
             StoryService storyService,
             CommentService commentService,
             TokenService tokenService,
-            UserService userService
+            UserService userService,
+            LikeService likeService
     ) {
         this.storyService = storyService;
         this.commentService = commentService;
         this.tokenService = tokenService;
         this.userService = userService;
+        this.likeService = likeService;
     }
     
     @PostMapping(PathConstant.STORY_COMMENT_LIST)
@@ -63,8 +67,8 @@ public class StoryCommentListController extends BaseController {
                         commentResponse.setAuthorId(comment.getAuthorId());
                         commentResponse.setAuthorNickname(authorNickname);
                         commentResponse.setContent(comment.getContent());
-                        commentResponse.setLikes(commentService.likes(commentId));
-                        commentResponse.setLiked(commentService.haveLiked(commentId, userid));
+                        commentResponse.setLikes(likeService.commentLikes(commentId));
+                        commentResponse.setLiked(likeService.haveLikedComment(userid, commentId));
                         return commentResponse;
                     }
             );

@@ -4,6 +4,7 @@ import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.StoryResponse;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
@@ -28,16 +29,19 @@ public class StoryDetailController extends BaseController {
     private final StoryService storyService;
     private final TokenService tokenService;
     private final UserService userService;
+    private final LikeService likeService;
 
     @Autowired
     StoryDetailController(
             StoryService storyService,
             TokenService tokenService,
-            UserService userService
+            UserService userService,
+            LikeService likeService
     ) {
         this.storyService = storyService;
         this.tokenService = tokenService;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     @PostMapping(PathConstant.GET_STORY)
@@ -60,8 +64,8 @@ public class StoryDetailController extends BaseController {
             storyResponse.setReleaseTime(story.getReleaseTime());
             storyResponse.setReleaseLocation(story.getReleaseLocation());
             storyResponse.setAttractionId(story.getAttractionId());
-            storyResponse.setLiked(storyService.haveLiked(storyId, userid));
-            storyResponse.setLikes(storyService.likes(storyId));
+            storyResponse.setLiked(likeService.haveLikedStory(userid, storyId));
+            storyResponse.setLikes(likeService.storyLikes(storyId));
             return Response.responseSuccess(storyResponse);
         } else {
             log.debug("story {} not exist!", storyId);

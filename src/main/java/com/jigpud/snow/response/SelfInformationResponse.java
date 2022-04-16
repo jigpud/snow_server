@@ -19,7 +19,7 @@ public class SelfInformationResponse {
     private String signature;
     private String gender;
     private Integer age;
-    private Long likes;
+    private Long favorites;
     private Long followers;
-    private Long followed;
+    private Long following;
 }
