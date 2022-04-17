@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.story;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
@@ -9,7 +10,6 @@ import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.constant.PermissionsConstant;
 import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.response.Response;
-import com.jigpud.snow.util.response.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;

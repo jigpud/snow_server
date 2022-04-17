@@ -40,8 +40,8 @@ public class AttractionFollowRepositoryImpl implements AttractionFollowRepositor
     }
 
     @Override
-    public Page<AttractionFollow> followerList(String attractionId, long pageCount, long page) {
-        return attractionFollowMapper.selectPage(new Page<>(page, pageCount), attractionQueryWrapper(attractionId));
+    public Page<AttractionFollow> followerList(String attractionId, long pageSize, long currentPage) {
+        return attractionFollowMapper.selectPage(new Page<>(currentPage, pageSize), attractionQueryWrapper(attractionId));
     }
 
     @Override
@@ -50,8 +50,8 @@ public class AttractionFollowRepositoryImpl implements AttractionFollowRepositor
     }
 
     @Override
-    public Page<AttractionFollow> followingList(String userid, long pageCount, long page) {
-        return attractionFollowMapper.selectPage(new Page<>(page, pageCount), followerQueryWrapper(userid));
+    public Page<AttractionFollow> followingList(String userid, long pageSize, long currentPage) {
+        return attractionFollowMapper.selectPage(new Page<>(currentPage, pageSize), followerQueryWrapper(userid));
     }
 
     @Override

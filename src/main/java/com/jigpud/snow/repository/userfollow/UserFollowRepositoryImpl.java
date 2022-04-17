@@ -40,8 +40,8 @@ public class UserFollowRepositoryImpl implements UserFollowRepository {
     }
 
     @Override
-    public Page<UserFollow> followerList(String userid, long pageCount, long page) {
-        return followMapper.selectPage(new Page<>(page, pageCount), userQueryWrapper(userid));
+    public Page<UserFollow> followerList(String userid, long pageSize, long currentPage) {
+        return followMapper.selectPage(new Page<>(currentPage, pageSize), userQueryWrapper(userid));
     }
 
     @Override
@@ -50,8 +50,8 @@ public class UserFollowRepositoryImpl implements UserFollowRepository {
     }
 
     @Override
-    public Page<UserFollow> followingList(String userid, long pageCount, long page) {
-        return followMapper.selectPage(new Page<>(page, pageCount), followerQueryWrapper(userid));
+    public Page<UserFollow> followingList(String userid, long pageSize, long currentPage) {
+        return followMapper.selectPage(new Page<>(currentPage, pageSize), followerQueryWrapper(userid));
     }
 
     @Override

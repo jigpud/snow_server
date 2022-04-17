@@ -11,9 +11,9 @@ public interface CommentRepository {
 
     Comment getComment(String commentId);
 
-    Page<Comment> getUserCommentList(String userid, long pageCount, long page);
+    Page<Comment> getUserCommentList(String userid, long pageSize, long currentPage);
 
-    Page<Comment> getStoryCommentList(String storyId, long pageCount, long page);
+    Page<Comment> getStoryCommentList(String storyId, long pageSize, long currentPage);
 
-    Page<Comment> getCommentReplyList(String commentId, long pageCount, long page);
+    Page<Comment> getCommentReplyList(String commentId, long pageSize, long currentPage);
 }

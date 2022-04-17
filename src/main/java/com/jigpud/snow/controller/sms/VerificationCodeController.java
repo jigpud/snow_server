@@ -1,11 +1,11 @@
 package com.jigpud.snow.controller.sms;
 
+import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.service.sms.VerificationCodeService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.response.Response;
-import com.jigpud.snow.util.response.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

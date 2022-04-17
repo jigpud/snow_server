@@ -2,14 +2,14 @@ package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.response.PageData;
+import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.constant.PermissionsConstant;
 import com.jigpud.snow.util.constant.RolesConstant;
-import com.jigpud.snow.util.response.PageData;
 import com.jigpud.snow.util.response.Response;
-import com.jigpud.snow.util.response.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -36,11 +36,11 @@ public class UserListController extends BaseController {
     @RequiresRoles(RolesConstant.ADMIN)
     @RequiresPermissions(PermissionsConstant.ADMIN_READ)
     ResponseBody<PageData<User>> getUserList(
-            @RequestParam(value = FormDataConstant.PAGE_COUNT, required = false, defaultValue = "0") Long pageCount,
-            @RequestParam(value = FormDataConstant.PAGE, required = false, defaultValue = "0") Long page
+            @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
+            @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage
     ) {
-        log.debug("ADMIN : get user list with pageCount {}", pageCount);
-        log.debug("ADMIN : get user list with page {}", page);
-        return Response.responseSuccess(userService.users(pageCount, page));
+        log.debug("ADMIN : get user list with pageSize {}", pageSize);
+        log.debug("ADMIN : get user list with currentPage {}", currentPage);
+        return Response.responseSuccess(userService.users(pageSize, currentPage));
     }
 }

@@ -1,8 +1,8 @@
 package com.jigpud.snow.controller;
 
+import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.util.constant.HeaderConstant;
 import com.jigpud.snow.util.response.Response;
-import com.jigpud.snow.util.response.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;

@@ -32,11 +32,11 @@ public interface FavoriteRepository {
     /**
      * 获取用户的收藏列表
      * @param userid 用户
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 收藏列表分页
      */
-    Page<Favorite> favoriteList(String userid, long pageCount, long page);
+    Page<Favorite> favoriteList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取用户的收藏数量

@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.user;
 
 import com.jigpud.snow.response.LoginResponse;
+import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.service.role.RoleService;
 import com.jigpud.snow.service.sms.VerificationCodeService;
 import com.jigpud.snow.service.token.TokenService;
@@ -9,10 +10,6 @@ import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.response.Response;
-import com.jigpud.snow.util.response.ResponseBody;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

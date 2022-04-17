@@ -32,18 +32,18 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public Page<Comment> getUserCommentList(String userid, long pageCount, long page) {
-        return commentMapper.selectPage(new Page<>(page, pageCount), authorQueryWrapper(userid));
+    public Page<Comment> getUserCommentList(String userid, long pageSize, long currentPage) {
+        return commentMapper.selectPage(new Page<>(currentPage, pageSize), authorQueryWrapper(userid));
     }
 
     @Override
-    public Page<Comment> getStoryCommentList(String storyId, long pageCount, long page) {
-        return commentMapper.selectPage(new Page<>(page, pageCount), storyQueryWrapper(storyId));
+    public Page<Comment> getStoryCommentList(String storyId, long pageSize, long currentPage) {
+        return commentMapper.selectPage(new Page<>(currentPage, pageSize), storyQueryWrapper(storyId));
     }
 
     @Override
-    public Page<Comment> getCommentReplyList(String commentId, long pageCount, long page) {
-        return commentMapper.selectPage(new Page<>(page, pageCount), replyQueryWrapper(commentId));
+    public Page<Comment> getCommentReplyList(String commentId, long pageSize, long currentPage) {
+        return commentMapper.selectPage(new Page<>(currentPage, pageSize), replyQueryWrapper(commentId));
     }
 
     private QueryWrapper<Comment> commentQueryWrapper(String commentId) {

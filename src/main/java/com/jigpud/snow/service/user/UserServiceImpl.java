@@ -2,9 +2,9 @@ package com.jigpud.snow.service.user;
 
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.repository.user.UserRepository;
+import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.encrypt.Encryptor;
-import com.jigpud.snow.util.response.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -137,22 +137,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageData<User> usersUsernameLike(String username, long pageCount, long page) {
-        return PageData.fromPage(userRepository.usersUsernameLike(username, pageCount, page));
+    public PageData<User> usersUsernameLike(String username, long pageSize, long currentPage) {
+        return PageData.fromPage(userRepository.usersUsernameLike(username, pageSize, currentPage));
     }
 
     @Override
-    public PageData<User> usersNicknameLike(String nickname, long pageCount, long page) {
-        return PageData.fromPage(userRepository.usersNicknameLike(nickname, pageCount, page));
+    public PageData<User> usersNicknameLike(String nickname, long pageSize, long currentPage) {
+        return PageData.fromPage(userRepository.usersNicknameLike(nickname, pageSize, currentPage));
     }
 
     @Override
-    public PageData<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page) {
-        return PageData.fromPage(userRepository.usersUsernameAndNicknameLike(username, nickname, pageCount, page));
+    public PageData<User> usersUsernameAndNicknameLike(String username, String nickname, long pageSize, long currentPage) {
+        return PageData.fromPage(userRepository.usersUsernameAndNicknameLike(username, nickname, pageSize, currentPage));
     }
 
     @Override
-    public PageData<User> users(long pageCount, long page) {
-        return PageData.fromPage(userRepository.users(pageCount, page));
+    public PageData<User> users(long pageSize, long currentPage) {
+        return PageData.fromPage(userRepository.users(pageSize, currentPage));
     }
 }

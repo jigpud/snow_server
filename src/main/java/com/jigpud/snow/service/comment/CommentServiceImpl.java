@@ -27,18 +27,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<Comment> storyCommentList(String storyId, long pageCount, long page) {
-        return commentRepository.getStoryCommentList(storyId, pageCount, page);
+    public Page<Comment> storyCommentList(String storyId, long pageSize, long currentPage) {
+        return commentRepository.getStoryCommentList(storyId, pageSize, currentPage);
     }
 
     @Override
-    public Page<Comment> commentReplyList(String commentId, long pageCount, long page) {
-        return commentRepository.getCommentReplyList(commentId, pageCount, page);
+    public Page<Comment> commentReplyList(String commentId, long pageSize, long currentPage) {
+        return commentRepository.getCommentReplyList(commentId, pageSize, currentPage);
     }
 
     @Override
-    public Page<Comment> userCommentList(String userid, long pageCount, long page) {
-        return commentRepository.getUserCommentList(userid, pageCount, page);
+    public Page<Comment> userCommentList(String userid, long pageSize, long currentPage) {
+        return commentRepository.getUserCommentList(userid, pageSize, currentPage);
     }
 
     @Override

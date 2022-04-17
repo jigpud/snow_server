@@ -1,7 +1,7 @@
 package com.jigpud.snow.service.story;
 
 import com.jigpud.snow.model.Story;
-import com.jigpud.snow.util.response.PageData;
+import com.jigpud.snow.response.PageData;
 
 /**
  * @author : jigpud
@@ -18,20 +18,20 @@ public interface StoryService {
     /**
      * 获取用户的所有游记
      * @param authorId userid
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 游记分页
      */
-    PageData<Story> getUserStoryList(String authorId, long pageCount, long page);
+    PageData<Story> getUserStoryList(String authorId, long pageSize, long currentPage);
 
     /**
      * 获取用户动态的所有游记
      * @param authorId userid
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 动态游记分页
      */
-    PageData<Story> getUserMomentsStoryList(String authorId, long pageCount, long page);
+    PageData<Story> getUserMomentsStoryList(String authorId, long pageSize, long currentPage);
 
     /**
      * 发表一篇游记

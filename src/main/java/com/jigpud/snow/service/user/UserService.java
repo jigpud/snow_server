@@ -1,7 +1,7 @@
 package com.jigpud.snow.service.user;
 
 import com.jigpud.snow.model.User;
-import com.jigpud.snow.util.response.PageData;
+import com.jigpud.snow.response.PageData;
 
 /**
  * @author : jigpud
@@ -100,11 +100,11 @@ public interface UserService {
     /**
      * 根据username模糊查询用户列表
      * @param username username
-     * @param pageCount 单页大小
-     * @param page 页码
+     * @param pageSize 单页大小
+     * @param currentPage 页码
      * @return 用户列表分页
      */
-    PageData<User> usersUsernameLike(String username, long pageCount, long page);
+    PageData<User> usersUsernameLike(String username, long pageSize, long currentPage);
 
     /**
      * 根据username获取用户信息
@@ -123,27 +123,27 @@ public interface UserService {
     /**
      * 根据nickname模糊查询用户列表
      * @param nickname nickname
-     * @param pageCount 单页大小
-     * @param page 页码
+     * @param pageSize 单页大小
+     * @param currentPage 页码
      * @return 用户列表分页
      */
-    PageData<User> usersNicknameLike(String nickname, long pageCount, long page);
+    PageData<User> usersNicknameLike(String nickname, long pageSize, long currentPage);
 
     /**
      * 根据username和nickname模糊查询用户列表
      * @param username username
      * @param nickname nickname
-     * @param pageCount 单页大小
-     * @param page 页码
+     * @param pageSize 单页大小
+     * @param currentPage 页码
      * @return 用户列表分页
      */
-    PageData<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page);
+    PageData<User> usersUsernameAndNicknameLike(String username, String nickname, long pageSize, long currentPage);
 
     /**
      * 获取用户列表
-     * @param pageCount 单页大小
-     * @param page 页码
+     * @param pageSize 单页大小
+     * @param currentPage 页码
      * @return 用户列表分页
      */
-    PageData<User> users(long pageCount, long page);
+    PageData<User> users(long pageSize, long currentPage);
 }

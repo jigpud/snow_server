@@ -32,10 +32,10 @@ public class StoryRepositoryImpl implements StoryRepository {
     }
 
     @Override
-    public Page<Story> getUserStoryList(String userid, long pageCount, long page) {
+    public Page<Story> getUserStoryList(String userid, long pageSize, long currentPage) {
         QueryWrapper<Story> queryWrapper = authorQueryWrapper(userid);
         queryWrapper.orderByDesc("release_time");
-        return storyMapper.selectPage(new Page<>(page, pageCount), queryWrapper);
+        return storyMapper.selectPage(new Page<>(currentPage, pageSize), queryWrapper);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class StoryRepositoryImpl implements StoryRepository {
     }
 
     @Override
-    public Page<Story> blurSearch(String keyWords, long pageCount, long page) {
-        return storyMapper.selectPage(new Page<>(page, pageCount), blurQueryWrapper(keyWords));
+    public Page<Story> blurSearch(String keyWords, long pageSize, long currentPage) {
+        return storyMapper.selectPage(new Page<>(currentPage, pageSize), blurQueryWrapper(keyWords));
     }
 
     private QueryWrapper<Story> storyQueryWrapper(String storyId) {

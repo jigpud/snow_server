@@ -18,29 +18,29 @@ public interface CommentService {
     /**
      * 获取游记的评论列表
      * @param storyId 游记
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 游记的评论列表分页
      */
-    Page<Comment> storyCommentList(String storyId, long pageCount, long page);
+    Page<Comment> storyCommentList(String storyId, long pageSize, long currentPage);
 
     /**
      * 获取评论的回复列表
      * @param commentId 评论
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 评论的回复列表分页
      */
-    Page<Comment> commentReplyList(String commentId, long pageCount, long page);
+    Page<Comment> commentReplyList(String commentId, long pageSize, long currentPage);
 
     /**
      * 获取用户评论列表
      * @param userid 用户
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 用户评论列表分页
      */
-    Page<Comment> userCommentList(String userid, long pageCount, long page);
+    Page<Comment> userCommentList(String userid, long pageSize, long currentPage);
 
     /**
      * 评论游记

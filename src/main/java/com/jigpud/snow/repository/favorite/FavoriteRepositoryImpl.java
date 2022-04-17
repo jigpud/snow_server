@@ -40,8 +40,8 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
     }
 
     @Override
-    public Page<Favorite> favoriteList(String userid, long pageCount, long page) {
-        return favoriteMapper.selectPage(new Page<>(page, pageCount), userQueryWrapper(userid));
+    public Page<Favorite> favoriteList(String userid, long pageSize, long currentPage) {
+        return favoriteMapper.selectPage(new Page<>(currentPage, pageSize), userQueryWrapper(userid));
     }
 
     @Override

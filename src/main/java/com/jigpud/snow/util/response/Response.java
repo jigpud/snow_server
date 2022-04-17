@@ -1,5 +1,7 @@
 package com.jigpud.snow.util.response;
 
+import com.jigpud.snow.response.ResponseBody;
+
 /**
  * @author : jigpud
  */

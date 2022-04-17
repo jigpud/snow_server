@@ -4,7 +4,7 @@ import com.jigpud.snow.model.AttractionFollow;
 import com.jigpud.snow.model.UserFollow;
 import com.jigpud.snow.repository.attractionfollow.AttractionFollowRepository;
 import com.jigpud.snow.repository.userfollow.UserFollowRepository;
-import com.jigpud.snow.util.response.PageData;
+import com.jigpud.snow.response.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,8 +50,8 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public PageData<String> followerList(String userid, long pageCount, long page) {
-        return PageData.fromPage(userFollowRepository.followerList(userid, pageCount, page), UserFollow::getFollowerId);
+    public PageData<String> followerList(String userid, long pageSize, long currentPage) {
+        return PageData.fromPage(userFollowRepository.followerList(userid, pageSize, currentPage), UserFollow::getFollowerId);
     }
 
     @Override
@@ -60,8 +60,8 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public PageData<String> userFollowingList(String userid, long pageCount, long page) {
-        return PageData.fromPage(userFollowRepository.followingList(userid, pageCount, page), UserFollow::getUserid);
+    public PageData<String> userFollowingList(String userid, long pageSize, long currentPage) {
+        return PageData.fromPage(userFollowRepository.followingList(userid, pageSize, currentPage), UserFollow::getUserid);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public PageData<String> attractionFollowingList(String userid, long pageCount, long page) {
-        return PageData.fromPage(attractionFollowRepository.followingList(userid, pageCount, page), AttractionFollow::getAttractionId);
+    public PageData<String> attractionFollowingList(String userid, long pageSize, long currentPage) {
+        return PageData.fromPage(attractionFollowRepository.followingList(userid, pageSize, currentPage), AttractionFollow::getAttractionId);
     }
 
     @Override

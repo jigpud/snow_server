@@ -1,6 +1,6 @@
 package com.jigpud.snow.service.follow;
 
-import com.jigpud.snow.util.response.PageData;
+import com.jigpud.snow.response.PageData;
 
 /**
  * @author : jigpud
@@ -44,11 +44,11 @@ public interface FollowService {
     /**
      * 获取用户的粉丝列表
      * @param userid 用户
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 粉丝列表分页
      */
-    PageData<String> followerList(String userid, long pageCount, long page);
+    PageData<String> followerList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取用户关注的用户数
@@ -60,11 +60,11 @@ public interface FollowService {
     /**
      * 获取用户关注的用户列表
      * @param userid 用户
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 关注列表分页
      */
-    PageData<String> userFollowingList(String userid, long pageCount, long page);
+    PageData<String> userFollowingList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取用户关注的景点数
@@ -76,11 +76,11 @@ public interface FollowService {
     /**
      * 獲取用戶关注的景点列表
      * @param userid 用户
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 关注列表分页
      */
-    PageData<String> attractionFollowingList(String userid, long pageCount, long page);
+    PageData<String> attractionFollowingList(String userid, long pageSize, long currentPage);
 
     /**
      * 是否关注了该用户

@@ -32,11 +32,11 @@ public interface AttractionFollowRepository {
     /**
      * 获取关注者列表
      * @param attractionId 景点
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 关注者列表分页
      */
-    Page<AttractionFollow> followerList(String attractionId, long pageCount, long page);
+    Page<AttractionFollow> followerList(String attractionId, long pageSize, long currentPage);
 
     /**
      * 获取关注者数量
@@ -48,11 +48,11 @@ public interface AttractionFollowRepository {
     /**
      * 获取关注列表
      * @param userid 自己
-     * @param pageCount 分页大小
-     * @param page 页码
+     * @param pageSize 分页大小
+     * @param currentPage 页码
      * @return 关注列表分页
      */
-    Page<AttractionFollow> followingList(String userid, long pageCount, long page);
+    Page<AttractionFollow> followingList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取关注数量

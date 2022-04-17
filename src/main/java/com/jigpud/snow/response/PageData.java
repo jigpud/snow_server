@@ -1,4 +1,4 @@
-package com.jigpud.snow.util.response;
+package com.jigpud.snow.response;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Data
 public class PageData <T> {
     private List<T> records;
-    private long pages;
-    private long current;
+    private long totalPage;
+    private long currentPage;
 
     public static <T> PageData<T> fromPage(Page<T> origin) {
         return new PageData<>(
@@ -38,8 +38,8 @@ public class PageData <T> {
     public static <IN, OUT> PageData<OUT> fromPageData(PageData<IN> origin, RecordsMapper<IN, OUT> mapper) {
         return new PageData<>(
                 origin.getRecords().stream().map(mapper::map).collect(Collectors.toList()),
-                origin.getPages(),
-                origin.getCurrent()
+                origin.getTotalPage(),
+                origin.getCurrentPage()
         );
     }
 

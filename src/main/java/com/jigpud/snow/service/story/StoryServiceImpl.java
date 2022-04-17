@@ -2,7 +2,7 @@ package com.jigpud.snow.service.story;
 
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.repository.story.StoryRepository;
-import com.jigpud.snow.util.response.PageData;
+import com.jigpud.snow.response.PageData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +26,12 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public PageData<Story> getUserStoryList(String authorId, long pageCount, long page) {
-        return PageData.fromPage(storyRepository.getUserStoryList(authorId, pageCount, page));
+    public PageData<Story> getUserStoryList(String authorId, long pageSize, long currentPage) {
+        return PageData.fromPage(storyRepository.getUserStoryList(authorId, pageSize, currentPage));
     }
 
     @Override
-    public PageData<Story> getUserMomentsStoryList(String authorId, long pageCount, long page) {
+    public PageData<Story> getUserMomentsStoryList(String authorId, long pageSize, long currentPage) {
         return null;
     }
 

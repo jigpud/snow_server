@@ -3,6 +3,8 @@ package com.jigpud.snow.controller.story;
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.response.PageData;
+import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.StoryResponse;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
@@ -12,9 +14,7 @@ import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
 import com.jigpud.snow.util.constant.PermissionsConstant;
 import com.jigpud.snow.util.constant.RolesConstant;
-import com.jigpud.snow.util.response.PageData;
 import com.jigpud.snow.util.response.Response;
-import com.jigpud.snow.util.response.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -53,15 +53,15 @@ public class SelfStoryListController extends BaseController {
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_READ)
     ResponseBody<PageData<StoryResponse>> getStoryList(
-            @RequestParam(value = FormDataConstant.PAGE_COUNT, required = false, defaultValue = "0") Long pageCount,
-            @RequestParam(value = FormDataConstant.PAGE, required = false, defaultValue = "0") Long page,
+            @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
+            @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage,
             HttpServletRequest request
     ) {
-        log.debug("get user story list with pageCount: {}", pageCount);
-        log.debug("get user story list with page: {}", page);
+        log.debug("get user story list with pageSize: {}", pageSize);
+        log.debug("get user story list with currentPage: {}", currentPage);
         String token = getToken(request);
         String selfUserid = tokenService.getUserid(token);
-        PageData<Story> stories = storyService.getUserStoryList(selfUserid, pageCount, page);
+        PageData<Story> stories = storyService.getUserStoryList(selfUserid, pageSize, currentPage);
         PageData<StoryResponse> responsePageData = PageData.fromPageData(stories, story -> {
             String storyId = story.getStoryId();
             User author = userService.getUserByUserid(story.getAuthorId());

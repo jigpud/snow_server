@@ -1,8 +1,8 @@
 package com.jigpud.snow.util.shiro;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.util.response.Response;
-import com.jigpud.snow.util.response.ResponseBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;

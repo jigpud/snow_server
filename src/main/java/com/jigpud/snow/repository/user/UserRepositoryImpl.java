@@ -41,23 +41,23 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Page<User> users(long pageCount, long page) {
-        return userMapper.selectPage(new Page<>(page, pageCount), new QueryWrapper<>());
+    public Page<User> users(long pageSize, long currentPage) {
+        return userMapper.selectPage(new Page<>(currentPage, pageSize), new QueryWrapper<>());
     }
 
     @Override
-    public Page<User> usersUsernameLike(String username, long pageCount, long page) {
-        return userMapper.selectPage(new Page<>(page, pageCount), usernameLikeQueryWrapper(username));
+    public Page<User> usersUsernameLike(String username, long pageSize, long currentPage) {
+        return userMapper.selectPage(new Page<>(currentPage, pageSize), usernameLikeQueryWrapper(username));
     }
 
     @Override
-    public Page<User> usersNicknameLike(String nickname, long pageCount, long page) {
-        return userMapper.selectPage(new Page<>(page, pageCount), nicknameLikeQueryWrapper(nickname));
+    public Page<User> usersNicknameLike(String nickname, long pageSize, long currentPage) {
+        return userMapper.selectPage(new Page<>(currentPage, pageSize), nicknameLikeQueryWrapper(nickname));
     }
 
     @Override
-    public Page<User> usersUsernameAndNicknameLike(String username, String nickname, long pageCount, long page) {
-        return userMapper.selectPage(new Page<>(page, pageCount), usernameAndNicknameLikeQueryWrapper(username, nickname));
+    public Page<User> usersUsernameAndNicknameLike(String username, String nickname, long pageSize, long currentPage) {
+        return userMapper.selectPage(new Page<>(currentPage, pageSize), usernameAndNicknameLikeQueryWrapper(username, nickname));
     }
 
     @Override
@@ -71,8 +71,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Page<User> blurSearch(String keyWords, long pageCount, long page) {
-        return userMapper.selectPage(new Page<>(page, pageCount), blurQueryWrapper(keyWords));
+    public Page<User> blurSearch(String keyWords, long pageSize, long currentPage) {
+        return userMapper.selectPage(new Page<>(currentPage, pageSize), blurQueryWrapper(keyWords));
     }
 
     private QueryWrapper<User> usernameQueryWrapper(String username) {

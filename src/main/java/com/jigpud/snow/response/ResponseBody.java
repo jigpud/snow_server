@@ -1,4 +1,4 @@
-package com.jigpud.snow.util.response;
+package com.jigpud.snow.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
