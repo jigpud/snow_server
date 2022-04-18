@@ -1,5 +1,8 @@
 package com.jigpud.snow.response;
 
+import com.jigpud.snow.model.User;
+import com.jigpud.snow.service.favorite.FavoriteService;
+import com.jigpud.snow.service.follow.FollowService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +25,21 @@ public class SelfInformationResponse {
     private Long favorites;
     private Long followers;
     private Long following;
+
+    public static SelfInformationResponse create(User user, FavoriteService favoriteService, FollowService followService) {
+        String userid = user.getUserid();
+        SelfInformationResponse selfInfo = new SelfInformationResponse();
+        selfInfo.setUsername(user.getUsername());
+        selfInfo.setUserid(user.getUserid());
+        selfInfo.setAvatar(user.getAvatar());
+        selfInfo.setNickname(user.getNickname());
+        selfInfo.setGender(user.getGender());
+        selfInfo.setAge(user.getAge());
+        selfInfo.setSignature(user.getSignature());
+        selfInfo.setFavorites(favoriteService.storyFavorites(userid));
+        selfInfo.setFollowers(followService.followerCount(userid));
+        selfInfo.setFollowing(followService.followingCount(userid));
+        selfInfo.setBackground(user.getBackground());
+        return selfInfo;
+    }
 }

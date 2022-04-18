@@ -82,10 +82,10 @@ create table if not exists comment(
     content mediumtext not null
 );
 
--- favorite
-create table if not exists favorite(
+-- storyFavorite
+create table if not exists story_favorite(
     id int auto_increment primary key,
     userid varchar(255) not null,
     story_id varchar(255) not null,
-    unique key favorite(userid, story_id)
+    unique key story_favorite(userid, story_id)
 );

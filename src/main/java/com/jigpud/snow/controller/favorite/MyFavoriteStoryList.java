@@ -1,10 +1,11 @@
-package com.jigpud.snow.controller.story;
+package com.jigpud.snow.controller.favorite;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.StoryResponse;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
@@ -29,39 +30,44 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class SelfStoryListController extends BaseController {
+public class MyFavoriteStoryList extends BaseController {
+    private final FavoriteService favoriteService;
     private final StoryService storyService;
-    private final TokenService tokenService;
     private final UserService userService;
+    private final TokenService tokenService;
     private final LikeService likeService;
 
     @Autowired
-    SelfStoryListController(
+    MyFavoriteStoryList(
+            FavoriteService favoriteService,
             StoryService storyService,
-            TokenService tokenService,
             UserService userService,
+            TokenService tokenService,
             LikeService likeService
     ) {
+        this.favoriteService = favoriteService;
         this.storyService = storyService;
-        this.tokenService = tokenService;
         this.userService = userService;
+        this.tokenService = tokenService;
         this.likeService = likeService;
     }
 
-    @PostMapping(PathConstant.GET_SELF_STORY_LIST)
+    @PostMapping(PathConstant.GET_SELF_FAVORITE_STORY_LIST)
     @RequiresRoles(RolesConstant.USER)
-    @RequiresPermissions(PermissionsConstant.USER_READ)
-    ResponseBody<PageData<StoryResponse>> getStoryList(
+    @RequiresPermissions(PermissionsConstant.USER_WRITE)
+    ResponseBody<PageData<StoryResponse>> selfStoryFavoriteList(
             @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
             @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage,
             HttpServletRequest request
     ) {
-        log.debug("get user story list with pageSize: {}", pageSize);
-        log.debug("get user story list with currentPage: {}", currentPage);
-        String token = getToken(request);
-        String userid = tokenService.getUserid(token);
-        PageData<Story> stories = storyService.getUserStoryList(userid, pageSize, currentPage);
-        PageData<StoryResponse> responsePageData = PageData.fromPageData(stories, story ->
+        log.debug("get self favorite story list with pageSize: {}", pageSize);
+        log.debug("get self favorite story list with currentPage: {}", currentPage);
+        String userid = tokenService.getUserid(getToken(request));
+        PageData<Story> favoriteStoryList = PageData.fromPageData(
+                favoriteService.storyFavoriteList(userid, pageSize, currentPage),
+                storyService::getStory
+        );
+        PageData<StoryResponse> responsePageData = PageData.fromPageData(favoriteStoryList, story ->
                 StoryResponse.create(story, userid, userService, likeService));
         return Response.responseSuccess(responsePageData);
     }

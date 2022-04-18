@@ -54,22 +54,8 @@ public class SearchUserController extends BaseController {
         if (!keyWords.isEmpty()) {
             String selfUserid = tokenService.getUserid(getToken(request));
             PageData<User> userPageData = searchService.searchUser(keyWords, pageSize, currentPage);
-            PageData<UserInformationResponse> searchUserResponsePageData = PageData.fromPageData(userPageData, user -> {
-                String userid = user.getUserid();
-                UserInformationResponse userInformationResponse = new UserInformationResponse();
-                userInformationResponse.setUserid(userid);
-                userInformationResponse.setNickname(user.getNickname());
-                userInformationResponse.setAvatar(user.getAvatar());
-                userInformationResponse.setBackground(user.getBackground());
-                userInformationResponse.setGender(user.getGender());
-                userInformationResponse.setAge(user.getAge());
-                userInformationResponse.setSignature(user.getSignature());
-                userInformationResponse.setLikes(likeService.likes(userid));
-                userInformationResponse.setFollowers(followService.followerCount(userid));
-                userInformationResponse.setFollowing(followService.followingCount(userid));
-                userInformationResponse.setHaveFollowing(followService.haveFollowingUser(selfUserid, userid));
-                return userInformationResponse;
-            });
+            PageData<UserInformationResponse> searchUserResponsePageData = PageData.fromPageData(userPageData, user ->
+                    UserInformationResponse.create(user, selfUserid, followService, likeService));
             return Response.responseSuccess(searchUserResponsePageData);
         } else {
             log.debug("searchUser: keyWords is empty!");

@@ -1,5 +1,9 @@
 package com.jigpud.snow.response;
 
+import com.jigpud.snow.model.Story;
+import com.jigpud.snow.model.User;
+import com.jigpud.snow.service.like.LikeService;
+import com.jigpud.snow.service.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +29,23 @@ public class StoryResponse {
     private String releaseLocation;
     private Boolean liked;
     private String attractionId;
+
+    public static StoryResponse create(Story story, String self, UserService userService, LikeService likeService) {
+        String storyId = story.getStoryId();
+        User author = userService.getUserByUserid(story.getAuthorId());
+        StoryResponse storyResponse = new StoryResponse();
+        storyResponse.setStoryId(storyId);
+        storyResponse.setAuthorId(author.getUserid());
+        storyResponse.setAuthorNickname(author.getNickname());
+        storyResponse.setAuthorAvatar(author.getAvatar());
+        storyResponse.setTitle(story.getTitle());
+        storyResponse.setContent(story.getContent());
+        storyResponse.setPictures(story.getPictures());
+        storyResponse.setReleaseTime(story.getReleaseTime());
+        storyResponse.setReleaseLocation(story.getReleaseLocation());
+        storyResponse.setAttractionId(story.getAttractionId());
+        storyResponse.setLiked(likeService.haveLikedStory(self, storyId));
+        storyResponse.setLikes(likeService.storyLikes(storyId));
+        return storyResponse;
+    }
 }

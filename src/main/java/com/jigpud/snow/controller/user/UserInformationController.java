@@ -51,18 +51,7 @@ public class UserInformationController extends BaseController {
         String selfUserid = tokenService.getUserid(getToken(request));
         if (userService.haveUseridIs(userid)) {
             User user = userService.getUserByUserid(userid);
-            UserInformationResponse info = new UserInformationResponse();
-            info.setUserid(user.getUserid());
-            info.setNickname(user.getNickname());
-            info.setBackground(user.getBackground());
-            info.setAvatar(user.getAvatar());
-            info.setGender(user.getGender());
-            info.setAge(user.getAge());
-            info.setSignature(user.getSignature());
-            info.setLikes(likeService.likes(userid));
-            info.setFollowers(followService.followerCount(userid));
-            info.setFollowing(followService.followingCount(userid));
-            info.setHaveFollowing(followService.haveFollowingUser(selfUserid, userid));
+            UserInformationResponse info = UserInformationResponse.create(user, selfUserid, followService, likeService);
             log.debug("get user information success! info: {}", info);
             return Response.responseSuccess(info);
         }

@@ -1,5 +1,7 @@
 package com.jigpud.snow.service.favorite;
 
+import com.jigpud.snow.response.PageData;
+
 /**
  * @author : jigpud
  */
@@ -9,21 +11,21 @@ public interface FavoriteService {
      * @param userid 用户
      * @return 收藏总数
      */
-    long favorites(String userid);
+    long storyFavorites(String userid);
 
     /**
      * 收藏游记
      * @param userid 用户
      * @param storyId 游记
      */
-    void favorite(String userid, String storyId);
+    void favoriteStory(String userid, String storyId);
 
     /**
      * 取消收藏游记
      * @param userid 用户
      * @param storyId 游记
      */
-    void unFavorite(String userid, String storyId);
+    void unFavoriteStory(String userid, String storyId);
 
     /**
      * 获取用户是否已经收藏了游记
@@ -31,5 +33,14 @@ public interface FavoriteService {
      * @param storyId 游记
      * @return 是否已经收藏了
      */
-    boolean haveFavorite(String userid, String storyId);
+    boolean haveFavoriteStory(String userid, String storyId);
+
+    /**
+     * 获取用户的收藏列表
+     * @param userid 用户
+     * @param pageSize 分页大小
+     * @param currentPage 页码
+     * @return 收藏列表分页
+     */
+    PageData<String> storyFavoriteList(String userid, long pageSize, long currentPage);
 }

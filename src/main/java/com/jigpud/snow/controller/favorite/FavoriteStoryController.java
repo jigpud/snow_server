@@ -1,17 +1,18 @@
-package com.jigpud.snow.controller.story;
+package com.jigpud.snow.controller.favorite;
 
 import com.jigpud.snow.controller.BaseController;
-import com.jigpud.snow.model.Story;
 import com.jigpud.snow.response.ResponseBody;
-import com.jigpud.snow.response.StoryResponse;
-import com.jigpud.snow.service.like.LikeService;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
-import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
+import com.jigpud.snow.util.constant.PermissionsConstant;
+import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,37 +25,40 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class StoryDetailController extends BaseController {
+public class FavoriteStoryController extends BaseController {
+    private final FavoriteService favoriteService;
     private final StoryService storyService;
     private final TokenService tokenService;
-    private final UserService userService;
-    private final LikeService likeService;
 
     @Autowired
-    StoryDetailController(
+    FavoriteStoryController(
+            FavoriteService favoriteService,
             StoryService storyService,
-            TokenService tokenService,
-            UserService userService,
-            LikeService likeService
-    ) {
+            TokenService tokenService) {
+        this.favoriteService = favoriteService;
         this.storyService = storyService;
         this.tokenService = tokenService;
-        this.userService = userService;
-        this.likeService = likeService;
     }
 
-    @PostMapping(PathConstant.GET_STORY)
-    ResponseBody<StoryResponse> getStory(
+    @PostMapping(PathConstant.FAVORITE_STORY)
+    @RequiresRoles(RolesConstant.USER)
+    @RequiresPermissions(PermissionsConstant.USER_WRITE)
+    ResponseBody<?> favoriteStory(
             @RequestParam(value = FormDataConstant.STORY_ID, required = false, defaultValue = "") String storyId,
             HttpServletRequest request
     ) {
-        Story story = storyService.getStory(storyId);
-        if (story != null) {
+        if (storyService.getStory(storyId) != null) {
             String userid = tokenService.getUserid(getToken(request));
-            StoryResponse storyResponse = StoryResponse.create(story, userid, userService, likeService);
-            return Response.responseSuccess(storyResponse);
+            favoriteService.favoriteStory(userid, storyId);
+            if (favoriteService.haveFavoriteStory(userid, storyId)) {
+                log.debug("favorite story success!");
+                return Response.responseSuccess();
+            } else {
+                log.debug("favorite story failed!");
+                return Response.responseFailed("收藏失败！");
+            }
         } else {
-            log.debug("story {} not exist!", storyId);
+            log.debug("story {} not exists!", storyId);
             return Response.responseFailed("游记不存在！");
         }
     }

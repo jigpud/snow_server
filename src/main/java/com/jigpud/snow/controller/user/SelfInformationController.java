@@ -54,18 +54,7 @@ public class SelfInformationController extends BaseController {
         String token = getToken(request);
         String userid = tokenService.getUserid(token);
         User user = userService.getUserByUserid(userid);
-        SelfInformationResponse info = new SelfInformationResponse();
-        info.setUsername(user.getUsername());
-        info.setUserid(user.getUserid());
-        info.setAvatar(user.getAvatar());
-        info.setNickname(user.getNickname());
-        info.setGender(user.getGender());
-        info.setAge(user.getAge());
-        info.setSignature(user.getSignature());
-        info.setFavorites(favoriteService.favorites(userid));
-        info.setFollowers(followService.followerCount(userid));
-        info.setFollowing(followService.followingCount(userid));
-        info.setBackground(user.getBackground());
+        SelfInformationResponse info = SelfInformationResponse.create(user, favoriteService, followService);
         log.debug("get self information success! info: {}", info);
         return Response.responseSuccess(info);
     }

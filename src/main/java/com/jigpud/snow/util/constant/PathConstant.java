@@ -69,6 +69,18 @@ public class PathConstant {
     // 取消游记点赞
     public static final String UNLIKE_STORY = "/story/unlike";
 
+    // 收藏游记
+    public static final String FAVORITE_STORY = "/favorite/story/favorite";
+
+    // 取消游记收藏
+    public static final String UN_FAVORITE_STORY = "/favorite/story/unFavorite";
+
+    // 获取用户自己的游记收藏列表
+    public static final String GET_SELF_FAVORITE_STORY_LIST = "/favorite/story/self";
+
+    // 获取用户的游记收藏列表
+    public static final String GET_USER_FAVORITE_STORY_LIST = "/favorite/story/list";
+
     // 评论
     public static final String COMMENT_STORY = "/story/comment";
 

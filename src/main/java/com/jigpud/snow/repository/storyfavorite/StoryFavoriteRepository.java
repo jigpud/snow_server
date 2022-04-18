@@ -1,12 +1,12 @@
-package com.jigpud.snow.repository.favorite;
+package com.jigpud.snow.repository.storyfavorite;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jigpud.snow.model.Favorite;
+import com.jigpud.snow.model.StoryFavorite;
 
 /**
  * @author : jigpud
  */
-public interface FavoriteRepository {
+public interface StoryFavoriteRepository {
     /**
      * 增加一条收藏
      * @param userid 用户
@@ -36,7 +36,7 @@ public interface FavoriteRepository {
      * @param currentPage 页码
      * @return 收藏列表分页
      */
-    Page<Favorite> favoriteList(String userid, long pageSize, long currentPage);
+    Page<StoryFavorite> favoriteList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取用户的收藏数量

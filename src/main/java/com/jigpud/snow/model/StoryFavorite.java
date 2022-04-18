@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 /**
  * @author : jigpud
  */
-@TableName("favorite")
+@TableName("story_favorite")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Favorite {
+public class StoryFavorite {
     @TableId(type = IdType.AUTO)
     private Long id;
     private String userid;
