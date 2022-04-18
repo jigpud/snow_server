@@ -6,6 +6,7 @@ import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.UserInformationResponse;
 import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.like.LikeService;
+import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -29,18 +30,21 @@ public class UserInformationController extends BaseController {
     private final TokenService tokenService;
     private final LikeService likeService;
     private final FollowService followService;
+    private final StoryService storyService;
 
     @Autowired
     UserInformationController(
             UserService userService,
             TokenService tokenService,
             LikeService likeService,
-            FollowService followService
+            FollowService followService,
+            StoryService storyService
     ) {
         this.userService = userService;
         this.tokenService = tokenService;
         this.likeService = likeService;
         this.followService = followService;
+        this.storyService = storyService;
     }
 
     @PostMapping(PathConstant.GET_USER_INFORMATION)
@@ -51,7 +55,7 @@ public class UserInformationController extends BaseController {
         String selfUserid = tokenService.getUserid(getToken(request));
         if (userService.haveUseridIs(userid)) {
             User user = userService.getUserByUserid(userid);
-            UserInformationResponse info = UserInformationResponse.create(user, selfUserid, followService, likeService);
+            UserInformationResponse info = UserInformationResponse.create(user, selfUserid, followService, likeService, storyService);
             log.debug("get user information success! info: {}", info);
             return Response.responseSuccess(info);
         }

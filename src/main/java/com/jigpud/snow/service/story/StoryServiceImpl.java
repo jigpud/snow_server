@@ -39,4 +39,9 @@ public class StoryServiceImpl implements StoryService {
     public void releaseStory(Story story) {
         storyRepository.addStory(story);
     }
+
+    @Override
+    public long storyCount(String userid) {
+        return storyRepository.storyCount(userid);
+    }
 }

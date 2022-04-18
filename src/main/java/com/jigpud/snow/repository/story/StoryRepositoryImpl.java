@@ -49,6 +49,11 @@ public class StoryRepositoryImpl implements StoryRepository {
         return storyMapper.selectPage(new Page<>(currentPage, pageSize), blurQueryWrapper(keyWords));
     }
 
+    @Override
+    public long storyCount(String userid) {
+        return storyMapper.selectCount(authorQueryWrapper(userid));
+    }
+
     private QueryWrapper<Story> storyQueryWrapper(String storyId) {
         QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("story_id", storyId);

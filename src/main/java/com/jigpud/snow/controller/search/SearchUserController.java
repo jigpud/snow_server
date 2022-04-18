@@ -8,6 +8,7 @@ import com.jigpud.snow.response.UserInformationResponse;
 import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.search.SearchService;
+import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -30,18 +31,21 @@ public class SearchUserController extends BaseController {
     private final SearchService searchService;
     private final FollowService followService;
     private final LikeService likeService;
+    private final StoryService storyService;
 
     @Autowired
     SearchUserController(
             TokenService tokenService,
             SearchService searchService,
             FollowService followService,
-            LikeService likeService
+            LikeService likeService,
+            StoryService storyService
     ) {
         this.tokenService = tokenService;
         this.searchService = searchService;
         this.followService = followService;
         this.likeService = likeService;
+        this.storyService = storyService;
     }
 
     @PostMapping(PathConstant.SEARCH_USER)
@@ -55,7 +59,7 @@ public class SearchUserController extends BaseController {
             String selfUserid = tokenService.getUserid(getToken(request));
             PageData<User> userPageData = searchService.searchUser(keyWords, pageSize, currentPage);
             PageData<UserInformationResponse> searchUserResponsePageData = PageData.fromPageData(userPageData, user ->
-                    UserInformationResponse.create(user, selfUserid, followService, likeService));
+                    UserInformationResponse.create(user, selfUserid, followService, likeService, storyService));
             return Response.responseSuccess(searchUserResponsePageData);
         } else {
             log.debug("searchUser: keyWords is empty!");

@@ -44,4 +44,11 @@ public interface StoryRepository {
      * @return 模糊搜索结果分页
      */
     Page<Story> blurSearch(String keyWords, long pageSize, long currentPage);
+
+    /**
+     * 获取用户发布的游记数量
+     * @param userid 用户
+     * @return 游记数量
+     */
+    long storyCount(String userid);
 }

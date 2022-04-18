@@ -38,4 +38,11 @@ public interface StoryService {
      * @param story 游记
      */
     void releaseStory(Story story);
+
+    /**
+     * 获取用户发布的游记数量
+     * @param userid 用户
+     * @return 游记数量
+     */
+    long storyCount(String userid);
 }
