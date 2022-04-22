@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         newUser.setUsername(username);
         newUser.setPassword(Encryptor.hmacSHA256Encrypt(password, newUser.getSalt()));
         newUser.setUserid(Encryptor.uuid());
-        userRepository.saveUser(newUser);
+        userRepository.addUser(newUser);
     }
 
     @Override

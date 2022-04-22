@@ -36,7 +36,7 @@ create table if not exists story(
     content text not null,
     release_time int not null,
     release_location varchar(255) not null,
-    pictures mediumtext  not null,
+    pictures mediumtext not null,
     attraction_id varchar(255) not null
 );
 
@@ -82,10 +82,39 @@ create table if not exists comment(
     content mediumtext not null
 );
 
--- storyFavorite
+-- story_favorite
 create table if not exists story_favorite(
     id int auto_increment primary key,
     userid varchar(255) not null,
     story_id varchar(255) not null,
     unique key story_favorite(userid, story_id)
+);
+
+-- attraction
+create table if not exists attraction(
+    id int auto_increment primary key,
+    attraction_id varchar(255) not null unique,
+    name varchar(255) not null,
+    description tinytext not null,
+    location varchar(255) not null default '',
+    tags mediumtext not null
+);
+
+-- attraction_photo
+create table if not exists attraction_photo(
+    id int auto_increment primary key,
+    uploader_id varchar(255) not null,
+    attraction_id varchar(255) not null,
+    photo varchar(2083) not null default '',
+    photo_md5 varchar(128) not null default '',
+    unique key attraction_photo(uploader_id, attraction_id, photo_md5)
+);
+
+-- attraction_score
+create table if not exists attraction_score(
+    id int auto_increment primary key,
+    userid varchar(255) not null,
+    attraction_id varchar(255) not null,
+    score int not null default 0,
+    unique key attraction_score(userid, attraction_id)
 );

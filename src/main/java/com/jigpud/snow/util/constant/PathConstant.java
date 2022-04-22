@@ -105,6 +105,9 @@ public class PathConstant {
     // 取消关注
     public static final String UNFOLLOW = "/user/unfollow";
 
+    // 获取景点详情
+    public static final String GET_ATTRACTION = "/attraction";
+
     /*
     admin用户相关接口
      */
@@ -112,18 +115,27 @@ public class PathConstant {
     // admin登录
     public static final String ADMIN_LOGIN = "/admin/login";
 
-    // 获取用户列表
-    public static final String GET_USER_LIST = "/users";
-
     // 更新用户信息
-    public static final String UPDATE_USER = "/user/update";
+    public static final String UPDATE_USER = "/admin/user/update";
 
     // 删除用户
-    public static final String DELETE_USER = "/user/delete";
+    public static final String DELETE_USER = "/admin/user/delete";
 
     // 创建用户
-    public static final String CREATE_USER = "/user/create";
+    public static final String CREATE_USER = "/admin/user/create";
 
     // 查询用户
-    public static final String QUERY_USER = "/user/query";
+    public static final String QUERY_USER = "/admin/user/query";
+
+    // 添加景点
+    public static final String ADD_ATTRACTION = "/admin/attraction/create";
+
+    // 删除景点
+    public static final String DELETE_ATTRACTION = "/admin/attraction/delete";
+
+    // 修改景点
+    public static final String UPDATE_ATTRACTION = "/admin/attraction/update";
+
+    // 查询景点
+    public static final String QUERY_ATTRACTION = "/admin/attraction/query";
 }

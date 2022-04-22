@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void saveUser(User user) {
+    public void addUser(User user) {
         userMapper.insert(user);
     }
 

@@ -15,8 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class AttractionFollow {
+    // 主键
     @TableId(type = IdType.AUTO)
     private Long id;
+
+    // 用户
     private String userid;
+
+    // 景点
     private String attractionId;
 }

@@ -12,7 +12,7 @@ public interface UserRepository {
      * 保存用户
      * @param user user
      */
-    void saveUser(User user);
+    void addUser(User user);
 
     /**
      * 通过username获取用户

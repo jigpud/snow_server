@@ -16,8 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Permission {
+    // 主键
     @TableId(type = IdType.AUTO)
     private Long id;
+
+    // 用户
     private String userid;
+
+    // 权限
     private String permissions;
 }

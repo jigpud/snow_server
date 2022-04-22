@@ -1,4 +1,4 @@
-package com.jigpud.snow.controller.user;
+package com.jigpud.snow.controller.user.admin;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.response.ResponseBody;

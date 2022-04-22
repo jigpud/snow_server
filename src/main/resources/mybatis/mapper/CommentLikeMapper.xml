@@ -4,6 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jigpud.snow.mapper.CommentLikeMapper">
     <select id="insertIgnore">
-        insert ignore into comment_like (userid, comment_id) values (#{userid}, #{commentId});
+        INSERT IGNORE INTO comment_like (userid, comment_id) VALUES (#{userid}, #{commentId});
     </select>
 </mapper>

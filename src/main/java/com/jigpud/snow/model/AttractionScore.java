@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author : jigpud
- * 角色
  */
-@TableName("role")
+@TableName("attraction_score")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Role {
+public class AttractionScore {
     // 主键
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -23,6 +22,9 @@ public class Role {
     // 用户
     private String userid;
 
-    // 角色
-    private String roles;
+    // 景点
+    private String attractionId;
+
+    // 评分
+    private Integer score;
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UpdateUserInfoRequest {
+public class UpdateUserInformationRequest {
     private String nickname;
     private String gender;
     private Integer age;

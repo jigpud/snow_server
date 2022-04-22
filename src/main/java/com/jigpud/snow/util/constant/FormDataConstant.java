@@ -18,4 +18,9 @@ public class FormDataConstant {
     public static final String COMMENT_ID = "commentId";
     public static final String CONTENT = "content";
     public static final String KEY_WORDS = "keyWords";
+    public static final String ATTRACTION_ID = "attractionId";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
+    public static final String LOCATION = "location";
+    public static final String TAGS = "tags";
 }

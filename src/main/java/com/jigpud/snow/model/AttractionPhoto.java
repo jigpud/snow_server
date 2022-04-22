@@ -9,20 +9,25 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author : jigpud
- * 角色
  */
-@TableName("role")
+@TableName("attraction_photo")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Role {
+public class AttractionPhoto {
     // 主键
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    // 用户
-    private String userid;
+    // 上传者
+    private String uploaderId;
 
-    // 角色
-    private String roles;
+    // 景点
+    private String attractionId;
+
+    // 照片链接
+    private String photo;
+
+    // 照片链接MD5
+    private String photoMd5;
 }

@@ -40,7 +40,7 @@ public class BaseController {
      */
     @ExceptionHandler({Exception.class})
     ResponseBody<?> handleException(Exception e) {
-        log.error("handleException: {}", e.toString());
+        log.error("handleException", e);
         return Response.response(500, "出错啦！");
     }
 

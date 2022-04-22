@@ -15,8 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class StoryFavorite {
+    // 主键
     @TableId(type = IdType.AUTO)
     private Long id;
+
+    // 用户
     private String userid;
+
+    // 游记
     private String storyId;
 }

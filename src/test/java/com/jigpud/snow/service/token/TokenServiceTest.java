@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
+
 /**
  * @author : jigpud
  */
@@ -26,5 +28,12 @@ public class TokenServiceTest {
         log.debug("userid         ===> " + tokenService.getUserid(token));
         log.debug("isExpiration   ===> " + tokenService.isExpiration(token));
         log.debug("isAvailable    ===> " + tokenService.verify(token));
+    }
+
+    @Test
+    void testTokenExpiration() {
+        String userid = "123456789";
+        String token = tokenService.createToken(userid);
+        log.debug("expiration: {}, now: {}", tokenService.getExpiration(token), new Date());
     }
 }

@@ -1,9 +1,10 @@
-package com.jigpud.snow.controller.user;
+package com.jigpud.snow.controller.user.admin;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
+import com.jigpud.snow.response.UserResponse;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -34,7 +35,7 @@ public class QueryUserController extends BaseController {
     @PostMapping(PathConstant.QUERY_USER)
     @RequiresRoles(RolesConstant.ADMIN)
     @RequiresPermissions(PermissionsConstant.ADMIN_READ)
-    ResponseBody<PageData<User>> queryUser(
+    ResponseBody<PageData<UserResponse>> queryUser(
             @RequestParam(value = FormDataConstant.USERNAME, required = false, defaultValue = "") String username,
             @RequestParam(value = FormDataConstant.NICKNAME, required = false, defaultValue = "") String nickname,
             @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
@@ -44,8 +45,8 @@ public class QueryUserController extends BaseController {
         log.debug("ADMIN : query nickname {}", nickname);
         log.debug("ADMIN : query user with pageSize {}", pageSize);
         log.debug("ADMIN : query user with currentPage {}", currentPage);
-
-        PageData<User> pageData = userService.usersUsernameAndNicknameLike(username, nickname, pageSize, currentPage);
-        return Response.responseSuccess(pageData);
+        PageData<User> userList = userService.usersUsernameAndNicknameLike(username, nickname, pageSize, currentPage);
+        PageData<UserResponse> userInformationResponseList = PageData.fromPageData(userList, UserResponse::create);
+        return Response.responseSuccess(userInformationResponseList);
     }
 }
