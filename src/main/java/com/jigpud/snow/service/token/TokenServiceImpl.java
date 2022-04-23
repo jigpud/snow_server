@@ -35,7 +35,7 @@ public class TokenServiceImpl implements TokenService {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         byte[] secretBytes = DatatypeConverter.parseBase64Binary(audience.getSecret());
         Key singingKey = new SecretKeySpec(secretBytes, signatureAlgorithm.getJcaName());
-        Date expiration = new Date(System.currentTimeMillis() + audience.getExpire() * 1000);
+        Date expiration = new Date(System.currentTimeMillis() + audience.getExpiration() * 1000);
         JwtBuilder jwtBuilder = Jwts.builder()
                 .setSubject(encryptedUserid)
                 .setAudience(audience.getName())

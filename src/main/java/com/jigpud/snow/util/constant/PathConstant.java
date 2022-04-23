@@ -108,6 +108,15 @@ public class PathConstant {
     // 获取景点详情
     public static final String GET_ATTRACTION = "/attraction";
 
+    // 获取头像的upload token
+    public static final String GET_AVATAR_UPLOAD_TOKEN = "/upload/token/avatar";
+
+    // 获取景点照片的upload token
+    public static final String GET_ATTRACTION_IMG_UPLOAD_TOKEN = "/upload/token/attraction";
+
+    // 获取游记照片的upload token
+    public static final String GET_STORY_IMG_UPLOAD_TOKEN = "/upload/token/story";
+
     /*
     admin用户相关接口
      */

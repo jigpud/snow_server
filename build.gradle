@@ -42,7 +42,12 @@ dependencies {
 	implementation 'com.aliyun:dysmsapi20170525:2.0.9'
 
 	// shiro
-	implementation 'org.apache.shiro:shiro-spring-boot-web-starter:1.8.0'
+	implementation 'org.apache.shiro:shiro-spring-boot-web-starter:1.9.0'
+
+	// qiniu
+	implementation('com.qiniu:qiniu-java-sdk:7.9.5') {
+		exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+	}
 
 	// unit test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

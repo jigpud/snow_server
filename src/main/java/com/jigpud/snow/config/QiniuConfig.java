@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "audience")
-public class AudienceConfig {
-    private String secret;
-    private String name;
-    private Long expiration;
+@ConfigurationProperties(prefix = "qiniu")
+public class QiniuConfig {
+    private String accessKey;
+    private String secretKey;
+    private String bucketName;
+    private String domain;
+    private Long uploadTokenExpiration;
 }

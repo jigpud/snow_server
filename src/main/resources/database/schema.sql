@@ -95,7 +95,7 @@ create table if not exists attraction(
     id int auto_increment primary key,
     attraction_id varchar(255) not null unique,
     name varchar(255) not null,
-    description tinytext not null,
+    description mediumtext not null,
     location varchar(255) not null default '',
     tags mediumtext not null
 );

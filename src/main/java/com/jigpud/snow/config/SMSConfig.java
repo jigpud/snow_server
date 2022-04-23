@@ -6,7 +6,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * @author : jigpud
@@ -21,8 +20,8 @@ public class SMSConfig {
     private String endpoint;
     private String signName;
     private String templateCode;
-    private int verificationCodeLength;
-    private long expiration;
+    private Integer verificationCodeLength;
+    private Long expiration;
 
     @Bean
     Client aliyunSmsClient(SMSConfig aliyunConfig) throws Exception {

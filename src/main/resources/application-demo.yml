@@ -51,6 +51,14 @@ logging:
     root: debug
     com.jigpud.snow: debug
 
+# qiniu
+qiniu:
+  access-key: xxx
+  secret-key: xxx
+  bucket-name: xxx
+  domain: xxx
+  upload-token-expiration: 0
+
 # 短信验证码发送服务单元测试配置
 verification-code-service-test:
   phone-number: xxx

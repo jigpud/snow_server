@@ -87,6 +87,7 @@ public class UpdateAttractionController extends BaseController {
             if (newPhotos != null) {
                 List<String> photosToAdd = photosToAdd(oldPhotos, newPhotos);
                 List<String> photosToDelete = photosToDelete(oldPhotos, newPhotos);
+                log.debug("ADMIN : photos: {}", newPhotos);
                 log.debug("ADMIN : photos to add: {}", photosToAdd);
                 log.debug("ADMIN : photos to delete: {}", photosToDelete);
                 photosToAdd.forEach(photo -> attractionService.addPhoto(userid, attractionId, photo));
