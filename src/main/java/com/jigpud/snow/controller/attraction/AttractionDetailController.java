@@ -6,6 +6,7 @@ import com.jigpud.snow.response.AttractionResponse;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.service.attraction.AttractionService;
 import com.jigpud.snow.service.follow.FollowService;
+import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -27,16 +28,19 @@ public class AttractionDetailController extends BaseController {
     private final AttractionService attractionService;
     private final FollowService followService;
     private final TokenService tokenService;
+    private final StoryService storyService;
 
     @Autowired
     AttractionDetailController(
             AttractionService attractionService,
             FollowService followService,
-            TokenService tokenService
+            TokenService tokenService,
+            StoryService storyService
     ) {
         this.attractionService = attractionService;
         this.followService = followService;
         this.tokenService = tokenService;
+        this.storyService = storyService;
     }
 
     @PostMapping(PathConstant.GET_ATTRACTION)
@@ -47,7 +51,8 @@ public class AttractionDetailController extends BaseController {
         if (attractionService.haveAttraction(attractionId)) {
             Attraction attraction = attractionService.getAttraction(attractionId);
             String userid = tokenService.getUserid(getToken(request));
-            AttractionResponse attractionResponse = AttractionResponse.create(attraction, userid, attractionService, followService);
+            AttractionResponse attractionResponse = AttractionResponse.create(attraction, userid, attractionService,
+                    followService, storyService);
             return Response.responseSuccess(attractionResponse);
         } else {
             log.debug("attraction {} not exists!", attractionId);

@@ -33,9 +33,6 @@ public class Story {
     // 发布的时间
     private Long releaseTime;
 
-    // 发布的地点
-    private String releaseLocation;
-
     // 标题
     private String title;
 

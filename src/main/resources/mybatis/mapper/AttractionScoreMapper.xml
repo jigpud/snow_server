@@ -4,14 +4,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jigpud.snow.mapper.AttractionScoreMapper">
     <select id="insertIgnore">
-        INSERT IGNORE INTO attraction_score (userid, attraction_id, score) VALUES (#{userid}, #{attractionId}, #{score});
+        INSERT IGNORE INTO attraction_score (userid, attraction_id, score) VALUES (#{userid}, #{attractionId}, #{score})
     </select>
 
     <select id="averageScore" resultType="float">
-        SELECT COALESCE(avg(score), 0) FROM attraction_score WHERE attraction_id = #{attractionId} AND score > 0;
+        SELECT COALESCE(avg(score), 0) FROM attraction_score WHERE attraction_id = #{attractionId} AND score > 0
     </select>
 
     <select id="scoreCount" resultType="long">
-        SELECT COUNT(score) FROM attraction_score WHERE attraction_id = #{attractionId} AND score > 0;
+        SELECT COUNT(score) FROM attraction_score WHERE attraction_id = #{attractionId} AND score > 0
     </select>
 </mapper>

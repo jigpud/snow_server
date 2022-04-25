@@ -48,7 +48,7 @@ public class UserInformationResponse {
         userInfo.setFollowers(followService.followerCount(userid));
         userInfo.setFollowing(followService.followingCount(userid));
         userInfo.setFollowed(followService.haveFollowingUser(self, userid));
-        userInfo.setStoryCount(storyService.storyCount(userid));
+        userInfo.setStoryCount(storyService.userStoryCount(userid));
         return userInfo;
     }
 }

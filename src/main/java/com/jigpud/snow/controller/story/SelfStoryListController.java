@@ -5,6 +5,8 @@ import com.jigpud.snow.model.Story;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.StoryResponse;
+import com.jigpud.snow.service.attraction.AttractionService;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
@@ -34,18 +36,24 @@ public class SelfStoryListController extends BaseController {
     private final TokenService tokenService;
     private final UserService userService;
     private final LikeService likeService;
+    private final AttractionService attractionService;
+    private final FavoriteService favoriteService;
 
     @Autowired
     SelfStoryListController(
             StoryService storyService,
             TokenService tokenService,
             UserService userService,
-            LikeService likeService
+            LikeService likeService,
+            AttractionService attractionService,
+            FavoriteService favoriteService
     ) {
         this.storyService = storyService;
         this.tokenService = tokenService;
         this.userService = userService;
         this.likeService = likeService;
+        this.attractionService = attractionService;
+        this.favoriteService = favoriteService;
     }
 
     @PostMapping(PathConstant.GET_SELF_STORY_LIST)
@@ -62,7 +70,7 @@ public class SelfStoryListController extends BaseController {
         String userid = tokenService.getUserid(token);
         PageData<Story> stories = storyService.getUserStoryList(userid, pageSize, currentPage);
         PageData<StoryResponse> responsePageData = PageData.fromPageData(stories, story ->
-                StoryResponse.create(story, userid, userService, likeService));
+                StoryResponse.create(story, userid, userService, likeService, attractionService, favoriteService));
         return Response.responseSuccess(responsePageData);
     }
 }

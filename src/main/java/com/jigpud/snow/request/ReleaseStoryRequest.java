@@ -16,7 +16,6 @@ public class ReleaseStoryRequest {
     private String title;
     private String content;
     private List<String> pictures;
-    private String releaseLocation;
     private Long releaseTime;
     private String attractionId;
 }

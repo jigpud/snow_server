@@ -2,7 +2,7 @@
 audience:
   secret: xxx
   name: xxx
-  expire: 0
+  expiration: 0
 
 # aliyun
 aliyun:
@@ -44,6 +44,9 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+  type-aliases-package: com.jigpud.snow.model
+  type-handlers-package: com.jigpud.snow.util.typehandler
 
 # logback
 logging:

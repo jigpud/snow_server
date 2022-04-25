@@ -4,6 +4,8 @@ import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.StoryResponse;
+import com.jigpud.snow.service.attraction.AttractionService;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
@@ -29,18 +31,24 @@ public class StoryDetailController extends BaseController {
     private final TokenService tokenService;
     private final UserService userService;
     private final LikeService likeService;
+    private final AttractionService attractionService;
+    private final FavoriteService favoriteService;
 
     @Autowired
     StoryDetailController(
             StoryService storyService,
             TokenService tokenService,
             UserService userService,
-            LikeService likeService
+            LikeService likeService,
+            AttractionService attractionService,
+            FavoriteService favoriteService
     ) {
         this.storyService = storyService;
         this.tokenService = tokenService;
         this.userService = userService;
         this.likeService = likeService;
+        this.attractionService = attractionService;
+        this.favoriteService = favoriteService;
     }
 
     @PostMapping(PathConstant.GET_STORY)
@@ -51,7 +59,8 @@ public class StoryDetailController extends BaseController {
         Story story = storyService.getStory(storyId);
         if (story != null) {
             String userid = tokenService.getUserid(getToken(request));
-            StoryResponse storyResponse = StoryResponse.create(story, userid, userService, likeService);
+            StoryResponse storyResponse = StoryResponse.create(story, userid, userService, likeService,
+                    attractionService, favoriteService);
             return Response.responseSuccess(storyResponse);
         } else {
             log.debug("story {} not exist!", storyId);

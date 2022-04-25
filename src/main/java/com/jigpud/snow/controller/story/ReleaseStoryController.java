@@ -54,7 +54,6 @@ public class ReleaseStoryController extends BaseController {
             story.setContent(releaseStoryRequest.getContent());
             story.setPictures(releaseStoryRequest.getPictures());
             story.setReleaseTime(releaseStoryRequest.getReleaseTime());
-            story.setReleaseLocation(releaseStoryRequest.getReleaseLocation());
             storyService.releaseStory(story);
             if (storyService.getStory(storyId) != null) {
                 log.debug("release story success!");
@@ -74,7 +73,6 @@ public class ReleaseStoryController extends BaseController {
                 releaseStoryRequest.getTitle() != null && !releaseStoryRequest.getTitle().isEmpty() &&
                 releaseStoryRequest.getContent() != null && !releaseStoryRequest.getContent().isEmpty() &&
                 releaseStoryRequest.getReleaseTime() != null &&
-                releaseStoryRequest.getReleaseLocation() != null &&
                 releaseStoryRequest.getAttractionId() != null && !releaseStoryRequest.getAttractionId().isEmpty();
     }
 }

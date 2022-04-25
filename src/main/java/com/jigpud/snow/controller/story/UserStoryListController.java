@@ -5,6 +5,8 @@ import com.jigpud.snow.model.Story;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.StoryResponse;
+import com.jigpud.snow.service.attraction.AttractionService;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
@@ -30,18 +32,24 @@ public class UserStoryListController extends BaseController {
     private final LikeService likeService;
     private final TokenService tokenService;
     private final UserService userService;
+    private final AttractionService attractionService;
+    private final FavoriteService favoriteService;
 
     @Autowired
     UserStoryListController(
             StoryService storyService,
             LikeService likeService,
             TokenService tokenService,
-            UserService userService
+            UserService userService,
+            AttractionService attractionService,
+            FavoriteService favoriteService
     ) {
         this.storyService = storyService;
         this.likeService = likeService;
         this.tokenService = tokenService;
         this.userService = userService;
+        this.attractionService = attractionService;
+        this.favoriteService = favoriteService;
     }
 
     @PostMapping(PathConstant.GET_USER_STORY_LIST)
@@ -56,7 +64,7 @@ public class UserStoryListController extends BaseController {
         String selfUserid = tokenService.getUserid(getToken(request));
         PageData<Story> storyList = storyService.getUserStoryList(userid, pageSize, currentPage);
         PageData<StoryResponse> storyResponseList = PageData.fromPageData(storyList, story ->
-                StoryResponse.create(story, selfUserid, userService, likeService));
+                StoryResponse.create(story, selfUserid, userService, likeService, attractionService, favoriteService));
         return Response.responseSuccess(storyResponseList);
     }
 }

@@ -117,6 +117,15 @@ public class PathConstant {
     // 获取游记照片的upload token
     public static final String GET_STORY_IMG_UPLOAD_TOKEN = "/upload/token/story";
 
+    // 获取热门景点列表
+    public static final String GET_HOT_ATTRACTION_LIST = "/recommend/attraction/hot";
+
+    // 获取推荐景点列表
+    public static final String GET_RECOMMEND_ATTRACTION_LIST = "/recommend/attraction";
+
+    // 获取推荐用户列表
+    public static final String GET_RECOMMEND_USER_LIST = "/recommend/user";
+
     /*
     admin用户相关接口
      */

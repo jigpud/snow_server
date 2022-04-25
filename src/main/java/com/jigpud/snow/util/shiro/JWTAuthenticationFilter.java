@@ -56,7 +56,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
         try {
             response.getWriter().print(objectMapper.writeValueAsString(authFailed));
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("sendChallenge", e);
         }
         return false;
     }
@@ -70,6 +70,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
             subject.login(authenticationToken);
             return true;
         } catch (Exception e) {
+            log.error("executeLogin", e);
             return false;
         }
     }

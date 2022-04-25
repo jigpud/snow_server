@@ -50,8 +50,13 @@ public class StoryRepositoryImpl implements StoryRepository {
     }
 
     @Override
-    public long storyCount(String userid) {
+    public long userStoryCount(String userid) {
         return storyMapper.selectCount(authorQueryWrapper(userid));
+    }
+
+    @Override
+    public long attractionStoryCount(String attractionId) {
+        return storyMapper.selectCount(attractionQueryWrapper(attractionId));
     }
 
     private QueryWrapper<Story> storyQueryWrapper(String storyId) {
@@ -71,6 +76,12 @@ public class StoryRepositoryImpl implements StoryRepository {
         queryWrapper.like("title", keyWords)
                 .or()
                 .like("content", keyWords);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<Story> attractionQueryWrapper(String attractionId) {
+        QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("attraction_id", attractionId);
         return queryWrapper;
     }
 }

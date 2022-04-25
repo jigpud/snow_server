@@ -50,5 +50,12 @@ public interface StoryRepository {
      * @param userid 用户
      * @return 游记数量
      */
-    long storyCount(String userid);
+    long userStoryCount(String userid);
+
+    /**
+     * 获取景点的游记数量
+     * @param attractionId 景点
+     * @return 游记数量
+     */
+    long attractionStoryCount(String attractionId);
 }
