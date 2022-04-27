@@ -46,7 +46,7 @@ public class PathConstant {
     public static final String GET_USER_STORY_LIST = "/story/list";
 
     // 发布游记
-    public static final String RELEASE_STORY = "/story/release";
+    public static final String POST_STORY = "/story/post";
 
     // 获取用户自己动态的所有游记
     public static final String GET_MOMENTS_STORY_LIST = "/story/moments/self";
@@ -82,7 +82,7 @@ public class PathConstant {
     public static final String GET_USER_FAVORITE_STORY_LIST = "/favorite/story/list";
 
     // 评论
-    public static final String COMMENT_STORY = "/story/comment";
+    public static final String COMMENT_STORY = "/story/comment/post";
 
     // 游记的评论列表
     public static final String STORY_COMMENT_LIST = "/story/comment/list";
@@ -98,6 +98,9 @@ public class PathConstant {
 
     // 评论的回复列表
     public static final String COMMENT_REPLY_LIST = "/story/comment/reply/list";
+
+    // 获取评论详情
+    public static final String GET_COMMENT = "/story/comment";
 
     // 关注
     public static final String FOLLOW = "/user/follow";

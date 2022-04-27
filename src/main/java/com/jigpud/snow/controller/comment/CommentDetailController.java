@@ -3,7 +3,6 @@ package com.jigpud.snow.controller.comment;
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Comment;
 import com.jigpud.snow.response.CommentResponse;
-import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.service.comment.CommentService;
 import com.jigpud.snow.service.like.LikeService;
@@ -25,40 +24,38 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class CommentReplyListController extends BaseController {
+public class CommentDetailController extends BaseController {
     private final CommentService commentService;
-    private final TokenService tokenService;
     private final UserService userService;
     private final LikeService likeService;
+    private final TokenService tokenService;
 
     @Autowired
-    CommentReplyListController(
+    CommentDetailController(
             CommentService commentService,
-            TokenService tokenService,
             UserService userService,
-            LikeService likeService
+            LikeService likeService,
+            TokenService tokenService
     ) {
         this.commentService = commentService;
-        this.tokenService = tokenService;
         this.userService = userService;
         this.likeService = likeService;
+        this.tokenService = tokenService;
     }
 
-    @PostMapping(PathConstant.COMMENT_REPLY_LIST)
-    ResponseBody<PageData<CommentResponse>> commentReplyList(
-            @RequestParam(value = FormDataConstant.COMMENT_ID, required = false, defaultValue = "") String commentId,
-            @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
-            @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage,
+    @PostMapping(PathConstant.GET_COMMENT)
+    ResponseBody<CommentResponse> getComment(
+            @RequestParam(FormDataConstant.COMMENT_ID) String commentId,
             HttpServletRequest request
     ) {
-        if (!commentId.isEmpty() && commentService.getComment(commentId) != null) {
+        Comment comment = commentService.getComment(commentId);
+        if (comment != null) {
+            log.debug("getComment: get comment success {}", comment);
             String userid = tokenService.getUserid(getToken(request));
-            PageData<Comment> commentList = commentService.commentReplyList(commentId, pageSize, currentPage);
-            PageData<CommentResponse> commentResponseList = PageData.fromPageData(commentList, comment ->
-                    CommentResponse.create(comment, userid, userService, likeService));
-            return Response.responseSuccess(commentResponseList);
+            CommentResponse commentResponse = CommentResponse.create(comment, userid, userService, likeService);
+            return Response.responseSuccess(commentResponse);
         } else {
-            log.debug("comment {} not exists!", commentId);
+            log.debug("getComment: {} not exists!", commentId);
             return Response.responseFailed("评论不存在！");
         }
     }

@@ -45,8 +45,14 @@ public class ReplyCommentController extends BaseController {
         if (!commentId.isEmpty() && commentService.getComment(commentId) != null) {
             if (!content.isEmpty()) {
                 String userid = tokenService.getUserid(getToken(request));
-                commentService.reply(commentId, userid, content);
-                return Response.responseSuccess();
+                String replyCommentId = commentService.reply(commentId, userid, content);
+                if (commentService.getComment(replyCommentId) != null) {
+                    log.debug("reply success!");
+                    return Response.responseSuccess();
+                } else {
+                    log.debug("reply {} failed!", commentId);
+                    return Response.responseFailed("回复失败！");
+                }
             } else {
                 log.debug("content can not be empty!");
                 return Response.responseFailed("回复不能为空！");

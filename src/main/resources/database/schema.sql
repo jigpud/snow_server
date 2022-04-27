@@ -78,7 +78,8 @@ create table if not exists comment(
     author_id varchar(255) not null,
     comment_id varchar(255) not null,
     pid varchar(255) not null default '',
-    content mediumtext not null
+    content mediumtext not null,
+    comment_time bigint not null
 );
 
 -- story_favorite

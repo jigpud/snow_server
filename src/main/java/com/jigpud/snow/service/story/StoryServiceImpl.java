@@ -3,9 +3,12 @@ package com.jigpud.snow.service.story;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.repository.story.StoryRepository;
 import com.jigpud.snow.response.PageData;
+import com.jigpud.snow.util.encrypt.Encryptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author : jigpud
@@ -36,8 +39,18 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public void releaseStory(Story story) {
+    public String postStory(String title, String content, List<String> pictures, String userid, String attractionId) {
+        String storyId = Encryptor.uuid();
+        Story story = new Story();
+        story.setTitle(title);
+        story.setContent(content);
+        story.setPictures(pictures);
+        story.setAuthorId(userid);
+        story.setAttractionId(attractionId);
+        story.setReleaseTime(System.currentTimeMillis());
+        story.setStoryId(storyId);
         storyRepository.addStory(story);
+        return storyId;
     }
 
     @Override

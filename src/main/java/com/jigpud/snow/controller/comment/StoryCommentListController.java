@@ -1,6 +1,7 @@
 package com.jigpud.snow.controller.comment;
 
 import com.jigpud.snow.controller.BaseController;
+import com.jigpud.snow.model.Comment;
 import com.jigpud.snow.response.CommentResponse;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
@@ -56,23 +57,10 @@ public class StoryCommentListController extends BaseController {
     ) {
         if (!storyId.isEmpty() && storyService.getStory(storyId) != null) {
             String userid = tokenService.getUserid(getToken(request));
-            PageData<CommentResponse> storyCommentList = PageData.fromPage(
-                    commentService.storyCommentList(storyId, pageSize, currentPage),
-                    comment -> {
-                        String commentId = comment.getCommentId();
-                        String authorNickname = userService.getUserByUserid(comment.getAuthorId()).getNickname();
-                        CommentResponse commentResponse = new CommentResponse();
-                        commentResponse.setStoryId(comment.getStoryId());
-                        commentResponse.setCommentId(commentId);
-                        commentResponse.setAuthorId(comment.getAuthorId());
-                        commentResponse.setAuthorNickname(authorNickname);
-                        commentResponse.setContent(comment.getContent());
-                        commentResponse.setLikes(likeService.commentLikes(commentId));
-                        commentResponse.setLiked(likeService.haveLikedComment(userid, commentId));
-                        return commentResponse;
-                    }
-            );
-            return Response.responseSuccess(storyCommentList);
+            PageData<Comment> commentList = commentService.storyCommentList(storyId, pageSize, currentPage);
+            PageData<CommentResponse> commentResponseList = PageData.fromPageData(commentList, comment ->
+                    CommentResponse.create(comment, userid, userService, likeService));
+            return Response.responseSuccess(commentResponseList);
         } else {
             log.debug("story {} not exists!", storyId);
             return Response.responseFailed("游记不存在！");

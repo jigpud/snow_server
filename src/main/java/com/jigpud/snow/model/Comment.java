@@ -33,4 +33,7 @@ public class Comment {
 
     // 评论内容
     private String content;
+
+    // 评论发布的时间
+    private Long commentTime;
 }

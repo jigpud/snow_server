@@ -3,6 +3,8 @@ package com.jigpud.snow.service.story;
 import com.jigpud.snow.model.Story;
 import com.jigpud.snow.response.PageData;
 
+import java.util.List;
+
 /**
  * @author : jigpud
  * 游记相关服务
@@ -35,9 +37,14 @@ public interface StoryService {
 
     /**
      * 发表一篇游记
-     * @param story 游记
+     * @param title 标题
+     * @param content 正文
+     * @param pictures 图片列表
+     * @param userid 作者
+     * @param attractionId 景点
+     * @return 游记id
      */
-    void releaseStory(Story story);
+    String postStory(String title, String content, List<String> pictures, String userid, String attractionId);
 
     /**
      * 获取用户发布的游记数量

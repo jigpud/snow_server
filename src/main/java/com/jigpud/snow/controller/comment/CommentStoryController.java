@@ -52,8 +52,14 @@ public class CommentStoryController extends BaseController {
         if (!storyId.isEmpty() && storyService.getStory(storyId) != null) {
             if (!content.isEmpty()) {
                 String userid = tokenService.getUserid(getToken(request));
-                commentService.comment(storyId, userid, content);
-                return Response.responseSuccess();
+                String commentId = commentService.comment(storyId, userid, content);
+                if (commentService.getComment(commentId) != null) {
+                    log.debug("comment success!");
+                    return Response.responseSuccess();
+                } else {
+                    log.debug("comment {} failed!", storyId);
+                    return Response.responseFailed("评论失败！");
+                }
             } else {
                 log.debug("content can not be empty!");
                 return Response.responseFailed("评论不能为空！");

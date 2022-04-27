@@ -31,7 +31,8 @@ public class StoryResponse {
     private String releaseLocation;
     private Boolean liked;
     private String attractionId;
-    private boolean haveFavorite;
+    private Boolean haveFavorite;
+    private Long favorites;
 
     public static StoryResponse create(
             Story story,
@@ -57,6 +58,7 @@ public class StoryResponse {
         storyResponse.setLiked(likeService.haveLikedStory(self, storyId));
         storyResponse.setLikes(likeService.storyLikes(storyId));
         storyResponse.setHaveFavorite(favoriteService.haveFavoriteStory(self, storyId));
+        storyResponse.setFavorites(favoriteService.storyFavorites(storyId));
         return storyResponse;
     }
 }
