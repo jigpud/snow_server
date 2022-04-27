@@ -21,7 +21,8 @@ public class BaseController {
      * @return 未授权
      */
     @ExceptionHandler({UnauthorizedException.class})
-    ResponseBody<?> handleUnauthorizedException() {
+    ResponseBody<?> handleUnauthorizedException(Exception e) {
+        log.error("handleUnauthorizedException", e);
         return Response.response(403, "未授权！");
     }
 
@@ -30,7 +31,8 @@ public class BaseController {
      * @return 未认证
      */
     @ExceptionHandler({UnauthenticatedException.class})
-    ResponseBody<?> handleUnauthenticatedException() {
+    ResponseBody<?> handleUnauthenticatedException(Exception e) {
+        log.debug("handleUnauthenticatedException", e);
         return Response.response(401, "未认证！");
     }
 

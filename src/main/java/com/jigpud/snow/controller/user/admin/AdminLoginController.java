@@ -57,7 +57,7 @@ public class AdminLoginController {
                     String refreshToken = tokenService.createRefreshToken(userid);
                     String token = tokenService.createToken(refreshToken);
                     log.debug("admin login success!");
-                    return Response.responseSuccess(new LoginResponse(refreshToken, token));
+                    return Response.responseSuccess(new LoginResponse(token, refreshToken));
                 } else {
                     log.debug("user not admin!");
                     return Response.response(401,"用户不是管理员！");

@@ -30,6 +30,8 @@ spring:
     password: xxx
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      max-lifetime: 0
 
   ## database initialization
   sql:

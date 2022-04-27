@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.Date;
 /**
  * @author : jigpud
  */
+@Slf4j
 @Service
 public class TokenServiceImpl implements TokenService {
     private final AudienceConfig audience;
@@ -92,6 +94,7 @@ public class TokenServiceImpl implements TokenService {
             String base64Userid = parseToken(token).getSubject();
             return Encryptor.base64Decode(base64Userid);
         } catch (Exception e) {
+            log.error("getUserid", e);
             return "";
         }
     }
@@ -115,6 +118,7 @@ public class TokenServiceImpl implements TokenService {
             }
             return false;
         } catch (Exception e) {
+            log.error("verify", e);
             return false;
         }
     }

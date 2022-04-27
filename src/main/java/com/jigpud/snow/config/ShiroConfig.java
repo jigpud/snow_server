@@ -26,7 +26,9 @@ import java.util.Map;
 public class ShiroConfig {
     @Bean
     JWTRealm jwtRealm(RoleService roleService, PermissionService permissionService, TokenService tokenService) {
-        return new JWTRealm(roleService, permissionService, tokenService);
+        JWTRealm jwtRealm = new JWTRealm(roleService, permissionService, tokenService);
+        jwtRealm.setAuthenticationCachingEnabled(false);
+        return jwtRealm;
     }
 
     @Bean
@@ -69,8 +71,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put(PathConstant.RETRIEVE_PASSWORD, "anon");
         filterChainDefinitionMap.put(PathConstant.LOGIN_WITH_VERIFICATION_CODE, "anon");
         filterChainDefinitionMap.put(PathConstant.ADMIN_LOGIN, "anon");
-        filterChainDefinitionMap.put(PathConstant.STORY_COMMENT_LIST, "anon");
-        filterChainDefinitionMap.put(PathConstant.COMMENT_REPLY_LIST, "anon");
         filterChainDefinitionMap.put(PathConstant.LOGOUT, "jwt,jwtLogout");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 

@@ -2,7 +2,7 @@
 create table if not exists user(
     username varchar(255) not null unique,
     nickname varchar(255) not null default '',
-    password varchar(255) not null,
+    password mediumtext not null,
     signature varchar(255) not null default '',
     salt varchar(255) not null,
     avatar varchar(2083) not null default '',
@@ -17,14 +17,14 @@ create table if not exists user(
 create table if not exists role(
     id bigint auto_increment primary key,
     userid varchar(255) not null unique,
-    roles varchar(255) not null default 'user'
+    roles text not null
 );
 
 -- permission
 create table if not exists permission(
     id bigint auto_increment primary key,
     userid varchar(255) not null unique,
-    permissions varchar(255) not null default 'read'
+    permissions text not null
 );
 
 -- story
@@ -32,14 +32,14 @@ create table if not exists story(
     id bigint auto_increment primary key,
     story_id varchar(255) not null unique,
     author_id varchar(255) not null,
-    title varchar(255) not null,
+    title tinytext not null,
     content text not null,
     release_time bigint not null,
     pictures mediumtext not null,
     attraction_id varchar(255) not null
 );
 
--- story_likes
+-- story_like
 create table if not exists story_like(
     id bigint auto_increment primary key,
     userid varchar(255) not null,
@@ -47,7 +47,7 @@ create table if not exists story_like(
     unique key story_like(userid, story_id)
 );
 
--- comment_likes
+-- comment_like
 create table if not exists comment_like(
     id bigint auto_increment primary key,
     userid varchar(255) not null,
@@ -55,7 +55,7 @@ create table if not exists comment_like(
     unique key comment_like(userid, comment_id)
 );
 
--- follow_user
+-- user_follow
 create table if not exists user_follow(
     id bigint auto_increment primary key,
     userid varchar(255) not null,
@@ -63,7 +63,7 @@ create table if not exists user_follow(
     unique key user_follow(userid, follower_id)
 );
 
--- follow_attraction
+-- attraction_follow
 create table if not exists attraction_follow(
     id bigint auto_increment primary key,
     userid varchar(255) not null,
@@ -114,6 +114,6 @@ create table if not exists attraction_score(
     id bigint auto_increment primary key,
     userid varchar(255) not null,
     attraction_id varchar(255) not null,
-    score bigint not null default 0,
+    score int not null default 0,
     unique key attraction_score(userid, attraction_id)
 );
