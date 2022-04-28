@@ -45,41 +45,40 @@ public class UpdateInformationController extends BaseController {
         String token = getToken(request);
         String userid = tokenService.getUserid(token);
         User user = userService.getUserByUserid(userid);
+        log.debug("updateInformationRequest: {}", updateInformationRequest);
+
         if (user != null) {
             // update nickname
             if (updateInformationRequest.getNickname() != null) {
                 user.setNickname(updateInformationRequest.getNickname());
-            } else {
-                user.setNickname("");
             }
 
             // update gender
             if (updateInformationRequest.getGender() != null) {
                 user.setGender(updateInformationRequest.getGender());
-            } else {
-                user.setGender("");
             }
 
             // update age
             if (updateInformationRequest.getAge() != null) {
                 user.setAge(updateInformationRequest.getAge());
-            } else {
-                user.setAge(0);
             }
 
             // update signature
             if (updateInformationRequest.getSignature() != null) {
                 user.setSignature(updateInformationRequest.getSignature());
-            } else {
-                user.setSignature("");
             }
 
             // update avatar
             if (updateInformationRequest.getAvatar() != null) {
                 user.setAvatar(updateInformationRequest.getAvatar());
-            } else {
-                user.setAvatar("");
             }
+
+            // update background
+            if (updateInformationRequest.getBackground() != null) {
+                user.setBackground(updateInformationRequest.getBackground());
+            }
+
+            userService.update(user);
             return Response.responseSuccess();
         }
         return Response.responseFailed("更新个人信息失败！");

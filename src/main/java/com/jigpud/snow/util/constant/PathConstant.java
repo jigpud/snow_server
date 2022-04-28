@@ -120,6 +120,9 @@ public class PathConstant {
     // 获取游记照片的upload token
     public static final String GET_STORY_IMG_UPLOAD_TOKEN = "/upload/token/story";
 
+    // 获取个人信息的背景图片
+    public static final String GET_USER_PROFILE_BACKGROUND_IMG_UPLOAD_TOKEN = "/upload/token/userProfileBackground";
+
     // 获取热门景点列表
     public static final String GET_HOT_ATTRACTION_LIST = "/recommend/attraction/hot";
 
