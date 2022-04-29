@@ -1,14 +1,18 @@
 package com.jigpud.snow.repository.attractionscore;
 
+import com.jigpud.snow.model.AttractionScore;
+
 /**
  * @author : jigpud
  */
 public interface AttractionScoreRepository {
-    void add(String userid, String attractionId, int score);
+    void add(String attractionId, String userid, int score);
 
-    void remove(String userid, String attractionId);
+    AttractionScore get(String attractionId, String userid);
 
-    boolean have(String userid, String attractionId);
+    void remove(String attractionId, String userid);
+
+    boolean have(String attractionId, String userid);
 
     long scoreCount(String attractionId);
 

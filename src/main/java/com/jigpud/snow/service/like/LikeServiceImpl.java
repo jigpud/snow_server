@@ -27,17 +27,17 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void likeStory(String userid, String storyId) {
+    public void likeStory(String storyId, String userid) {
         storyLikeRepository.add(storyId, userid);
     }
 
     @Override
-    public void unlikeStory(String userid, String storyId) {
+    public void unlikeStory(String storyId, String userid) {
         storyLikeRepository.remove(storyId, userid);
     }
 
     @Override
-    public boolean haveLikedStory(String userid, String storyId) {
+    public boolean haveLikedStory(String storyId, String userid) {
         return storyLikeRepository.have(storyId, userid);
     }
 
@@ -47,17 +47,17 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public void likeComment(String userid, String commentId) {
+    public void likeComment(String commentId, String userid) {
         commentLikeRepository.add(commentId, userid);
     }
 
     @Override
-    public void unlikeComment(String userid, String commentId) {
+    public void unlikeComment(String commentId, String userid) {
         commentLikeRepository.remove(commentId, userid);
     }
 
     @Override
-    public boolean haveLikedComment(String userid, String commentId) {
+    public boolean haveLikedComment(String commentId, String userid) {
         return commentLikeRepository.have(commentId, userid);
     }
 

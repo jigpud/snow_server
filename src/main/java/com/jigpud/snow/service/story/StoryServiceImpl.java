@@ -34,8 +34,8 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public PageData<Story> getUserMomentsStoryList(String authorId, long pageSize, long currentPage) {
-        return null;
+    public PageData<Story> getAttractionStoryList(String attractionId, long pageSize, long currentPage) {
+        return PageData.fromPage(storyRepository.getAttractionStoryList(attractionId, pageSize, currentPage));
     }
 
     @Override

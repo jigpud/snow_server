@@ -1,6 +1,7 @@
 package com.jigpud.snow.service.attraction;
 
 import com.jigpud.snow.model.Attraction;
+import com.jigpud.snow.model.AttractionPhoto;
 import com.jigpud.snow.response.PageData;
 
 import java.util.List;
@@ -11,9 +12,9 @@ import java.util.List;
 public interface AttractionService {
     /**
      * 增加一个景点
-     * @param attraction 景点
+     * @param attractionId 景点
      */
-    void addAttraction(Attraction attraction);
+    void addAttraction(Attraction attractionId);
 
     /**
      * 删除一个景点
@@ -60,11 +61,11 @@ public interface AttractionService {
 
     /**
      * 为景点打分
-     * @param userid 用户
      * @param attractionId 景点
+     * @param userid 用户
      * @param score 分数
      */
-    void score(String userid, String attractionId, int score);
+    void score(String attractionId, String userid, int score);
 
     /**
      * 获取景点已打分的人数
@@ -81,35 +82,52 @@ public interface AttractionService {
     float getScore(String attractionId);
 
     /**
-     * 获取用户是否已经为景点打分
-     * @param userid 用户
+     * 获取用户的打分
      * @param attractionId 景点
+     * @param userid 用户
+     * @return 打分
+     */
+    int getUserScore(String attractionId, String userid);
+
+    /**
+     * 获取用户是否已经为景点打分
+     * @param attractionId 景点
+     * @param userid 用户
      * @return 是否已经打分
      */
-    boolean haveScored(String userid, String attractionId);
+    boolean haveScored(String attractionId, String userid);
 
     /**
      * 增加一张景点照片
-     * @param uploaderId 上传者
      * @param attractionId 景点
+     * @param userid 上传者
      * @param photo 照片链接
      */
-    void addPhoto(String uploaderId, String attractionId, String photo);
+    void addPhoto(String attractionId, String userid, String photo);
 
     /**
      * 删除一张景点照片
-     * @param uploaderId 上传者
+     * @param attractionId 景点
+     * @param userid 上传者
+     * @param photo 照片链接
+     */
+    void deletePhoto(String attractionId, String userid, String photo);
+
+    /**
+     * 删除一张照片
      * @param attractionId 景点
      * @param photo 照片链接
      */
-    void deletePhoto(String uploaderId, String attractionId, String photo);
+    void deletePhoto(String attractionId, String photo);
 
     /**
      * 获取景点的照片列表
      * @param attractionId 景点
-     * @return 照片列表
+     * @param pageSize 分页大小
+     * @param currentPage 页码
+     * @return 照片列表分页
      */
-    List<String> getAttractionPhotoList(String attractionId);
+    PageData<AttractionPhoto> getAttractionPhotoList(String attractionId, long pageSize, long currentPage);
 
     /**
      * 景点中是否存在这张照片

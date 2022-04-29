@@ -9,7 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AttractionScoreMapper extends BaseMapper<AttractionScore> {
-    void insertIgnore(String userid, String attractionId, int score);
+    void insertOrUpdate(String attractionId, String userid, int score);
+
     float averageScore(String attractionId);
 
     long scoreCount(String attractionId);

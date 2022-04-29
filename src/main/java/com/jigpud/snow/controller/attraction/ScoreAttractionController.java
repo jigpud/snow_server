@@ -1,9 +1,8 @@
-package com.jigpud.snow.controller.story;
+package com.jigpud.snow.controller.attraction;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.response.ResponseBody;
-import com.jigpud.snow.service.like.LikeService;
-import com.jigpud.snow.service.story.StoryService;
+import com.jigpud.snow.service.attraction.AttractionService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -25,42 +24,36 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class UnlikeStoryController extends BaseController {
+public class ScoreAttractionController extends BaseController {
+    private final AttractionService attractionService;
     private final TokenService tokenService;
-    private final StoryService storyService;
-    private final LikeService likeService;
 
     @Autowired
-    UnlikeStoryController(
-            TokenService tokenService,
-            StoryService storyService,
-            LikeService likeService
-    ) {
+    ScoreAttractionController(AttractionService attractionService, TokenService tokenService) {
+        this.attractionService = attractionService;
         this.tokenService = tokenService;
-        this.storyService = storyService;
-        this.likeService = likeService;
     }
 
-    @PostMapping(PathConstant.UNLIKE_STORY)
+    @PostMapping(PathConstant.SCORE_ATTRACTION)
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_WRITE)
-    ResponseBody<?> unlikeStory(
-            @RequestParam(value = FormDataConstant.STORY_ID, required = false, defaultValue = "") String storyId,
+    ResponseBody<?> scoreAttraction(
+            @RequestParam(value = FormDataConstant.ATTRACTION_ID, required = false, defaultValue = "") String attractionId,
+            @RequestParam(value = FormDataConstant.SCORE, required = false, defaultValue = "0") Integer score,
             HttpServletRequest request
     ) {
-        String userid = tokenService.getUserid(getToken(request));
-        if (storyService.getStory(storyId) != null) {
-            likeService.unlikeStory(storyId, userid);
-            if (!likeService.haveLikedStory(storyId, userid)) {
-                log.debug("unlike story success!");
+        if (attractionService.haveAttraction(attractionId)) {
+            if (score >= 0 && score <= 5) {
+                String userid = tokenService.getUserid(getToken(request));
+                attractionService.score(attractionId, userid, score);
                 return Response.responseSuccess();
             } else {
-                log.debug("unlike story failed!");
-                return Response.responseFailed("取消点赞失败！");
+                log.debug("illegal score {}", score);
+                return Response.responseFailed("错误的分数！");
             }
         } else {
-            log.debug("story not exists, story id: {}", storyId);
-            return Response.responseFailed("游记不存在！");
+            log.debug("attraction {} not exists!", attractionId);
+            return Response.responseFailed("景点不存在！");
         }
     }
 }

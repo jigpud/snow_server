@@ -18,14 +18,14 @@ public interface FavoriteService {
      * @param userid 用户
      * @param storyId 游记
      */
-    void favoriteStory(String userid, String storyId);
+    void favoriteStory(String storyId, String userid);
 
     /**
      * 取消收藏游记
      * @param userid 用户
      * @param storyId 游记
      */
-    void unFavoriteStory(String userid, String storyId);
+    void unFavoriteStory(String storyId, String userid);
 
     /**
      * 获取用户是否已经收藏了游记
@@ -33,7 +33,7 @@ public interface FavoriteService {
      * @param storyId 游记
      * @return 是否已经收藏了
      */
-    boolean haveFavoriteStory(String userid, String storyId);
+    boolean haveFavoriteStory(String storyId, String userid);
 
     /**
      * 获取用户的收藏列表

@@ -22,7 +22,7 @@ public class StoryFavoriteRepositoryImpl implements StoryFavoriteRepository {
     }
 
     @Override
-    public void add(String userid, String storyId) {
+    public void add(String storyId, String userid) {
         StoryFavorite storyFavorite = new StoryFavorite();
         storyFavorite.setUserid(userid);
         storyFavorite.setStoryId(storyId);
@@ -30,13 +30,13 @@ public class StoryFavoriteRepositoryImpl implements StoryFavoriteRepository {
     }
 
     @Override
-    public void remove(String userid, String storyId) {
-        storyFavoriteMapper.delete(userAndStoryQueryWrapper(userid, storyId));
+    public void remove(String storyId, String userid) {
+        storyFavoriteMapper.delete(userAndStoryQueryWrapper(storyId, userid));
     }
 
     @Override
-    public boolean have(String userid, String storyId) {
-        return storyFavoriteMapper.exists(userAndStoryQueryWrapper(userid, storyId));
+    public boolean have(String storyId, String userid) {
+        return storyFavoriteMapper.exists(userAndStoryQueryWrapper(storyId, userid));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class StoryFavoriteRepositoryImpl implements StoryFavoriteRepository {
         return storyFavoriteMapper.selectCount(userQueryWrapper(userid));
     }
 
-    private QueryWrapper<StoryFavorite> userAndStoryQueryWrapper(String userid, String storyId) {
+    private QueryWrapper<StoryFavorite> userAndStoryQueryWrapper(String storyId, String userid) {
         QueryWrapper<StoryFavorite> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", userid);
         queryWrapper.eq("story_id", storyId);

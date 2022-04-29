@@ -2,6 +2,7 @@ package com.jigpud.snow.service.attraction;
 
 import com.jigpud.snow.model.Attraction;
 import com.jigpud.snow.model.AttractionPhoto;
+import com.jigpud.snow.model.AttractionScore;
 import com.jigpud.snow.repository.attraction.AttractionRepository;
 import com.jigpud.snow.repository.attractionphoto.AttractionPhotoRepository;
 import com.jigpud.snow.repository.attractionscore.AttractionScoreRepository;
@@ -36,8 +37,8 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public void addAttraction(Attraction attraction) {
-        attractionRepository.add(attraction);
+    public void addAttraction(Attraction attractionId) {
+        attractionRepository.add(attractionId);
     }
 
     @Override
@@ -71,8 +72,8 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public void score(String userid, String attractionId, int score) {
-        attractionScoreRepository.add(userid, attractionId, score);
+    public void score(String attractionId, String userid, int score) {
+        attractionScoreRepository.add(attractionId, userid, score);
     }
 
     @Override
@@ -86,30 +87,42 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public boolean haveScored(String userid, String attractionId) {
-        return attractionScoreRepository.have(userid, attractionId);
+    public int getUserScore(String attractionId, String userid) {
+        if (attractionScoreRepository.have(attractionId, userid)) {
+            return attractionScoreRepository.get(attractionId, userid).getScore();
+        } else {
+            return 0;
+        }
     }
 
     @Override
-    public void addPhoto(String uploaderId, String attractionId, String photo) {
+    public boolean haveScored(String attractionId, String userid) {
+        return attractionScoreRepository.have(attractionId, userid);
+    }
+
+    @Override
+    public void addPhoto(String attractionId, String userid, String photo) {
         AttractionPhoto attractionPhoto = new AttractionPhoto();
-        attractionPhoto.setUploaderId(uploaderId);
         attractionPhoto.setAttractionId(attractionId);
+        attractionPhoto.setUploaderId(userid);
         attractionPhoto.setPhoto(photo);
         attractionPhoto.setPhotoMd5(Encryptor.md5(photo));
         attractionPhotoRepository.add(attractionPhoto);
     }
 
     @Override
-    public void deletePhoto(String uploaderId, String attractionId, String photo) {
-        attractionPhotoRepository.remove(uploaderId, attractionId, photo);
+    public void deletePhoto(String attractionId, String userid, String photo) {
+        attractionPhotoRepository.remove(attractionId, userid, photo);
     }
 
     @Override
-    public List<String> getAttractionPhotoList(String attractionId) {
-        return attractionPhotoRepository.getAttractionPhotoList(attractionId).stream()
-                .map(AttractionPhoto::getPhoto)
-                .collect(Collectors.toList());
+    public void deletePhoto(String attractionId, String photo) {
+        attractionPhotoRepository.remove(attractionId, photo);
+    }
+
+    @Override
+    public PageData<AttractionPhoto> getAttractionPhotoList(String attractionId, long pageSize, long currentPage) {
+        return PageData.fromPage(attractionPhotoRepository.getAttractionPhotoList(attractionId, pageSize, currentPage));
     }
 
     @Override

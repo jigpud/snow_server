@@ -50,8 +50,8 @@ public class LikeStoryController extends BaseController {
     ) {
         String userid = tokenService.getUserid(getToken(request));
         if (storyService.getStory(storyId) != null) {
-            likeService.likeStory(userid, storyId);
-            if (likeService.haveLikedStory(userid, storyId)) {
+            likeService.likeStory(storyId, userid);
+            if (likeService.haveLikedStory(storyId, userid)) {
                 log.debug("like story success!");
                 return Response.responseSuccess();
             } else {

@@ -50,7 +50,7 @@ public class LikeCommentController extends BaseController {
     ) {
         if (!commentId.isEmpty() && commentService.getComment(commentId) != null) {
             String userid = tokenService.getUserid(getToken(request));
-            likeService.likeComment(userid, commentId);
+            likeService.likeComment(commentId, userid);
         } else {
             log.debug("likeComment: comment {} not exists!", commentId);
             return Response.responseFailed("评论不存在！");

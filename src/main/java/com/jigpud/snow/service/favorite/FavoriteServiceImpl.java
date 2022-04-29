@@ -26,18 +26,18 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public void favoriteStory(String userid, String storyId) {
-        storyFavoriteRepository.add(userid, storyId);
+    public void favoriteStory(String storyId, String userid) {
+        storyFavoriteRepository.add(storyId, userid);
     }
 
     @Override
-    public void unFavoriteStory(String userid, String storyId) {
-        storyFavoriteRepository.remove(userid, storyId);
+    public void unFavoriteStory(String storyId, String userid) {
+        storyFavoriteRepository.remove(storyId, userid);
     }
 
     @Override
-    public boolean haveFavoriteStory(String userid, String storyId) {
-        return storyFavoriteRepository.have(userid, storyId);
+    public boolean haveFavoriteStory(String storyId, String userid) {
+        return storyFavoriteRepository.have(storyId, userid);
     }
 
     @Override

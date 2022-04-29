@@ -50,8 +50,8 @@ public class UnFavoriteStoryController extends BaseController {
     ) {
         if (storyService.getStory(storyId) != null) {
             String userid = tokenService.getUserid(getToken(request));
-            favoriteService.unFavoriteStory(userid, storyId);
-            if (!favoriteService.haveFavoriteStory(userid, storyId)) {
+            favoriteService.unFavoriteStory(storyId, userid);
+            if (!favoriteService.haveFavoriteStory(storyId, userid)) {
                 log.debug("un favorite story success!");
                 return Response.responseSuccess();
             } else {

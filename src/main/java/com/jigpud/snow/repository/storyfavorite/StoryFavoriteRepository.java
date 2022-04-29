@@ -12,14 +12,14 @@ public interface StoryFavoriteRepository {
      * @param userid 用户
      * @param storyId 游记
      */
-    void add(String userid, String storyId);
+    void add(String storyId, String userid);
 
     /**
      * 删除一条收藏
      * @param userid 用户
      * @param storyId 游记
      */
-    void remove(String userid, String storyId);
+    void remove(String storyId, String userid);
 
     /**
      * 是否有这样一条收藏
@@ -27,7 +27,7 @@ public interface StoryFavoriteRepository {
      * @param storyId 游记
      * @return 是否有这样的收藏
      */
-    boolean have(String userid, String storyId);
+    boolean have(String storyId, String userid);
 
     /**
      * 获取用户的收藏列表

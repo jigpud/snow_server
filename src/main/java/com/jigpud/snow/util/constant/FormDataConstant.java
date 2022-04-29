@@ -23,4 +23,6 @@ public class FormDataConstant {
     public static final String DESCRIPTION = "description";
     public static final String LOCATION = "location";
     public static final String TAGS = "tags";
+    public static final String SCORE = "score";
+    public static final String PHOTO = "photo";
 }

@@ -81,21 +81,6 @@ public class UpdateAttractionController extends BaseController {
                 attraction.setLocation("");
             }
 
-            // update photos
-            List<String> oldPhotos = attractionService.getAttractionPhotoList(attractionId);
-            List<String> newPhotos = update.getPhotos();
-            if (newPhotos != null) {
-                List<String> photosToAdd = photosToAdd(oldPhotos, newPhotos);
-                List<String> photosToDelete = photosToDelete(oldPhotos, newPhotos);
-                log.debug("ADMIN : photos: {}", newPhotos);
-                log.debug("ADMIN : photos to add: {}", photosToAdd);
-                log.debug("ADMIN : photos to delete: {}", photosToDelete);
-                photosToAdd.forEach(photo -> attractionService.addPhoto(userid, attractionId, photo));
-                photosToDelete.forEach(photo -> attractionService.deletePhoto(userid, attractionId, photo));
-            } else {
-                oldPhotos.forEach(photo -> attractionService.deletePhoto(userid, attractionId, photo));
-            }
-
             attractionService.updateAttraction(attraction);
 
             log.debug("ADMIN : update attraction information success!");
@@ -103,15 +88,5 @@ public class UpdateAttractionController extends BaseController {
         }
         log.debug("ADMIN : update attraction information failed!");
         return Response.responseFailed("更新景点信息失败！");
-    }
-
-    private List<String> photosToDelete(List<String> oldPhotos, List<String> newPhotos) {
-        Set<String> photos = new HashSet<>(newPhotos);
-        return oldPhotos.stream().filter(photo -> !photos.contains(photo)).collect(Collectors.toList());
-    }
-
-    private List<String> photosToAdd(List<String> oldPhotos, List<String> newPhotos) {
-        Set<String> photos = new HashSet<>(oldPhotos);
-        return newPhotos.stream().filter(photo -> !photos.contains(photo)).collect(Collectors.toList());
     }
 }

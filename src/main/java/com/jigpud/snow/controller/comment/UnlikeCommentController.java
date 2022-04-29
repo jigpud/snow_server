@@ -50,7 +50,7 @@ public class UnlikeCommentController extends BaseController {
     ) {
         if (!commentId.isEmpty() && commentService.getComment(commentId) != null) {
             String userid = tokenService.getUserid(getToken(request));
-            likeService.unlikeComment(userid, commentId);
+            likeService.unlikeComment(commentId, userid);
         } else {
             log.debug("unlikeComment: comment {} not exists!", commentId);
             return Response.responseFailed("评论不存在！");

@@ -1,13 +1,12 @@
 package com.jigpud.snow.repository.attractionphoto;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.mapper.AttractionPhotoMapper;
 import com.jigpud.snow.model.AttractionPhoto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author : jigpud
@@ -28,13 +27,18 @@ public class AttractionPhotoRepositoryImpl implements AttractionPhotoRepository 
     }
 
     @Override
-    public void remove(String uploaderId, String attractionId, String photo) {
-        attractionPhotoMapper.delete(uploaderAttractionAndPhotoQueryWrapper(uploaderId, attractionId, photo));
+    public void remove(String attractionId, String uploaderId, String photo) {
+        attractionPhotoMapper.delete(attractionUploaderAndPhotoQueryWrapper(attractionId, uploaderId, photo));
     }
 
     @Override
-    public List<AttractionPhoto> getAttractionPhotoList(String attractionId) {
-        return attractionPhotoMapper.selectList(attractionQueryWrapper(attractionId));
+    public void remove(String attractionId, String photo) {
+        attractionPhotoMapper.delete(attractionAndPhotoQueryWrapper(attractionId, photo));
+    }
+
+    @Override
+    public Page<AttractionPhoto> getAttractionPhotoList(String attractionId, long pageSize, long currentPage) {
+        return attractionPhotoMapper.selectPage(new Page<>(currentPage, pageSize), attractionQueryWrapper(attractionId));
     }
 
     @Override
@@ -42,7 +46,7 @@ public class AttractionPhotoRepositoryImpl implements AttractionPhotoRepository 
         return attractionPhotoMapper.exists(attractionAndPhotoQueryWrapper(attractionId, photo));
     }
 
-    private QueryWrapper<AttractionPhoto> uploaderAttractionAndPhotoQueryWrapper(String uploaderId, String attractionId, String photo) {
+    private QueryWrapper<AttractionPhoto> attractionUploaderAndPhotoQueryWrapper(String attractionId, String uploaderId, String photo) {
         QueryWrapper<AttractionPhoto> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("uploader_id", uploaderId);
         queryWrapper.eq("attraction_id", attractionId);

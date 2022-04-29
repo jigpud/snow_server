@@ -39,6 +39,11 @@ public class StoryRepositoryImpl implements StoryRepository {
     }
 
     @Override
+    public Page<Story> getAttractionStoryList(String attractionId, long pageSize, long currentPage) {
+        return (Page<Story>) storyMapper.getAttractionStoryList(attractionId, new Page<>(currentPage, pageSize));
+    }
+
+    @Override
     public void update(Story story) {
         String storyId = story.getStoryId();
         storyMapper.update(story, storyQueryWrapper(storyId));

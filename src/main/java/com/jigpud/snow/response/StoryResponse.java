@@ -55,9 +55,9 @@ public class StoryResponse {
         storyResponse.setReleaseTime(story.getReleaseTime());
         storyResponse.setReleaseLocation(attractionService.getAttraction(story.getAttractionId()).getName());
         storyResponse.setAttractionId(story.getAttractionId());
-        storyResponse.setLiked(likeService.haveLikedStory(self, storyId));
+        storyResponse.setLiked(likeService.haveLikedStory(storyId, self));
         storyResponse.setLikes(likeService.storyLikes(storyId));
-        storyResponse.setHaveFavorite(favoriteService.haveFavoriteStory(self, storyId));
+        storyResponse.setHaveFavorite(favoriteService.haveFavoriteStory(storyId, self));
         storyResponse.setFavorites(favoriteService.storyFavorites(storyId));
         return storyResponse;
     }

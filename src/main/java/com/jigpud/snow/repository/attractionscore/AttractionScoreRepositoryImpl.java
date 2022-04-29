@@ -21,18 +21,23 @@ public class AttractionScoreRepositoryImpl implements AttractionScoreRepository 
     }
 
     @Override
-    public void add(String userid, String attractionId, int score) {
-        attractionScoreMapper.insertIgnore(userid, attractionId, score);
+    public void add(String attractionId, String userid, int score) {
+        attractionScoreMapper.insertOrUpdate(attractionId, userid, score);
     }
 
     @Override
-    public void remove(String userid, String attractionId) {
-        attractionScoreMapper.delete(userAndAttractionQueryWrapper(userid, attractionId));
+    public AttractionScore get(String attractionId, String userid) {
+        return attractionScoreMapper.selectOne(attractionAndUserQueryWrapper(attractionId, userid));
     }
 
     @Override
-    public boolean have(String userid, String attractionId) {
-        return attractionScoreMapper.exists(userAndAttractionQueryWrapper(userid, attractionId));
+    public void remove(String attractionId, String userid) {
+        attractionScoreMapper.delete(attractionAndUserQueryWrapper(attractionId, userid));
+    }
+
+    @Override
+    public boolean have(String attractionId, String userid) {
+        return attractionScoreMapper.exists(attractionAndUserQueryWrapper(attractionId, userid));
     }
 
     @Override
@@ -45,15 +50,9 @@ public class AttractionScoreRepositoryImpl implements AttractionScoreRepository 
         return attractionScoreMapper.scoreCount(attractionId);
     }
 
-    private QueryWrapper<AttractionScore> userAndAttractionQueryWrapper(String userid, String attractionId) {
+    private QueryWrapper<AttractionScore> attractionAndUserQueryWrapper(String attractionId, String userid) {
         QueryWrapper<AttractionScore> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", userid);
-        queryWrapper.eq("attraction_id", attractionId);
-        return queryWrapper;
-    }
-
-    private QueryWrapper<AttractionScore> attractionQueryWrapper(String attractionId) {
-        QueryWrapper<AttractionScore> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("attraction_id", attractionId);
         return queryWrapper;
     }

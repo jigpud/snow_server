@@ -27,13 +27,13 @@ public interface StoryService {
     PageData<Story> getUserStoryList(String authorId, long pageSize, long currentPage);
 
     /**
-     * 获取用户动态的所有游记
-     * @param authorId userid
+     * 获取景点的游记列表
+     * @param attractionId 景点
      * @param pageSize 分页大小
      * @param currentPage 页码
-     * @return 动态游记分页
+     * @return 游记列表分页
      */
-    PageData<Story> getUserMomentsStoryList(String authorId, long pageSize, long currentPage);
+    PageData<Story> getAttractionStoryList(String attractionId, long pageSize, long currentPage);
 
     /**
      * 发表一篇游记

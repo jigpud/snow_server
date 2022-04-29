@@ -111,6 +111,27 @@ public class PathConstant {
     // 获取景点详情
     public static final String GET_ATTRACTION = "/attraction";
 
+    // 获取景点下的游记列表
+    public static final String GET_ATTRACTION_STORY_LIST = "/attraction/story/list";
+
+    // 为景点打分
+    public static final String SCORE_ATTRACTION = "/attraction/score";
+
+    // 获取景点的照片列表
+    public static final String GET_ATTRACTION_PHOTO_LIST = "/attraction/photo";
+
+    // 上传景点照片
+    public static final String UPLOAD_ATTRACTION_PHOTO = "/attraction/photo/upload";
+
+    // 删除景点照片
+    public static final String DELETE_ATTRACTION_PHOTO = "/attraction/photo/delete";
+
+    // 关注景点
+    public static final String FOLLOW_ATTRACTION = "attraction/follow";
+
+    // 取消关注景点
+    public static final String UNFOLLOW_ATTRACTION = "attraction/unfollow";
+
     // 获取头像的upload token
     public static final String GET_AVATAR_UPLOAD_TOKEN = "/upload/token/avatar";
 
@@ -162,4 +183,7 @@ public class PathConstant {
 
     // 查询景点
     public static final String QUERY_ATTRACTION = "/admin/attraction/query";
+
+    // 删除景点照片
+    public static final String ADMIN_DELETE_ATTRACTION_PHOTO = "/admin/attraction/photo/delete";
 }

@@ -37,7 +37,7 @@ public class CommentResponse {
         commentResponse.setAuthorAvatar(author.getAvatar());
         commentResponse.setContent(comment.getContent());
         commentResponse.setLikes(likeService.commentLikes(commentId));
-        commentResponse.setLiked(likeService.haveLikedComment(self, commentId));
+        commentResponse.setLiked(likeService.haveLikedComment(commentId, self));
         commentResponse.setReplyTo(comment.getPid());
         commentResponse.setCommentTime(comment.getCommentTime());
         return commentResponse;

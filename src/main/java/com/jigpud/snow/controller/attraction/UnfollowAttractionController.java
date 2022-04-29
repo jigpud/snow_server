@@ -1,9 +1,9 @@
-package com.jigpud.snow.controller.favorite;
+package com.jigpud.snow.controller.attraction;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.response.ResponseBody;
-import com.jigpud.snow.service.favorite.FavoriteService;
-import com.jigpud.snow.service.story.StoryService;
+import com.jigpud.snow.service.attraction.AttractionService;
+import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -25,41 +25,42 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class FavoriteStoryController extends BaseController {
-    private final FavoriteService favoriteService;
-    private final StoryService storyService;
+public class UnfollowAttractionController extends BaseController {
+    private final AttractionService attractionService;
+    private final FollowService followService;
     private final TokenService tokenService;
 
     @Autowired
-    FavoriteStoryController(
-            FavoriteService favoriteService,
-            StoryService storyService,
-            TokenService tokenService) {
-        this.favoriteService = favoriteService;
-        this.storyService = storyService;
+    UnfollowAttractionController(
+            AttractionService attractionService,
+            FollowService followService,
+            TokenService tokenService
+    ) {
+        this.attractionService = attractionService;
+        this.followService = followService;
         this.tokenService = tokenService;
     }
 
-    @PostMapping(PathConstant.FAVORITE_STORY)
+    @PostMapping(PathConstant.UNFOLLOW_ATTRACTION)
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_WRITE)
-    ResponseBody<?> favoriteStory(
-            @RequestParam(value = FormDataConstant.STORY_ID, required = false, defaultValue = "") String storyId,
+    ResponseBody<?> unfollowAttraction(
+            @RequestParam(value = FormDataConstant.ATTRACTION_ID, required = false, defaultValue = "") String attractionId,
             HttpServletRequest request
     ) {
-        if (storyService.getStory(storyId) != null) {
+        if (attractionService.haveAttraction(attractionId)) {
             String userid = tokenService.getUserid(getToken(request));
-            favoriteService.favoriteStory(storyId, userid);
-            if (favoriteService.haveFavoriteStory(storyId, userid)) {
-                log.debug("favorite story success!");
+            followService.unfollowAttraction(attractionId, userid);
+            if (!followService.haveFollowingAttraction(attractionId, userid)) {
+                log.debug("unfollow attraction success!");
                 return Response.responseSuccess();
             } else {
-                log.debug("favorite story failed!");
-                return Response.responseFailed("收藏失败！");
+                log.debug("unfollow attraction failed!");
+                return Response.responseFailed("取消关注景点失败！");
             }
         } else {
-            log.debug("story {} not exists!", storyId);
-            return Response.responseFailed("游记不存在！");
+            log.debug("attraction {} not exists!", attractionId);
+            return Response.responseFailed("景点不存在！");
         }
     }
 }

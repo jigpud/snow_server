@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jigpud.snow.mapper.StoryMapper">
+    <select id="getAttractionStoryList" resultType="Story">
+        SELECT
+            story.*,
+            (SELECT COUNT(*) FROM story_like WHERE story.story_id = story_like.story_id) AS likes,
+            (SELECT COUNT(*) FROM comment WHERE story.story_id = comment.story_id) AS comment_count
+        FROM story
+        WHERE attraction_id = #{attractionId}
+        ORDER BY (likes * 0.5 + comment_count * 0.5) DESC
+    </select>
+</mapper>

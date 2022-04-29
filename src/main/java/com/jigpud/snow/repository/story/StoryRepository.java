@@ -31,6 +31,15 @@ public interface StoryRepository {
     Page<Story> getUserStoryList(String userid, long pageSize, long currentPage);
 
     /**
+     * 获取景点的游记列表
+     * @param attractionId 景点
+     * @param pageSize 分页大小
+     * @param currentPage 页码
+     * @return 游记列表分页
+     */
+    Page<Story> getAttractionStoryList(String attractionId, long pageSize, long currentPage);
+
+    /**
      * 更新游记
      * @param story 游记
      */

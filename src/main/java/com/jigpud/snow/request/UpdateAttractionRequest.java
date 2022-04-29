@@ -16,7 +16,6 @@ public class UpdateAttractionRequest {
     private String attractionId;
     private String name;
     private String description;
-    private List<String> photos;
     private List<String> tags;
     private String location;
 }
