@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,14 +29,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class FollowedAttractionListController extends BaseController {
+public class FollowingAttractionListController extends BaseController {
     private final AttractionService attractionService;
     private final TokenService tokenService;
     private final FollowService followService;
     private final StoryService storyService;
 
     @Autowired
-    FollowedAttractionListController(
+    FollowingAttractionListController(
             AttractionService attractionService,
             TokenService tokenService,
             FollowService followService,
@@ -49,19 +48,18 @@ public class FollowedAttractionListController extends BaseController {
         this.storyService = storyService;
     }
 
-    @PostMapping(PathConstant.FOLLOWED_ATTRACTION_LIST)
+    @PostMapping(PathConstant.FOLLOWING_ATTRACTION_LIST)
     @RequiresRoles(RolesConstant.USER)
     @RequiresPermissions(PermissionsConstant.USER_READ)
-    ResponseBody<PageData<AttractionResponse>> followedAttractionList(
+    ResponseBody<PageData<AttractionResponse>> getFollowingAttractionList(
             @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
             @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage,
             HttpServletRequest request
     ) {
-        log.debug("get followed attraction list with pageSize: {}", pageSize);
-        log.debug("get followed attraction list with currentPage: {}", currentPage);
+        log.debug("get following attraction list with pageSize: {}", pageSize);
+        log.debug("get following attraction list with currentPage: {}", currentPage);
         String userid = tokenService.getUserid(getToken(request));
-        PageData<Attraction> attractionList = PageData.fromPageData(
-                followService.attractionFollowingList(userid, pageSize, currentPage), attractionService::getAttraction);
+        PageData<Attraction> attractionList = followService.getFollowingAttractionList(userid, pageSize, currentPage);
         PageData<AttractionResponse> attractionResponseList = PageData.fromPageData(attractionList, attraction ->
                 AttractionResponse.create(attraction, userid, attractionService, followService, storyService));
         return Response.responseSuccess(attractionResponseList);

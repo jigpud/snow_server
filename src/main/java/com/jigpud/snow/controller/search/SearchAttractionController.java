@@ -1,12 +1,14 @@
 package com.jigpud.snow.controller.search;
 
 import com.jigpud.snow.controller.BaseController;
-import com.jigpud.snow.model.User;
+import com.jigpud.snow.model.Attraction;
+import com.jigpud.snow.model.Story;
+import com.jigpud.snow.response.AttractionResponse;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
-import com.jigpud.snow.response.UserInformationResponse;
+import com.jigpud.snow.response.StoryResponse;
+import com.jigpud.snow.service.attraction.AttractionService;
 import com.jigpud.snow.service.follow.FollowService;
-import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.search.SearchService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
@@ -26,30 +28,30 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class SearchUserController extends BaseController {
-    private final TokenService tokenService;
+public class SearchAttractionController extends BaseController {
     private final SearchService searchService;
+    private final TokenService tokenService;
     private final FollowService followService;
-    private final LikeService likeService;
     private final StoryService storyService;
+    private final AttractionService attractionService;
 
     @Autowired
-    SearchUserController(
-            TokenService tokenService,
+    SearchAttractionController(
             SearchService searchService,
+            TokenService tokenService,
             FollowService followService,
-            LikeService likeService,
-            StoryService storyService
+            StoryService storyService,
+            AttractionService attractionService
     ) {
-        this.tokenService = tokenService;
         this.searchService = searchService;
+        this.tokenService = tokenService;
         this.followService = followService;
-        this.likeService = likeService;
         this.storyService = storyService;
+        this.attractionService = attractionService;
     }
 
-    @PostMapping(PathConstant.SEARCH_USER)
-    ResponseBody<PageData<UserInformationResponse>> searchUser(
+    @PostMapping(PathConstant.SEARCH_ATTRACTION)
+    ResponseBody<PageData<AttractionResponse>> searchAttraction(
             @RequestParam(value = FormDataConstant.KEY_WORDS, required = false, defaultValue = "") String keyWords,
             @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
             @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage,
@@ -60,12 +62,12 @@ public class SearchUserController extends BaseController {
         log.debug("search user with currentPage: {}", currentPage);
         if (!keyWords.isEmpty()) {
             String userid = tokenService.getUserid(getToken(request));
-            PageData<User> userList = searchService.searchUser(keyWords, pageSize, currentPage);
-            PageData<UserInformationResponse> userResponseList = PageData.fromPageData(userList, user ->
-                    UserInformationResponse.create(user, userid, followService, likeService, storyService));
-            return Response.responseSuccess(userResponseList);
+            PageData<Attraction> attractionList = searchService.searchAttraction(keyWords, pageSize, currentPage);
+            PageData<AttractionResponse> attractionResponseList = PageData.fromPageData(attractionList, attraction ->
+                    AttractionResponse.create(attraction, userid, attractionService, followService, storyService));
+            return Response.responseSuccess(attractionResponseList);
         } else {
-            log.debug("searchUser: keyWords is empty!");
+            log.debug("searchStory: keyWords is empty!");
             return Response.responseFailed("关键词不能为空！");
         }
     }

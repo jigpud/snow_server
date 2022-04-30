@@ -50,11 +50,6 @@ public class StoryRepositoryImpl implements StoryRepository {
     }
 
     @Override
-    public Page<Story> blurSearch(String keyWords, long pageSize, long currentPage) {
-        return storyMapper.selectPage(new Page<>(currentPage, pageSize), blurQueryWrapper(keyWords));
-    }
-
-    @Override
     public long userStoryCount(String userid) {
         return storyMapper.selectCount(authorQueryWrapper(userid));
     }
@@ -78,14 +73,6 @@ public class StoryRepositoryImpl implements StoryRepository {
     private QueryWrapper<Story> authorQueryWrapper(String authorId) {
         QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("author_id", authorId);
-        return queryWrapper;
-    }
-
-    private QueryWrapper<Story> blurQueryWrapper(String keyWords) {
-        QueryWrapper<Story> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("title", keyWords)
-                .or()
-                .like("content", keyWords);
         return queryWrapper;
     }
 

@@ -51,7 +51,7 @@ public class FollowController extends BaseController {
         String selfUserid = tokenService.getUserid(getToken(request));
         if (userService.haveUseridIs(userid)) {
             followService.followUser(selfUserid, userid);
-            if (followService.haveFollowingUser(selfUserid, userid)) {
+            if (followService.haveFollowedUser(selfUserid, userid)) {
                 log.debug("follow success!");
                 return Response.responseSuccess();
             } else {

@@ -51,7 +51,7 @@ public class UnfollowController extends BaseController {
         String selfUserid = tokenService.getUserid(getToken(request));
         if (userService.haveUseridIs(userid)) {
             followService.unfollowUser(selfUserid, userid);
-            if (!followService.haveFollowingUser(selfUserid, userid)) {
+            if (!followService.haveFollowedUser(selfUserid, userid)) {
                 log.debug("unfollow success!");
                 return Response.responseSuccess();
             } else {

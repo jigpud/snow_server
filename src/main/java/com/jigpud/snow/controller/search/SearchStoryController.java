@@ -59,12 +59,15 @@ public class SearchStoryController extends BaseController {
             @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage,
             HttpServletRequest request
     ) {
+        log.debug("search with keyWords: {}", keyWords);
+        log.debug("search user with pageSize: {}", pageSize);
+        log.debug("search user with currentPage: {}", currentPage);
         if (!keyWords.isEmpty()) {
-            String selfUserid = tokenService.getUserid(getToken(request));
-            PageData<Story> storyPageData = searchService.searchStory(keyWords, pageSize, currentPage);
-            PageData<StoryResponse> searchStoryResponsePageData = PageData.fromPageData(storyPageData, story ->
-                    StoryResponse.create(story, selfUserid, userService, likeService, attractionService, favoriteService));
-            return Response.responseSuccess(searchStoryResponsePageData);
+            String userid = tokenService.getUserid(getToken(request));
+            PageData<Story> storyList = searchService.searchStory(keyWords, pageSize, currentPage);
+            PageData<StoryResponse> storyResponseList = PageData.fromPageData(storyList, story ->
+                    StoryResponse.create(story, userid, userService, likeService, attractionService, favoriteService));
+            return Response.responseSuccess(storyResponseList);
         } else {
             log.debug("searchStory: keyWords is empty!");
             return Response.responseFailed("关键词不能为空！");

@@ -3,6 +3,7 @@ package com.jigpud.snow.repository.userfollow;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.mapper.UserFollowMapper;
+import com.jigpud.snow.model.User;
 import com.jigpud.snow.model.UserFollow;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,22 +41,22 @@ public class UserFollowRepositoryImpl implements UserFollowRepository {
     }
 
     @Override
-    public Page<UserFollow> followerList(String userid, long pageSize, long currentPage) {
-        return followMapper.selectPage(new Page<>(currentPage, pageSize), userQueryWrapper(userid));
+    public Page<User> getFollowerList(String userid, long pageSize, long currentPage) {
+        return (Page<User>) followMapper.getFollowerList(userid, new Page<>(currentPage, pageSize));
     }
 
     @Override
-    public long followerCount(String userid) {
+    public long getFollowers(String userid) {
         return followMapper.selectCount(userQueryWrapper(userid));
     }
 
     @Override
-    public Page<UserFollow> followingList(String userid, long pageSize, long currentPage) {
-        return followMapper.selectPage(new Page<>(currentPage, pageSize), followerQueryWrapper(userid));
+    public Page<User> getFollowingList(String userid, long pageSize, long currentPage) {
+        return (Page<User>) followMapper.getFollowingList(userid, new Page<>(currentPage, pageSize));
     }
 
     @Override
-    public long followingCount(String userid) {
+    public long getFollowingCount(String userid) {
         return followMapper.selectCount(followerQueryWrapper(userid));
     }
 

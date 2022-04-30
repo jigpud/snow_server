@@ -51,7 +51,7 @@ public class UnfollowAttractionController extends BaseController {
         if (attractionService.haveAttraction(attractionId)) {
             String userid = tokenService.getUserid(getToken(request));
             followService.unfollowAttraction(attractionId, userid);
-            if (!followService.haveFollowingAttraction(attractionId, userid)) {
+            if (!followService.haveFollowedAttraction(attractionId, userid)) {
                 log.debug("unfollow attraction success!");
                 return Response.responseSuccess();
             } else {

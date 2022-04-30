@@ -1,7 +1,8 @@
 package com.jigpud.snow.repository.attractionfollow;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jigpud.snow.model.AttractionFollow;
+import com.jigpud.snow.model.Attraction;
+import com.jigpud.snow.model.User;
 
 /**
  * @author : jigpud
@@ -36,14 +37,14 @@ public interface AttractionFollowRepository {
      * @param currentPage 页码
      * @return 关注者列表分页
      */
-    Page<AttractionFollow> followerList(String attractionId, long pageSize, long currentPage);
+    Page<User> getFollowerList(String attractionId, long pageSize, long currentPage);
 
     /**
      * 获取关注者数量
      * @param attractionId 景点
      * @return 关注者数量
      */
-    long followerCount(String attractionId);
+    long getFollowers(String attractionId);
 
     /**
      * 获取关注列表
@@ -52,12 +53,12 @@ public interface AttractionFollowRepository {
      * @param currentPage 页码
      * @return 关注列表分页
      */
-    Page<AttractionFollow> followingList(String userid, long pageSize, long currentPage);
+    Page<Attraction> getFollowingList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取关注数量
      * @param userid 自己
      * @return 关注数量
      */
-    long followingCount(String userid);
+    long getFollowingCount(String userid);
 }

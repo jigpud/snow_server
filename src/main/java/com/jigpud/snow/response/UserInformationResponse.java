@@ -45,9 +45,9 @@ public class UserInformationResponse {
         userInfo.setAge(user.getAge());
         userInfo.setSignature(user.getSignature());
         userInfo.setLikes(likeService.likes(userid));
-        userInfo.setFollowers(followService.userFollowerCount(userid));
-        userInfo.setFollowing(followService.followingCount(userid));
-        userInfo.setFollowed(followService.haveFollowingUser(self, userid));
+        userInfo.setFollowers(followService.getUserFollowers(userid));
+        userInfo.setFollowing(followService.getFollowingCount(userid));
+        userInfo.setFollowed(followService.haveFollowedUser(self, userid));
         userInfo.setStoryCount(storyService.userStoryCount(userid));
         return userInfo;
     }

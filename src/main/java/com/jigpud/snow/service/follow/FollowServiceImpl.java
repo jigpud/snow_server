@@ -1,7 +1,7 @@
 package com.jigpud.snow.service.follow;
 
-import com.jigpud.snow.model.AttractionFollow;
-import com.jigpud.snow.model.UserFollow;
+import com.jigpud.snow.model.Attraction;
+import com.jigpud.snow.model.User;
 import com.jigpud.snow.repository.attractionfollow.AttractionFollowRepository;
 import com.jigpud.snow.repository.userfollow.UserFollowRepository;
 import com.jigpud.snow.response.PageData;
@@ -45,52 +45,52 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public long userFollowerCount(String userid) {
-        return userFollowRepository.followerCount(userid);
+    public long getUserFollowers(String userid) {
+        return userFollowRepository.getFollowers(userid);
     }
 
     @Override
-    public PageData<String> followerList(String userid, long pageSize, long currentPage) {
-        return PageData.fromPage(userFollowRepository.followerList(userid, pageSize, currentPage), UserFollow::getFollowerId);
+    public PageData<User> getUserFollowerList(String userid, long pageSize, long currentPage) {
+        return PageData.fromPage(userFollowRepository.getFollowerList(userid, pageSize, currentPage));
     }
 
     @Override
-    public long userFollowingCount(String userid) {
-        return userFollowRepository.followingCount(userid);
+    public long getFollowingUserCount(String userid) {
+        return userFollowRepository.getFollowingCount(userid);
     }
 
     @Override
-    public PageData<String> userFollowingList(String userid, long pageSize, long currentPage) {
-        return PageData.fromPage(userFollowRepository.followingList(userid, pageSize, currentPage), UserFollow::getUserid);
+    public PageData<User> getFollowingUserList(String userid, long pageSize, long currentPage) {
+        return PageData.fromPage(userFollowRepository.getFollowingList(userid, pageSize, currentPage));
     }
 
     @Override
-    public long attractionFollowingCount(String userid) {
-        return attractionFollowRepository.followingCount(userid);
+    public long getFollowingAttractionCount(String userid) {
+        return attractionFollowRepository.getFollowingCount(userid);
     }
 
     @Override
-    public long attractionFollowerCount(String attractionId) {
-        return attractionFollowRepository.followerCount(attractionId);
+    public long getAttractionFollowers(String attractionId) {
+        return attractionFollowRepository.getFollowers(attractionId);
     }
 
     @Override
-    public PageData<String> attractionFollowingList(String userid, long pageSize, long currentPage) {
-        return PageData.fromPage(attractionFollowRepository.followingList(userid, pageSize, currentPage), AttractionFollow::getAttractionId);
+    public PageData<Attraction> getFollowingAttractionList(String userid, long pageSize, long currentPage) {
+        return PageData.fromPage(attractionFollowRepository.getFollowingList(userid, pageSize, currentPage));
     }
 
     @Override
-    public boolean haveFollowingUser(String follower, String userid) {
+    public boolean haveFollowedUser(String follower, String userid) {
         return userFollowRepository.have(follower, userid);
     }
 
     @Override
-    public boolean haveFollowingAttraction(String attractionId, String follower) {
+    public boolean haveFollowedAttraction(String attractionId, String follower) {
         return attractionFollowRepository.have(attractionId, follower);
     }
 
     @Override
-    public long followingCount(String userid) {
-        return userFollowRepository.followingCount(userid) + attractionFollowRepository.followingCount(userid);
+    public long getFollowingCount(String userid) {
+        return userFollowRepository.getFollowingCount(userid) + attractionFollowRepository.getFollowingCount(userid);
     }
 }

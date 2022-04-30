@@ -81,13 +81,4 @@ public interface UserRepository {
      * @param userid userid
      */
     void deleteUserByUserid(String userid);
-
-    /**
-     * 根据关键词模糊搜索用户
-     * @param keyWords 关键词
-     * @param pageSize 分页大小
-     * @param currentPage 页码
-     * @return 模糊搜索结果分页
-     */
-    Page<User> blurSearch(String keyWords, long pageSize, long currentPage);
 }

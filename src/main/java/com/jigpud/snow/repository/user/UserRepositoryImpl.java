@@ -70,11 +70,6 @@ public class UserRepositoryImpl implements UserRepository {
         userMapper.delete(useridQueryWrapper(userid));
     }
 
-    @Override
-    public Page<User> blurSearch(String keyWords, long pageSize, long currentPage) {
-        return userMapper.selectPage(new Page<>(currentPage, pageSize), blurQueryWrapper(keyWords));
-    }
-
     private QueryWrapper<User> usernameQueryWrapper(String username) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
@@ -105,9 +100,5 @@ public class UserRepositoryImpl implements UserRepository {
                 .or()
                 .like("nickname", nickname);
         return queryWrapper;
-    }
-
-    private QueryWrapper<User> blurQueryWrapper(String keyWords) {
-        return nicknameLikeQueryWrapper(keyWords);
     }
 }

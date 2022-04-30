@@ -51,7 +51,7 @@ public class FollowAttractionController extends BaseController {
         if (attractionService.haveAttraction(attractionId)) {
             String userid = tokenService.getUserid(getToken(request));
             followService.followAttraction(attractionId, userid);
-            if (followService.haveFollowingAttraction(attractionId, userid)) {
+            if (followService.haveFollowedAttraction(attractionId, userid)) {
                 log.debug("follow attraction success!");
                 return Response.responseSuccess();
             } else {

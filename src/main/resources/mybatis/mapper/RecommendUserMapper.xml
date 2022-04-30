@@ -9,7 +9,10 @@
             (SELECT COUNT(*) FROM user_follow WHERE user_follow.userid = user.userid) AS followers,
             (SELECT COUNT(*) FROM story WHERE story.author_id = user.userid) AS story_count
         FROM user
-        WHERE userid != #{userid}
+        WHERE
+              userid != #{userid}
+          AND
+              EXISTS(SELECT * FROM role WHERE role.userid = user.userid AND role.role = 'user')
         ORDER BY (followers * 0.8 + story_count * 0.2) DESC
     </select>
 </mapper>

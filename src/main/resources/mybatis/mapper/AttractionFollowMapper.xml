@@ -6,4 +6,20 @@
     <select id="insertIgnore">
         INSERT IGNORE INTO attraction_follow (userid, attraction_id) VALUES (#{userid}, #{attractionId})
     </select>
+
+    <select id="getFollowingList" resultType="Attraction">
+        SELECT
+               attraction.*
+        FROM attraction
+        WHERE
+              attraction.attraction_id IN (SELECT attraction_follow.attraction_id FROM attraction_follow WHERE attraction_follow.userid = #{userid})
+    </select>
+
+    <select id="getFollowerList" resultType="User">
+        SELECT
+               user.*
+        FROM user
+        WHERE
+              user.userid IN (SELECT attraction_follow.userid FROM attraction_follow WHERE attraction_follow.attraction_id = #{attractionId})
+    </select>
 </mapper>

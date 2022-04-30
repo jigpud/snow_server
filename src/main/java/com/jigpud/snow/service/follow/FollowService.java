@@ -1,5 +1,7 @@
 package com.jigpud.snow.service.follow;
 
+import com.jigpud.snow.model.Attraction;
+import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.PageData;
 
 /**
@@ -39,7 +41,7 @@ public interface FollowService {
      * @param userid 用户
      * @return 粉丝总数
      */
-    long userFollowerCount(String userid);
+    long getUserFollowers(String userid);
 
     /**
      * 获取用户的粉丝列表
@@ -48,14 +50,14 @@ public interface FollowService {
      * @param currentPage 页码
      * @return 粉丝列表分页
      */
-    PageData<String> followerList(String userid, long pageSize, long currentPage);
+    PageData<User> getUserFollowerList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取用户关注的用户数
      * @param userid 用户
      * @return 关注数
      */
-    long userFollowingCount(String userid);
+    long getFollowingUserCount(String userid);
 
     /**
      * 获取用户关注的用户列表
@@ -64,30 +66,30 @@ public interface FollowService {
      * @param currentPage 页码
      * @return 关注列表分页
      */
-    PageData<String> userFollowingList(String userid, long pageSize, long currentPage);
+    PageData<User> getFollowingUserList(String userid, long pageSize, long currentPage);
 
     /**
      * 获取用户关注的景点数
      * @param userid 用户
      * @return 关注数
      */
-    long attractionFollowingCount(String userid);
+    long getFollowingAttractionCount(String userid);
 
     /**
      * 获取景点的关注数量
      * @param attractionId 景点
      * @return 景点的关注数
      */
-    long attractionFollowerCount(String attractionId);
+    long getAttractionFollowers(String attractionId);
 
     /**
-     * 獲取用戶关注的景点列表
+     * 获取用戶关注的景点列表
      * @param userid 用户
      * @param pageSize 分页大小
      * @param currentPage 页码
      * @return 关注列表分页
      */
-    PageData<String> attractionFollowingList(String userid, long pageSize, long currentPage);
+    PageData<Attraction> getFollowingAttractionList(String userid, long pageSize, long currentPage);
 
     /**
      * 是否关注了该用户
@@ -95,7 +97,7 @@ public interface FollowService {
      * @param userid 关注
      * @return 是否关注了
      */
-    boolean haveFollowingUser(String follower, String userid);
+    boolean haveFollowedUser(String follower, String userid);
 
     /**
      * 是否关注了该景点
@@ -103,12 +105,12 @@ public interface FollowService {
      * @param attractionId 景点
      * @return 是否关注了
      */
-    boolean haveFollowingAttraction(String attractionId, String follower);
+    boolean haveFollowedAttraction(String attractionId, String follower);
 
     /**
      * 获取用户的关注数量
      * @param userid 用户
      * @return 关注数量
      */
-    long followingCount(String userid);
+    long getFollowingCount(String userid);
 }

@@ -46,15 +46,6 @@ public interface StoryRepository {
     void update(Story story);
 
     /**
-     * 根据关键词模糊搜索游记
-     * @param keyWords 关键词
-     * @param pageSize 分页大小
-     * @param currentPage 页码
-     * @return 模糊搜索结果分页
-     */
-    Page<Story> blurSearch(String keyWords, long pageSize, long currentPage);
-
-    /**
      * 获取用户发布的游记数量
      * @param userid 用户
      * @return 游记数量

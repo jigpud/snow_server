@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jigpud.snow.mapper.SearchMapper">
+    <select id="searchUser" resultType="User">
+        <bind name="pattern" value="'%' + keyWords + '%'"/>
+        SELECT
+               user.*
+        FROM user
+        WHERE
+              user.nickname LIKE #{pattern}
+    </select>
+
+    <select id="searchStory" resultType="Story">
+        <bind name="pattern" value="'%' + keyWords + '%'"/>
+        SELECT
+               story.*
+        FROM story
+        WHERE
+              story.title LIKE #{pattern}
+           OR
+              story.content LIKE #{pattern}
+    </select>
+
+    <select id="searchAttraction" resultType="Attraction">
+        <bind name="pattern" value="'%' + keyWords + '%'"/>
+        SELECT
+               attraction.*
+        FROM attraction
+        WHERE
+              attraction.name LIKE #{pattern}
+           OR
+              attraction.description LIKE #{pattern}
+           OR
+              attraction.location LIKE #{pattern}
+    </select>
+</mapper>

@@ -52,10 +52,10 @@ public class AttractionResponse {
         attractionResponse.setLocation(attraction.getLocation());
         attractionResponse.setScore(attractionService.getScore(attractionId));
         attractionResponse.setScoreCount(attractionService.scoreCount(attractionId));
-        attractionResponse.setFollowed(followService.haveFollowingAttraction(attractionId, self));
+        attractionResponse.setFollowed(followService.haveFollowedAttraction(attractionId, self));
         attractionResponse.setStoryCount(storyService.attractionStoryCount(attractionId));
         attractionResponse.setMyScore(attractionService.getUserScore(attractionId, self));
-        attractionResponse.setFollowers(followService.attractionFollowerCount(attractionId));
+        attractionResponse.setFollowers(followService.getAttractionFollowers(attractionId));
         return attractionResponse;
     }
 }
