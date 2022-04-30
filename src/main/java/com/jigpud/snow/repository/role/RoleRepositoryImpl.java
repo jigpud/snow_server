@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author : jigpud
  */
@@ -21,23 +23,35 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public Role getRole(String userid) {
-        return rolesMapper.selectOne(getQueryWrapper(userid));
+    public List<Role> getRoleList(String userid) {
+        return rolesMapper.selectList(userQueryWrapper(userid));
     }
 
     @Override
-    public void updateOrInsert(Role role) {
-        QueryWrapper<Role> queryWrapper = getQueryWrapper(role.getUserid());
-        if (rolesMapper.exists(queryWrapper)) {
-            rolesMapper.update(role, queryWrapper);
-        } else {
-            rolesMapper.insert(role);
-        }
+    public void add(String userid, String role) {
+        rolesMapper.insertIgnore(userid, role);
     }
 
-    private QueryWrapper<Role> getQueryWrapper(String userid) {
+    @Override
+    public boolean have(String userid, String role) {
+        return rolesMapper.exists(userAndRoleQueryWrapper(userid, role));
+    }
+
+    @Override
+    public void remove(String userid, String role) {
+        rolesMapper.delete(userAndRoleQueryWrapper(userid, role));
+    }
+
+    private QueryWrapper<Role> userQueryWrapper(String userid) {
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", userid);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<Role> userAndRoleQueryWrapper(String userid, String role) {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid", userid);
+        queryWrapper.eq("role", role);
         return queryWrapper;
     }
 }

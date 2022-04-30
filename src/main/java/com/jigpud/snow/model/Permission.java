@@ -24,5 +24,5 @@ public class Permission {
     private String userid;
 
     // 权限
-    private String permissions;
+    private String permission;
 }

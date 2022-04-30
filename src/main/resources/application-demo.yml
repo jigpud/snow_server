@@ -24,7 +24,7 @@ spring:
     password: xxx
     timeout: 0
     connect-timeout: 0
-    client-type: lettuce
+    client-type: jedis
 
   ## mysql
   datasource:

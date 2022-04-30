@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author : jigpud
  */
@@ -21,23 +23,35 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public Permission getPermission(String userid) {
-        return permissionMapper.selectOne(getQueryWrapper(userid));
+    public List<Permission> getPermissionList(String userid) {
+        return permissionMapper.selectList(userQueryWrapper(userid));
     }
 
     @Override
-    public void updateOrInsert(Permission permission) {
-        QueryWrapper<Permission> queryWrapper = getQueryWrapper(permission.getUserid());
-        if (permissionMapper.exists(queryWrapper)) {
-            permissionMapper.update(permission, queryWrapper);
-        } else {
-            permissionMapper.insert(permission);
-        }
+    public void add(String userid, String permission) {
+        permissionMapper.insertIgnore(userid, permission);
     }
 
-    private QueryWrapper<Permission> getQueryWrapper(String userid) {
+    @Override
+    public boolean have(String userid, String permission) {
+        return permissionMapper.exists(userAndPermissionQueryWrapper(userid, permission));
+    }
+
+    @Override
+    public void remove(String userid, String permission) {
+        permissionMapper.delete(userAndPermissionQueryWrapper(userid, permission));
+    }
+
+    private QueryWrapper<Permission> userQueryWrapper(String userid) {
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", userid);
+        return queryWrapper;
+    }
+
+    private QueryWrapper<Permission> userAndPermissionQueryWrapper(String userid, String permission) {
+        QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid", userid);
+        queryWrapper.eq("permission", permission);
         return queryWrapper;
     }
 }

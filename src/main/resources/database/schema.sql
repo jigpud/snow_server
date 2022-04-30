@@ -16,15 +16,17 @@ create table if not exists user(
 -- role
 create table if not exists role(
     id bigint auto_increment primary key,
-    userid varchar(255) not null unique,
-    roles text not null
+    userid varchar(255) not null,
+    role varchar(255) not null default '',
+    unique key role(userid, role)
 );
 
 -- permission
 create table if not exists permission(
     id bigint auto_increment primary key,
-    userid varchar(255) not null unique,
-    permissions text not null
+    userid varchar(255) not null,
+    permission varchar(255) not null default '',
+    unique key permission(userid, permission)
 );
 
 -- story

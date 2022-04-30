@@ -50,10 +50,11 @@ public class JWTRealm extends AuthorizingRealm {
         String userid = tokenService.getUserid(token);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         // 添加角色
-        roleService.getAllRoles(userid).forEach(authorizationInfo::addRole);
+        roleService.getRoleList(userid).forEach(role -> authorizationInfo.addRole(role.getRole()));
 
         // 添加权限
-        permissionService.getAllPermissions(userid).forEach(authorizationInfo::addStringPermission);
+        permissionService.getPermissionList(userid).forEach(permission ->
+                authorizationInfo.addStringPermission(permission.getPermission()));
 
         return authorizationInfo;
     }

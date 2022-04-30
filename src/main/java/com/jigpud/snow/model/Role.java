@@ -24,5 +24,5 @@ public class Role {
     private String userid;
 
     // 角色
-    private String roles;
+    private String role;
 }
