@@ -67,4 +67,13 @@ public interface StoryRepository {
      * @return 游记数量
      */
     long attractionStoryCount(String attractionId);
+
+    /**
+     * 获取用户的动态游记列表
+     * @param userid 用户
+     * @param pageSize 分页大小
+     * @param currentPage 页码
+     * @return 动态游记列表分页
+     */
+    Page<Story> getMomentsStoryList(String userid, long pageSize, long currentPage);
 }

@@ -37,7 +37,7 @@ public class SelfInformationResponse {
         selfInfo.setAge(user.getAge());
         selfInfo.setSignature(user.getSignature());
         selfInfo.setFavorites(favoriteService.storyFavorites(userid));
-        selfInfo.setFollowers(followService.followerCount(userid));
+        selfInfo.setFollowers(followService.userFollowerCount(userid));
         selfInfo.setFollowing(followService.followingCount(userid));
         selfInfo.setBackground(user.getBackground());
         return selfInfo;

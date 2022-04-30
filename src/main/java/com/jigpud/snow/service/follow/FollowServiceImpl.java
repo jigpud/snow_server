@@ -35,17 +35,17 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public void followAttraction(String follower, String attractionId) {
-        attractionFollowRepository.add(follower, attractionId);
+    public void followAttraction(String attractionId, String follower) {
+        attractionFollowRepository.add(attractionId, follower);
     }
 
     @Override
-    public void unfollowAttraction(String follower, String attractionId) {
-        attractionFollowRepository.remove(follower, attractionId);
+    public void unfollowAttraction(String attractionId, String follower) {
+        attractionFollowRepository.remove(attractionId, follower);
     }
 
     @Override
-    public long followerCount(String userid) {
+    public long userFollowerCount(String userid) {
         return userFollowRepository.followerCount(userid);
     }
 
@@ -70,6 +70,11 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
+    public long attractionFollowerCount(String attractionId) {
+        return attractionFollowRepository.followerCount(attractionId);
+    }
+
+    @Override
     public PageData<String> attractionFollowingList(String userid, long pageSize, long currentPage) {
         return PageData.fromPage(attractionFollowRepository.followingList(userid, pageSize, currentPage), AttractionFollow::getAttractionId);
     }
@@ -80,8 +85,8 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public boolean haveFollowingAttraction(String follower, String attractionId) {
-        return attractionFollowRepository.have(follower, attractionId);
+    public boolean haveFollowingAttraction(String attractionId, String follower) {
+        return attractionFollowRepository.have(attractionId, follower);
     }
 
     @Override

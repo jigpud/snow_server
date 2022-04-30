@@ -29,7 +29,8 @@ public class AttractionResponse {
     private Long scoreCount;
     private Boolean followed;
     private Long storyCount;
-    private int myScore;
+    private Integer myScore;
+    private Long followers;
 
     public static AttractionResponse create(
             Attraction attraction,
@@ -51,9 +52,10 @@ public class AttractionResponse {
         attractionResponse.setLocation(attraction.getLocation());
         attractionResponse.setScore(attractionService.getScore(attractionId));
         attractionResponse.setScoreCount(attractionService.scoreCount(attractionId));
-        attractionResponse.setFollowed(followService.haveFollowingAttraction(self, attractionId));
+        attractionResponse.setFollowed(followService.haveFollowingAttraction(attractionId, self));
         attractionResponse.setStoryCount(storyService.attractionStoryCount(attractionId));
         attractionResponse.setMyScore(attractionService.getUserScore(attractionId, self));
+        attractionResponse.setFollowers(followService.attractionFollowerCount(attractionId));
         return attractionResponse;
     }
 }

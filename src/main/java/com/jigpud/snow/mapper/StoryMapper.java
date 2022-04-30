@@ -11,4 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface StoryMapper extends BaseMapper<Story> {
     IPage<Story> getAttractionStoryList(String attractionId, IPage<Story> page);
+
+    IPage<Story> getMomentsStoryList(String userid, IPage<Story> page);
 }

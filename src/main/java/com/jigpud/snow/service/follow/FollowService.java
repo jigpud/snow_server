@@ -25,21 +25,21 @@ public interface FollowService {
      * @param follower 用户
      * @param attractionId 景点
      */
-    void followAttraction(String follower, String attractionId);
+    void followAttraction(String attractionId, String follower);
 
     /**
      * 取消关注一个景点
      * @param follower 用户
      * @param attractionId 景点
      */
-    void unfollowAttraction(String follower, String attractionId);
+    void unfollowAttraction(String attractionId, String follower);
 
     /**
-     * 获取粉丝总数
+     * 获取用户的粉丝总数
      * @param userid 用户
      * @return 粉丝总数
      */
-    long followerCount(String userid);
+    long userFollowerCount(String userid);
 
     /**
      * 获取用户的粉丝列表
@@ -74,6 +74,13 @@ public interface FollowService {
     long attractionFollowingCount(String userid);
 
     /**
+     * 获取景点的关注数量
+     * @param attractionId 景点
+     * @return 景点的关注数
+     */
+    long attractionFollowerCount(String attractionId);
+
+    /**
      * 獲取用戶关注的景点列表
      * @param userid 用户
      * @param pageSize 分页大小
@@ -96,7 +103,7 @@ public interface FollowService {
      * @param attractionId 景点
      * @return 是否关注了
      */
-    boolean haveFollowingAttraction(String follower, String attractionId);
+    boolean haveFollowingAttraction(String attractionId, String follower);
 
     /**
      * 获取用户的关注数量

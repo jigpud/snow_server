@@ -22,8 +22,9 @@ spring:
     host: xxx
     port: 0
     password: xxx
-    timeout: 10000
-    connect-timeout: 10000
+    timeout: 0
+    connect-timeout: 0
+    client-type: lettuce
 
   ## mysql
   datasource:
@@ -65,11 +66,3 @@ qiniu:
   bucket-name: xxx
   domain: xxx
   upload-token-expiration: 0
-
-# 短信验证码发送服务单元测试配置
-verification-code-service-test:
-  phone-number: xxx
-
-# 用户服务单元测试配置
-user-service-test:
-  username: xxx

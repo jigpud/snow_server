@@ -62,4 +62,9 @@ public class StoryServiceImpl implements StoryService {
     public long attractionStoryCount(String attractionId) {
         return storyRepository.attractionStoryCount(attractionId);
     }
+
+    @Override
+    public PageData<Story> getMomentsStoryList(String userid, long pageSize, long currentPage) {
+        return PageData.fromPage(storyRepository.getMomentsStoryList(userid, pageSize, currentPage));
+    }
 }

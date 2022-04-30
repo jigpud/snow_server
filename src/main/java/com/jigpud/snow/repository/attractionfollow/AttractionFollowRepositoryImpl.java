@@ -22,7 +22,7 @@ public class AttractionFollowRepositoryImpl implements AttractionFollowRepositor
     }
 
     @Override
-    public void add(String follower, String attractionId) {
+    public void add(String attractionId, String follower) {
         AttractionFollow attractionFollow = new AttractionFollow();
         attractionFollow.setUserid(follower);
         attractionFollow.setAttractionId(attractionId);
@@ -30,13 +30,13 @@ public class AttractionFollowRepositoryImpl implements AttractionFollowRepositor
     }
 
     @Override
-    public void remove(String follower, String attractionId) {
-        attractionFollowMapper.delete(followerAndAttractionQueryWrapper(follower, attractionId));
+    public void remove(String attractionId, String follower) {
+        attractionFollowMapper.delete(attractionAndFollowerQueryWrapper(attractionId, follower));
     }
 
     @Override
-    public boolean have(String follower, String attractionId) {
-        return attractionFollowMapper.exists(followerAndAttractionQueryWrapper(follower, attractionId));
+    public boolean have(String attractionId, String follower) {
+        return attractionFollowMapper.exists(attractionAndFollowerQueryWrapper(attractionId, follower));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AttractionFollowRepositoryImpl implements AttractionFollowRepositor
         return attractionFollowMapper.selectCount(followerQueryWrapper(userid));
     }
 
-    private QueryWrapper<AttractionFollow> followerAndAttractionQueryWrapper(String follower, String attractionId) {
+    private QueryWrapper<AttractionFollow> attractionAndFollowerQueryWrapper(String attractionId, String follower) {
         QueryWrapper<AttractionFollow> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userid", follower);
         queryWrapper.eq("attraction_id", attractionId);

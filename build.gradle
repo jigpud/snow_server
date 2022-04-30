@@ -24,7 +24,10 @@ dependencies {
 	implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.1'
 
 	// spring redis
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation('org.springframework.boot:spring-boot-starter-data-redis') {
+		exclude(group: 'io.lettuce', module: 'lettuce-core')
+	}
+	implementation 'redis.clients:jedis'
 
 	// mysql driver
 	runtimeOnly 'mysql:mysql-connector-java'

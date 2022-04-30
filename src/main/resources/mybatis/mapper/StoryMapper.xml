@@ -12,4 +12,15 @@
         WHERE attraction_id = #{attractionId}
         ORDER BY (likes * 0.5 + comment_count * 0.5) DESC
     </select>
+
+    <select id="getMomentsStoryList" resultType="Story">
+        SELECT
+               story.*
+        FROM story
+        WHERE
+              attraction_id IN (SELECT attraction_id FROM attraction_follow WHERE userid = #{userid})
+           OR author_id IN (SELECT userid FROM user_follow WHERE follower_id = #{userid})
+           OR author_id = #{userid}
+        ORDER BY release_time DESC
+    </select>
 </mapper>

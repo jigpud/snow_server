@@ -12,14 +12,14 @@ public interface AttractionFollowRepository {
      * @param follower 关注者
      * @param attractionId 景点
      */
-    void add(String follower, String attractionId);
+    void add(String attractionId, String follower);
 
     /**
      * 移除一个关注关系
      * @param follower 关注者
      * @param attractionId 景点
      */
-    void remove(String follower, String attractionId);
+    void remove(String attractionId, String follower);
 
     /**
      * 是否有一个这样的关注关系
@@ -27,7 +27,7 @@ public interface AttractionFollowRepository {
      * @param attractionId 景点
      * @return 是否有这样一个关系
      */
-    boolean have(String follower, String attractionId);
+    boolean have(String attractionId, String follower);
 
     /**
      * 获取关注者列表

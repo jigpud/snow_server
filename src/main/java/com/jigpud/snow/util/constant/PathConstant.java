@@ -132,6 +132,9 @@ public class PathConstant {
     // 取消关注景点
     public static final String UNFOLLOW_ATTRACTION = "attraction/unfollow";
 
+    // 获取关注的景点列表
+    public static final String FOLLOWED_ATTRACTION_LIST = "/attraction/followed";
+
     // 获取头像的upload token
     public static final String GET_AVATAR_UPLOAD_TOKEN = "/upload/token/avatar";
 
