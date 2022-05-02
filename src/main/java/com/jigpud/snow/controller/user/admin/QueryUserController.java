@@ -4,7 +4,7 @@ import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
-import com.jigpud.snow.response.UserResponse;
+import com.jigpud.snow.response.admin.UserResponse;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
 import com.jigpud.snow.util.constant.PathConstant;

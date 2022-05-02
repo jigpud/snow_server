@@ -10,6 +10,7 @@ import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.encrypt.Encryptor;
 import com.jigpud.snow.util.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,12 @@ public class UserProfileBackgroundUploadTokenController extends BaseController {
     }
 
     @GetMapping(PathConstant.GET_USER_PROFILE_BACKGROUND_IMG_UPLOAD_TOKEN)
-    @RequiresRoles(RolesConstant.USER)
-    @RequiresPermissions(PermissionsConstant.USER_WRITE)
-    ResponseBody<UploadTokenResponse> getUserProfileBackgroundImgUploadToken() {
+    @RequiresRoles(value = {RolesConstant.USER, RolesConstant.ADMIN}, logical = Logical.OR)
+    @RequiresPermissions(value = {PermissionsConstant.USER_WRITE, PermissionsConstant.ADMIN_WRITE}, logical = Logical.AND)
+    ResponseBody<UploadTokenResponse> getUserProfileBackgroundUploadToken() {
         String filename = "userProfileBackground/" + Encryptor.uuid();
         String uploadToken = qiniuService.createImgUploadToken(filename);
-        log.debug("userProfileBackgroundImgUploadToken -> uploadToken: {}, filename: {}", uploadToken, filename);
+        log.debug("userProfileBackgroundUploadToken -> uploadToken: {}, filename: {}", uploadToken, filename);
         UploadTokenResponse uploadTokenResponse = UploadTokenResponse.create(uploadToken, filename);
         return Response.responseSuccess(uploadTokenResponse);
     }

@@ -23,10 +23,6 @@ public class Story {
     // 作者的用户id
     private String authorId;
 
-    // 图片
-    @TableField(value = "pictures", typeHandler = StringListTypeHandler.class)
-    private List<String> pictures;
-
     // 游记id
     private String storyId;
 

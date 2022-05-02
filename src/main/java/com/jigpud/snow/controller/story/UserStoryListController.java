@@ -64,7 +64,7 @@ public class UserStoryListController extends BaseController {
         String selfUserid = tokenService.getUserid(getToken(request));
         PageData<Story> storyList = storyService.getUserStoryList(userid, pageSize, currentPage);
         PageData<StoryResponse> storyResponseList = PageData.fromPageData(storyList, story ->
-                StoryResponse.create(story, selfUserid, userService, likeService, attractionService, favoriteService));
+                StoryResponse.create(story, selfUserid, storyService, userService, likeService, attractionService, favoriteService));
         return Response.responseSuccess(storyResponseList);
     }
 }

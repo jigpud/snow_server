@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jigpud.snow.mapper.AttractionFoodMapper">
+    <select id="insertIgnore">
+        INSERT IGNORE INTO attraction_food (attraction_id, food_id) VALUES (#{attractionId}, #{foodId});
+    </select>
+
+    <select id="getFoodList" resultType="Food">
+        SELECT
+               food.*
+        FROM food
+        WHERE
+              food.food_id IN (SELECT attraction_food.food_id FROM attraction_food WHERE attraction_food.attraction_id = #{attractionId})
+    </select>
+
+    <select id="getAttractionList" resultType="Attraction">
+        SELECT
+            attraction.*
+        FROM attraction
+        WHERE
+                attraction.attraction_id IN (SELECT attraction_food.attraction_id FROM attraction_food WHERE attraction_food.food_id = #{foodId})
+    </select>
+</mapper>

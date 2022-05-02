@@ -34,5 +34,6 @@
               attraction.description LIKE #{pattern}
            OR
               attraction.location LIKE #{pattern}
+           OR attraction.tags LIKE #{pattern}
     </select>
 </mapper>

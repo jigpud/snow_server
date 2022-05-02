@@ -24,8 +24,8 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public List<Attraction> getHotAttractionList(long hotAttractionCount) {
-        return recommendRepository.getHotAttractionList(hotAttractionCount);
+    public PageData<Attraction> getHotAttractionList(long pageSize, long currentPage) {
+        return PageData.fromPage(recommendRepository.getHotAttractionList(pageSize, currentPage));
     }
 
     @Override

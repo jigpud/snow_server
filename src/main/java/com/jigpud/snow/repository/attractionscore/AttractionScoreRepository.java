@@ -16,5 +16,5 @@ public interface AttractionScoreRepository {
 
     long scoreCount(String attractionId);
 
-    float getAttractionAverageScore(String attractionId);
+    float getAverageScore(String attractionId);
 }

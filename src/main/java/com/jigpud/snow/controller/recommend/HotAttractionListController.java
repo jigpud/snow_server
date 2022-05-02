@@ -52,7 +52,7 @@ public class HotAttractionListController extends BaseController {
             HttpServletRequest request
     ) {
         String userid = tokenService.getUserid(getToken(request));
-        List<Attraction> hotAttractionList = recommendService.getHotAttractionList(5);
+        List<Attraction> hotAttractionList = recommendService.getHotAttractionList(5, 1).getRecords();
         List<AttractionResponse> hotAttractionResponseList = hotAttractionList.stream()
                 .map(attraction ->
                         AttractionResponse.create(attraction, userid, attractionService, followService, storyService))

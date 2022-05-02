@@ -69,7 +69,7 @@ public class MomentsStoryListController extends BaseController {
         String userid = tokenService.getUserid(getToken(request));
         PageData<Story> storyList = storyService.getMomentsStoryList(userid, pageSize, currentPage);
         PageData<StoryResponse> storyResponseList = PageData.fromPageData(storyList, story ->
-                StoryResponse.create(story, userid, userService, likeService, attractionService, favoriteService));
+                StoryResponse.create(story, userid, storyService, userService, likeService, attractionService, favoriteService));
         return Response.responseSuccess(storyResponseList);
     }
 }

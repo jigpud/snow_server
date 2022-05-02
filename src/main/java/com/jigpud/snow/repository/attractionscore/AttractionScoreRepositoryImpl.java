@@ -41,7 +41,7 @@ public class AttractionScoreRepositoryImpl implements AttractionScoreRepository 
     }
 
     @Override
-    public float getAttractionAverageScore(String attractionId) {
+    public float getAverageScore(String attractionId) {
         return attractionScoreMapper.averageScore(attractionId);
     }
 

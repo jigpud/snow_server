@@ -1,6 +1,8 @@
 package com.jigpud.snow.service.story;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jigpud.snow.model.Story;
+import com.jigpud.snow.model.StoryPicture;
 import com.jigpud.snow.response.PageData;
 
 import java.util.List;
@@ -68,4 +70,44 @@ public interface StoryService {
      * @return 动态游记列表分页
      */
     PageData<Story> getMomentsStoryList(String userid, long pageSize, long currentPage);
+
+    /**
+     * 新增一张游记照片
+     * @param storyId 游记
+     * @param userid 上传者
+     * @param picture 照片链接
+     */
+    void addPicture(String storyId, String userid, String picture);
+
+    /**
+     * 删除一张游记照片
+     * @param storyId 游记
+     * @param userid 上传者
+     * @param picture 照片链接
+     */
+    void deletePicture(String storyId, String userid, String picture);
+
+    /**
+     * 删除一张游记照片
+     * @param storyId 游记
+     * @param picture 照片链接
+     */
+    void deletePicture(String storyId, String picture);
+
+    /**
+     * 是否存在该游记照片
+     * @param storyId 游记
+     * @param picture 照片地址
+     * @return 是否存在
+     */
+    boolean havePicture(String storyId, String picture);
+
+    /**
+     * 获取游记的照片列表
+     * @param storyId 游记
+     * @param pageSize 分页大小
+     * @param currentPage 页码
+     * @return 照片列表分页
+     */
+    PageData<StoryPicture> getPictureList(String storyId, long pageSize, long currentPage);
 }

@@ -118,22 +118,25 @@ public class PathConstant {
     public static final String SCORE_ATTRACTION = "/attraction/score";
 
     // 获取景点的照片列表
-    public static final String GET_ATTRACTION_PHOTO_LIST = "/attraction/photo";
+    public static final String GET_ATTRACTION_PICTURE_LIST = "/attraction/picture/list";
 
     // 上传景点照片
-    public static final String UPLOAD_ATTRACTION_PHOTO = "/attraction/photo/upload";
+    public static final String UPLOAD_ATTRACTION_PICTURE = "/attraction/picture/upload";
 
     // 删除景点照片
-    public static final String DELETE_ATTRACTION_PHOTO = "/attraction/photo/delete";
+    public static final String DELETE_ATTRACTION_PICTURE = "/attraction/picture/delete";
 
     // 关注景点
-    public static final String FOLLOW_ATTRACTION = "attraction/follow";
+    public static final String FOLLOW_ATTRACTION = "/attraction/follow";
 
     // 取消关注景点
-    public static final String UNFOLLOW_ATTRACTION = "attraction/unfollow";
+    public static final String UNFOLLOW_ATTRACTION = "/attraction/unfollow";
 
     // 获取关注的景点列表
-    public static final String FOLLOWING_ATTRACTION_LIST = "/attraction/following";
+    public static final String FOLLOWING_ATTRACTION_LIST = "/attraction/following/list";
+
+    // 获取景点相关的美食列表
+    public static final String GET_ATTRACTION_FOOD_LIST = "/attraction/food/list";
 
     // 获取头像的upload token
     public static final String GET_AVATAR_UPLOAD_TOKEN = "/upload/token/avatar";
@@ -144,17 +147,38 @@ public class PathConstant {
     // 获取游记照片的upload token
     public static final String GET_STORY_IMG_UPLOAD_TOKEN = "/upload/token/story";
 
-    // 获取个人信息的背景图片
+    // 获取个人信息的背景图片的upload token
     public static final String GET_USER_PROFILE_BACKGROUND_IMG_UPLOAD_TOKEN = "/upload/token/userProfileBackground";
 
+    // 获取美食照片的upload token
+    public static final String GET_FOOD_IMG_UPLOAD_TOKEN = "/upload/token/food";
+
     // 获取热门景点列表
-    public static final String GET_HOT_ATTRACTION_LIST = "/recommend/attraction/hot";
+    public static final String GET_HOT_ATTRACTION_LIST = "/recommend/attraction/hot/list";
 
     // 获取推荐景点列表
-    public static final String GET_RECOMMEND_ATTRACTION_LIST = "/recommend/attraction";
+    public static final String GET_RECOMMEND_ATTRACTION_LIST = "/recommend/attraction/list";
 
     // 获取推荐用户列表
-    public static final String GET_RECOMMEND_USER_LIST = "/recommend/user";
+    public static final String GET_RECOMMEND_USER_LIST = "/recommend/user/list";
+
+    // 获取美食详情
+    public static final String GET_FOOD = "/food";
+
+    // 获取美食列表
+    public static final String GET_FOOD_LIST = "/food/list";
+
+    // 获取美食的照片列表
+    public static final String GET_FOOD_PICTURE_LIST = "/food/picture/list";
+
+    // 上传美食照片
+    public static final String UPLOAD_FOOD_PICTURE = "/food/picture/upload";
+
+    // 删除美食照片
+    public static final String DELETE_FOOD_PICTURE = "/food/picture/delete";
+
+    // 获取美食相关的景点列表
+    public static final String GET_FOOD_ATTRACTION_LIST = "/food/attraction/list";
 
     /*
     admin用户相关接口
@@ -188,5 +212,20 @@ public class PathConstant {
     public static final String QUERY_ATTRACTION = "/admin/attraction/query";
 
     // 删除景点照片
-    public static final String ADMIN_DELETE_ATTRACTION_PHOTO = "/admin/attraction/photo/delete";
+    public static final String ADMIN_DELETE_ATTRACTION_PICTURE = "/admin/attraction/picture/delete";
+
+    // 添加美食
+    public static final String CREATE_FOOD = "/admin/food/create";
+
+    // 查询美食
+    public static final String QUERY_FOOD = "/admin/food/query";
+
+    // 修改美食
+    public static final String UPDATE_FOOD = "/admin/food/update";
+
+    // 删除美食
+    public static final String DELETE_FOOD = "/admin/food/delete";
+
+    // 删除美食照片
+    public static final String ADMIN_DELETE_FOOD_PICTURE = "/admin/food/picture/delete";
 }

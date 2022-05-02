@@ -10,7 +10,6 @@ public class FormDataConstant {
     public static final String VERIFICATION_CODE_TARGET = "verificationCodeTarget";
     public static final String USERID = "userid";
     public static final String NICKNAME = "nickname";
-    public static final String AVATAR = "avatar";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String PAGE_SIZE = "pageSize";
     public static final String REFRESH_TOKEN = "refreshToken";
@@ -24,5 +23,6 @@ public class FormDataConstant {
     public static final String LOCATION = "location";
     public static final String TAGS = "tags";
     public static final String SCORE = "score";
-    public static final String PHOTO = "photo";
+    public static final String PICTURE = "picture";
+    public static final String FOOD_ID = "foodId";
 }

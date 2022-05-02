@@ -1,10 +1,10 @@
 package com.jigpud.snow.service.attraction;
 
 import com.jigpud.snow.model.Attraction;
-import com.jigpud.snow.model.AttractionPhoto;
+import com.jigpud.snow.model.AttractionPicture;
+import com.jigpud.snow.model.AttractionTag;
+import com.jigpud.snow.model.Food;
 import com.jigpud.snow.response.PageData;
-
-import java.util.List;
 
 /**
  * @author : jigpud
@@ -101,24 +101,24 @@ public interface AttractionService {
      * 增加一张景点照片
      * @param attractionId 景点
      * @param userid 上传者
-     * @param photo 照片链接
+     * @param picture 照片链接
      */
-    void addPhoto(String attractionId, String userid, String photo);
+    void addPicture(String attractionId, String userid, String picture);
 
     /**
      * 删除一张景点照片
      * @param attractionId 景点
      * @param userid 上传者
-     * @param photo 照片链接
+     * @param picture 照片链接
      */
-    void deletePhoto(String attractionId, String userid, String photo);
+    void deletePicture(String attractionId, String userid, String picture);
 
     /**
      * 删除一张照片
      * @param attractionId 景点
-     * @param photo 照片链接
+     * @param picture 照片链接
      */
-    void deletePhoto(String attractionId, String photo);
+    void deletePicture(String attractionId, String picture);
 
     /**
      * 获取景点的照片列表
@@ -127,13 +127,75 @@ public interface AttractionService {
      * @param currentPage 页码
      * @return 照片列表分页
      */
-    PageData<AttractionPhoto> getAttractionPhotoList(String attractionId, long pageSize, long currentPage);
+    PageData<AttractionPicture> getPictureList(String attractionId, long pageSize, long currentPage);
 
     /**
      * 景点中是否存在这张照片
      * @param attractionId 景点
-     * @param photo 照片链接
+     * @param picture 照片链接
      * @return 是否存在
      */
-    boolean havePhoto(String attractionId, String photo);
+    boolean havePicture(String attractionId, String picture);
+
+    /**
+     * 为景点添加一个标签
+     * @param attractionId 景点
+     * @param tag 标签
+     */
+    void addTag(String attractionId, String tag);
+
+    /**
+     * 删除景点中的一个标签
+     * @param attractionId 景点
+     * @param tag 标签
+     */
+    void deleteTag(String attractionId, String tag);
+
+    /**
+     * 获取景点的标签列表
+     * @param attractionId 景点
+     * @param pageSize 分页大小
+     * @param currentPage 页码
+     * @return 标签列表分页
+     */
+    PageData<AttractionTag> getTagList(String attractionId, long pageSize, long currentPage);
+
+    /**
+     * 景点是否包含该标签
+     * @param attractionId 景点
+     * @param tag 标签
+     * @return 是否包含
+     */
+    boolean haveTag(String attractionId, String tag);
+
+    /**
+     * 为景点增加一个相关美食
+     * @param attractionId 景点
+     * @param foodId 美食
+     */
+    void addFood(String attractionId, String foodId);
+
+    /**
+     * 获取景点是否包含该美食
+     * @param attractionId 景点
+     * @param foodId 美食
+     * @return 是否包含该美食
+     */
+    boolean haveFood(String attractionId, String foodId);
+
+    /**
+     * 删除一个景点相关的美食
+     * @param attractionId 景点
+     * @param foodId 美食
+     */
+    void deleteFood(String attractionId, String foodId);
+
+    /**
+     * 获取景点相关的美食列表
+     * @param attractionId 景点
+     * @param pageSize 分页大小
+     * @param currentPage 页码
+     * @return 美食列表分页
+     */
+    PageData<Food> getFoodList(String attractionId, long pageSize, long currentPage);
 }

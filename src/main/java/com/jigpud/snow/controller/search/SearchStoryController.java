@@ -9,6 +9,7 @@ import com.jigpud.snow.service.attraction.AttractionService;
 import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.search.SearchService;
+import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -34,6 +35,7 @@ public class SearchStoryController extends BaseController {
     private final LikeService likeService;
     private final AttractionService attractionService;
     private final FavoriteService favoriteService;
+    private final StoryService storyService;
 
     @Autowired
     SearchStoryController(
@@ -42,7 +44,8 @@ public class SearchStoryController extends BaseController {
             UserService userService,
             LikeService likeService,
             AttractionService attractionService,
-            FavoriteService favoriteService
+            FavoriteService favoriteService,
+            StoryService storyService
     ) {
         this.searchService = searchService;
         this.tokenService = tokenService;
@@ -50,6 +53,7 @@ public class SearchStoryController extends BaseController {
         this.likeService = likeService;
         this.attractionService = attractionService;
         this.favoriteService = favoriteService;
+        this.storyService = storyService;
     }
 
     @PostMapping(PathConstant.SEARCH_STORY)
@@ -66,7 +70,7 @@ public class SearchStoryController extends BaseController {
             String userid = tokenService.getUserid(getToken(request));
             PageData<Story> storyList = searchService.searchStory(keyWords, pageSize, currentPage);
             PageData<StoryResponse> storyResponseList = PageData.fromPageData(storyList, story ->
-                    StoryResponse.create(story, userid, userService, likeService, attractionService, favoriteService));
+                    StoryResponse.create(story, userid, storyService, userService, likeService, attractionService, favoriteService));
             return Response.responseSuccess(storyResponseList);
         } else {
             log.debug("searchStory: keyWords is empty!");

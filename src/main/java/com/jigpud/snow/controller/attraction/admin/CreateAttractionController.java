@@ -51,14 +51,18 @@ public class CreateAttractionController extends BaseController {
                 "description: {}\n" +
                 "location: {}\n" +
                 "tags: {}", name, description, location, Arrays.toString(tags));
+        // create attraction
         String attractionId = Encryptor.uuid();
         Attraction attraction = new Attraction();
         attraction.setAttractionId(attractionId);
         attraction.setName(name);
         attraction.setDescription(description);
         attraction.setLocation(location);
-        attraction.setTags(Arrays.stream(tags).collect(Collectors.toList()));
         attractionService.addAttraction(attraction);
+
+        // add tags
+        Arrays.stream(tags).forEach(tag -> attractionService.addTag(attractionId, tag));
+
         if (attractionService.haveAttraction(attractionId)) {
             log.debug("ADMIN : add attraction success: {}", attraction);
             return Response.responseSuccess();

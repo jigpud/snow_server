@@ -65,7 +65,7 @@ public class AttractionStoryListController extends BaseController {
             String userid = tokenService.getUserid(getToken(request));
             PageData<Story> storyList = storyService.getAttractionStoryList(attractionId, pageSize, currentPage);
             PageData<StoryResponse> storyResponseList = PageData.fromPageData(storyList, story ->
-                    StoryResponse.create(story, userid, userService, likeService, attractionService, favoriteService));
+                    StoryResponse.create(story, userid, storyService, userService, likeService, attractionService, favoriteService));
             return Response.responseSuccess(storyResponseList);
         } else {
             log.debug("attraction {} not exists!", attractionId);

@@ -2,7 +2,7 @@ package com.jigpud.snow.controller.user.admin;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
-import com.jigpud.snow.request.UpdateUserRequest;
+import com.jigpud.snow.request.admin.UpdateUserRequest;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.PathConstant;

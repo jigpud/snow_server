@@ -12,10 +12,11 @@ import java.util.List;
 public interface RecommendRepository {
     /**
      * 获取热门景点列表
-     * @param hotAttractionCount 需要的热门景点数量
+     * @param currentPage 页码
+     * @param pageSize 分页大小
      * @return 热门景点分页
      */
-    List<Attraction> getHotAttractionList(long hotAttractionCount);
+    Page<Attraction> getHotAttractionList(long pageSize, long currentPage);
 
     /**
      * 获取推荐景点列表

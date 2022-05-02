@@ -59,7 +59,7 @@ public class StoryDetailController extends BaseController {
         Story story = storyService.getStory(storyId);
         if (story != null) {
             String userid = tokenService.getUserid(getToken(request));
-            StoryResponse storyResponse = StoryResponse.create(story, userid, userService, likeService,
+            StoryResponse storyResponse = StoryResponse.create(story, userid, storyService, userService, likeService,
                     attractionService, favoriteService);
             return Response.responseSuccess(storyResponse);
         } else {

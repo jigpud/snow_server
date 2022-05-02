@@ -1,122 +1,165 @@
 -- user
-create table if not exists user(
-    username varchar(255) not null unique,
-    nickname varchar(255) not null default '',
-    password mediumtext not null,
-    signature varchar(255) not null default '',
-    salt varchar(255) not null,
-    avatar varchar(2083) not null default '',
-    userid varchar(255) not null unique,
-    gender varchar(10) not null default '',
-    age int not null default 0,
-    id bigint auto_increment primary key,
-    background varchar(2083) not null default ''
+CREATE TABLE IF NOT EXISTS user(
+    username VARCHAR(255) NOT NULL UNIQUE,
+    nickname VARCHAR(255) NOT NULL DEFAULT '',
+    password MEDIUMTEXT NOT NULL,
+    signature VARCHAR(255) NOT NULL DEFAULT '',
+    salt VARCHAR(255) NOT NULL,
+    avatar VARCHAR(2083) NOT NULL DEFAULT '',
+    userid VARCHAR(255) NOT NULL UNIQUE,
+    gender VARCHAR(10) NOT NULL DEFAULT '',
+    age INT NOT NULL DEFAULT 0,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    background VARCHAR(2083) NOT NULL DEFAULT ''
 );
 
 -- role
-create table if not exists role(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    role varchar(255) not null default '',
-    unique key role(userid, role)
+CREATE TABLE IF NOT EXISTS role(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL DEFAULT '',
+    UNIQUE KEY role(userid, role)
 );
 
 -- permission
-create table if not exists permission(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    permission varchar(255) not null default '',
-    unique key permission(userid, permission)
+CREATE TABLE IF NOT EXISTS permission(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    permission VARCHAR(255) NOT NULL DEFAULT '',
+    UNIQUE KEY permission(userid, permission)
 );
 
 -- story
-create table if not exists story(
-    id bigint auto_increment primary key,
-    story_id varchar(255) not null unique,
-    author_id varchar(255) not null,
-    title tinytext not null,
-    content text not null,
-    release_time bigint not null,
-    pictures mediumtext not null,
-    attraction_id varchar(255) not null
+CREATE TABLE IF NOT EXISTS story(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    story_id VARCHAR(255) NOT NULL UNIQUE,
+    author_id VARCHAR(255) NOT NULL,
+    title TINYTEXT NOT NULL,
+    content text NOT NULL,
+    release_time BIGINT NOT NULL,
+    attraction_id VARCHAR(255) NOT NULL
+);
+
+-- story_picture
+CREATE TABLE IF NOT EXISTS story_picture(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    uploader_id VARCHAR(255) NOT NULL,
+    story_id VARCHAR(255) NOT NULL,
+    picture VARCHAR(2083) NOT NULL,
+    picture_md5 VARCHAR(128) NOT NULL,
+    UNIQUE KEY story_picture(story_id, picture_md5)
 );
 
 -- story_like
-create table if not exists story_like(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    story_id varchar(255) not null,
-    unique key story_like(userid, story_id)
+CREATE TABLE IF NOT EXISTS story_like(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    story_id VARCHAR(255) NOT NULL,
+    UNIQUE KEY story_like(userid, story_id)
 );
 
 -- comment_like
-create table if not exists comment_like(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    comment_id varchar(255) not null,
-    unique key comment_like(userid, comment_id)
+CREATE TABLE IF NOT EXISTS comment_like(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    comment_id VARCHAR(255) NOT NULL,
+    UNIQUE KEY comment_like(userid, comment_id)
 );
 
 -- user_follow
-create table if not exists user_follow(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    follower_id varchar(255) not null,
-    unique key user_follow(userid, follower_id)
+CREATE TABLE IF NOT EXISTS user_follow(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    follower_id VARCHAR(255) NOT NULL,
+    UNIQUE KEY user_follow(userid, follower_id)
 );
 
 -- attraction_follow
-create table if not exists attraction_follow(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    attraction_id varchar(255) not null,
-    unique key attraction_follow(userid, attraction_id)
+CREATE TABLE IF NOT EXISTS attraction_follow(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    attraction_id VARCHAR(255) NOT NULL,
+    UNIQUE KEY attraction_follow(userid, attraction_id)
 );
 
 -- comment
-create table if not exists comment(
-    id bigint auto_increment primary key,
-    story_id varchar(255) not null,
-    author_id varchar(255) not null,
-    comment_id varchar(255) not null,
-    pid varchar(255) not null default '',
-    content mediumtext not null,
-    comment_time bigint not null
+CREATE TABLE IF NOT EXISTS comment(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    story_id VARCHAR(255) NOT NULL,
+    author_id VARCHAR(255) NOT NULL,
+    comment_id VARCHAR(255) NOT NULL,
+    pid VARCHAR(255) NOT NULL DEFAULT '',
+    content MEDIUMTEXT NOT NULL,
+    comment_time BIGINT NOT NULL
 );
 
 -- story_favorite
-create table if not exists story_favorite(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    story_id varchar(255) not null,
-    unique key story_favorite(userid, story_id)
+CREATE TABLE IF NOT EXISTS story_favorite(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    story_id VARCHAR(255) NOT NULL,
+    UNIQUE KEY story_favorite(userid, story_id)
 );
 
 -- attraction
-create table if not exists attraction(
-    id bigint auto_increment primary key,
-    attraction_id varchar(255) not null unique,
-    name varchar(255) not null,
-    description mediumtext not null,
-    location tinytext not null,
-    tags mediumtext not null
+CREATE TABLE IF NOT EXISTS attraction(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    attraction_id VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    description MEDIUMTEXT NOT NULL,
+    location TINYTEXT NOT NULL
 );
 
--- attraction_photo
-create table if not exists attraction_photo(
-    id bigint auto_increment primary key,
-    uploader_id varchar(255) not null,
-    attraction_id varchar(255) not null,
-    photo varchar(2083) not null default '',
-    photo_md5 varchar(128) not null default '',
-    unique key attraction_photo(uploader_id, attraction_id, photo_md5)
+-- attraction_tag
+CREATE TABLE IF NOT EXISTS attraction_tag(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    attraction_id VARCHAR(255) NOT NULL,
+    tag TINYTEXT NOT NULL,
+    tag_md5 VARCHAR(128) NOT NULL,
+    UNIQUE KEY attraction_tag(attraction_id, tag_md5)
+);
+
+-- attraction_picture
+CREATE TABLE IF NOT EXISTS attraction_picture(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    uploader_id VARCHAR(255) NOT NULL,
+    attraction_id VARCHAR(255) NOT NULL,
+    picture VARCHAR(2083) NOT NULL DEFAULT '',
+    picture_md5 VARCHAR(128) NOT NULL DEFAULT '',
+    UNIQUE KEY attraction_picture(attraction_id, picture_md5)
 );
 
 -- attraction_score
-create table if not exists attraction_score(
-    id bigint auto_increment primary key,
-    userid varchar(255) not null,
-    attraction_id varchar(255) not null,
-    score int not null default 0,
-    unique key attraction_score(userid, attraction_id)
+CREATE TABLE IF NOT EXISTS attraction_score(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userid VARCHAR(255) NOT NULL,
+    attraction_id VARCHAR(255) NOT NULL,
+    score INT NOT NULL DEFAULT 0,
+    UNIQUE KEY attraction_score(userid, attraction_id)
+);
+
+-- food
+CREATE TABLE IF NOT EXISTS food(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    food_id VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    description MEDIUMTEXT NOT NULL
+);
+
+-- food_picture
+CREATE TABLE IF NOT EXISTS food_picture(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    uploader_id VARCHAR(255) NOT NULL,
+    food_id VARCHAR(255) NOT NULL,
+    picture VARCHAR(2083) NOT NULL DEFAULT '',
+    picture_md5 VARCHAR(128) NOT NULL DEFAULT '',
+    UNIQUE KEY food_picture(food_id, picture_md5)
+);
+
+-- attraction_food
+CREATE TABLE IF NOT EXISTS attraction_food(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    attraction_id VARCHAR(255) NOT NULL,
+    food_id VARCHAR(255) NOT NULL,
+    UNIQUE KEY attraction_food(attraction_id, food_id)
 );

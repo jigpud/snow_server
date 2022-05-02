@@ -10,6 +10,7 @@ import com.jigpud.snow.util.constant.RolesConstant;
 import com.jigpud.snow.util.encrypt.Encryptor;
 import com.jigpud.snow.util.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class AttractionImgUploadTokenController extends BaseController {
     }
 
     @GetMapping(PathConstant.GET_ATTRACTION_IMG_UPLOAD_TOKEN)
-    @RequiresRoles(RolesConstant.USER)
-    @RequiresPermissions(PermissionsConstant.USER_WRITE)
+    @RequiresRoles(value = {RolesConstant.USER, RolesConstant.ADMIN}, logical = Logical.OR)
+    @RequiresPermissions(value = {PermissionsConstant.USER_WRITE, PermissionsConstant.ADMIN_WRITE}, logical = Logical.AND)
     ResponseBody<UploadTokenResponse> getAttractionImgUploadToken() {
         String filename = "attraction/" + Encryptor.uuid();
         String uploadToken = qiniuService.createImgUploadToken(filename);

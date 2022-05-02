@@ -32,10 +32,6 @@ public class Attraction {
     // 简介
     private String description;
 
-    // 标签
-    @TableField(value = "tags", typeHandler = StringListTypeHandler.class)
-    private List<String> tags;
-
     // 景点的位置
     private String location;
 }

@@ -2,11 +2,12 @@ package com.jigpud.snow.controller.attraction.admin;
 
 import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.Attraction;
-import com.jigpud.snow.response.AttractionResponse;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
+import com.jigpud.snow.response.admin.AttractionResponse;
 import com.jigpud.snow.service.attraction.AttractionService;
 import com.jigpud.snow.service.follow.FollowService;
+import com.jigpud.snow.service.food.FoodService;
 import com.jigpud.snow.service.story.StoryService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.util.constant.FormDataConstant;
@@ -31,21 +32,21 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class QueryAttractionController extends BaseController {
     private final AttractionService attractionService;
-    private final TokenService tokenService;
     private final FollowService followService;
     private final StoryService storyService;
+    private final FoodService foodService;
 
     @Autowired
     QueryAttractionController(
             AttractionService attractionService,
-            TokenService tokenService,
             FollowService followService,
-            StoryService storyService
+            StoryService storyService,
+            FoodService foodService
     ) {
         this.attractionService = attractionService;
-        this.tokenService = tokenService;
         this.followService = followService;
         this.storyService = storyService;
+        this.foodService = foodService;
     }
 
     @PostMapping(PathConstant.QUERY_ATTRACTION)
@@ -54,15 +55,13 @@ public class QueryAttractionController extends BaseController {
     ResponseBody<PageData<AttractionResponse>> queryAttraction(
             @RequestParam(value = FormDataConstant.NAME, required = false, defaultValue = "") String name,
             @RequestParam(value = FormDataConstant.PAGE_SIZE, required = false, defaultValue = "0") Long pageSize,
-            @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage,
-            HttpServletRequest request
+            @RequestParam(value = FormDataConstant.CURRENT_PAGE, required = false, defaultValue = "0") Long currentPage
     ) {
         log.debug("ADMIN : get attraction list with pageSize: {}", pageSize);
         log.debug("ADMIN : get attraction list with currentPage: {}", currentPage);
-        String userid = tokenService.getUserid(getToken(request));
         PageData<Attraction> attractionList = attractionService.attractionsNameLike(name, pageSize, currentPage);
         PageData<AttractionResponse> attractionResponseList = PageData.fromPageData(attractionList, attraction ->
-                AttractionResponse.create(attraction, userid, attractionService, followService, storyService));
+                AttractionResponse.create(attraction, attractionService, followService, storyService, foodService));
         return Response.responseSuccess(attractionResponseList);
     }
 }

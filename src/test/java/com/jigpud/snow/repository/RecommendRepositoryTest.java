@@ -25,7 +25,7 @@ public class RecommendRepositoryTest {
 
     @Test
     public void testGetHotAttractionList() {
-        List<Attraction> hotAttractionList = recommendRepository.getHotAttractionList(5);
+        List<Attraction> hotAttractionList = recommendRepository.getHotAttractionList(5, 1).getRecords();
         log.debug("hotAttractionList: {}", hotAttractionList);
     }
 

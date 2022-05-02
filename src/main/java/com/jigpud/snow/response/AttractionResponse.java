@@ -1,7 +1,8 @@
 package com.jigpud.snow.response;
 
 import com.jigpud.snow.model.Attraction;
-import com.jigpud.snow.model.AttractionPhoto;
+import com.jigpud.snow.model.AttractionPicture;
+import com.jigpud.snow.model.AttractionTag;
 import com.jigpud.snow.service.attraction.AttractionService;
 import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.story.StoryService;
@@ -22,7 +23,7 @@ public class AttractionResponse {
     private String attractionId;
     private String name;
     private String description;
-    private List<String> photos;
+    private List<String> pictures;
     private List<String> tags;
     private String location;
     private Float score;
@@ -40,15 +41,18 @@ public class AttractionResponse {
             StoryService storyService
     ) {
         String attractionId = attraction.getAttractionId();
-        List<String> attractionPhotoList = attractionService.getAttractionPhotoList(attractionId, 5, 1).getRecords().stream()
-                .map(AttractionPhoto::getPhoto)
+        List<String> attractionPictureList = attractionService.getPictureList(attractionId, 5, 1).getRecords().stream()
+                .map(AttractionPicture::getPicture)
+                .collect(Collectors.toList());
+        List<String> attractionTagList = attractionService.getTagList(attractionId, Long.MAX_VALUE, 1).getRecords().stream()
+                .map(AttractionTag::getTag)
                 .collect(Collectors.toList());
         AttractionResponse attractionResponse = new AttractionResponse();
         attractionResponse.setAttractionId(attraction.getAttractionId());
         attractionResponse.setName(attraction.getName());
         attractionResponse.setDescription(attraction.getDescription());
-        attractionResponse.setPhotos(attractionPhotoList);
-        attractionResponse.setTags(attraction.getTags());
+        attractionResponse.setPictures(attractionPictureList);
+        attractionResponse.setTags(attractionTagList);
         attractionResponse.setLocation(attraction.getLocation());
         attractionResponse.setScore(attractionService.getScore(attractionId));
         attractionResponse.setScoreCount(attractionService.scoreCount(attractionId));

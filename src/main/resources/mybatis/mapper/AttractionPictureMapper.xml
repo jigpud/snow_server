@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jigpud.snow.mapper.AttractionPictureMapper">
+    <select id="insertIgnore">
+        INSERT IGNORE INTO attraction_picture (attraction_id, picture, picture_md5, uploader_id) VALUES (#{attractionId}, #{picture}, #{pictureMd5}, #{uploaderId})
+    </select>
+</mapper>

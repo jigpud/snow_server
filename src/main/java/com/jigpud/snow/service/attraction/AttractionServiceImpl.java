@@ -1,19 +1,19 @@
 package com.jigpud.snow.service.attraction;
 
 import com.jigpud.snow.model.Attraction;
-import com.jigpud.snow.model.AttractionPhoto;
-import com.jigpud.snow.model.AttractionScore;
+import com.jigpud.snow.model.AttractionPicture;
+import com.jigpud.snow.model.AttractionTag;
+import com.jigpud.snow.model.Food;
 import com.jigpud.snow.repository.attraction.AttractionRepository;
-import com.jigpud.snow.repository.attractionphoto.AttractionPhotoRepository;
+import com.jigpud.snow.repository.attractionfood.AttractionFoodRepository;
+import com.jigpud.snow.repository.attractionpicture.AttractionPictureRepository;
 import com.jigpud.snow.repository.attractionscore.AttractionScoreRepository;
+import com.jigpud.snow.repository.attractiontag.AttractionTagRepository;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.util.encrypt.Encryptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author : jigpud
@@ -23,17 +23,23 @@ import java.util.stream.Collectors;
 public class AttractionServiceImpl implements AttractionService {
     private final AttractionRepository attractionRepository;
     private final AttractionScoreRepository attractionScoreRepository;
-    private final AttractionPhotoRepository attractionPhotoRepository;
+    private final AttractionPictureRepository attractionPictureRepository;
+    private final AttractionTagRepository attractionTagRepository;
+    private final AttractionFoodRepository attractionFoodRepository;
 
     @Autowired
     AttractionServiceImpl(
             AttractionRepository attractionRepository,
             AttractionScoreRepository attractionScoreRepository,
-            AttractionPhotoRepository attractionPhotoRepository
+            AttractionPictureRepository attractionPictureRepository,
+            AttractionTagRepository attractionTagRepository,
+            AttractionFoodRepository attractionFoodRepository
     ) {
         this.attractionRepository = attractionRepository;
         this.attractionScoreRepository = attractionScoreRepository;
-        this.attractionPhotoRepository = attractionPhotoRepository;
+        this.attractionPictureRepository = attractionPictureRepository;
+        this.attractionTagRepository = attractionTagRepository;
+        this.attractionFoodRepository  = attractionFoodRepository;
     }
 
     @Override
@@ -83,7 +89,7 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Override
     public float getScore(String attractionId) {
-        return attractionScoreRepository.getAttractionAverageScore(attractionId);
+        return attractionScoreRepository.getAverageScore(attractionId);
     }
 
     @Override
@@ -101,32 +107,72 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public void addPhoto(String attractionId, String userid, String photo) {
-        AttractionPhoto attractionPhoto = new AttractionPhoto();
-        attractionPhoto.setAttractionId(attractionId);
-        attractionPhoto.setUploaderId(userid);
-        attractionPhoto.setPhoto(photo);
-        attractionPhoto.setPhotoMd5(Encryptor.md5(photo));
-        attractionPhotoRepository.add(attractionPhoto);
+    public void addPicture(String attractionId, String userid, String picture) {
+        AttractionPicture attractionPicture = new AttractionPicture();
+        attractionPicture.setAttractionId(attractionId);
+        attractionPicture.setUploaderId(userid);
+        attractionPicture.setPicture(picture);
+        attractionPicture.setPictureMd5(Encryptor.md5(picture));
+        attractionPictureRepository.add(attractionPicture);
     }
 
     @Override
-    public void deletePhoto(String attractionId, String userid, String photo) {
-        attractionPhotoRepository.remove(attractionId, userid, photo);
+    public void deletePicture(String attractionId, String userid, String picture) {
+        attractionPictureRepository.remove(attractionId, userid, picture);
     }
 
     @Override
-    public void deletePhoto(String attractionId, String photo) {
-        attractionPhotoRepository.remove(attractionId, photo);
+    public void deletePicture(String attractionId, String picture) {
+        attractionPictureRepository.remove(attractionId, picture);
     }
 
     @Override
-    public PageData<AttractionPhoto> getAttractionPhotoList(String attractionId, long pageSize, long currentPage) {
-        return PageData.fromPage(attractionPhotoRepository.getAttractionPhotoList(attractionId, pageSize, currentPage));
+    public PageData<AttractionPicture> getPictureList(String attractionId, long pageSize, long currentPage) {
+        return PageData.fromPage(attractionPictureRepository.getPictureList(attractionId, pageSize, currentPage));
     }
 
     @Override
-    public boolean havePhoto(String attractionId, String photo) {
-        return attractionPhotoRepository.have(attractionId, photo);
+    public boolean havePicture(String attractionId, String picture) {
+        return attractionPictureRepository.have(attractionId, picture);
+    }
+
+    @Override
+    public void addTag(String attractionId, String tag) {
+        attractionTagRepository.add(attractionId, tag);
+    }
+
+    @Override
+    public void deleteTag(String attractionId, String tag) {
+        attractionTagRepository.remove(attractionId, tag);
+    }
+
+    @Override
+    public PageData<AttractionTag> getTagList(String attractionId, long pageSize, long currentPage) {
+        return PageData.fromPage(attractionTagRepository.getTagList(attractionId, pageSize, currentPage));
+    }
+
+    @Override
+    public boolean haveTag(String attractionId, String tag) {
+        return attractionTagRepository.have(attractionId, tag);
+    }
+
+    @Override
+    public void addFood(String attractionId, String foodId) {
+        attractionFoodRepository.add(attractionId, foodId);
+    }
+
+    @Override
+    public boolean haveFood(String attractionId, String foodId) {
+        return attractionFoodRepository.have(attractionId, foodId);
+    }
+
+    @Override
+    public void deleteFood(String attractionId, String foodId) {
+        attractionFoodRepository.remove(attractionId, foodId);
+    }
+
+    @Override
+    public PageData<Food> getFoodList(String attractionId, long pageSize, long currentPage) {
+        return PageData.fromPage(attractionFoodRepository.getFoodList(attractionId, pageSize, currentPage));
     }
 }

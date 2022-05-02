@@ -70,7 +70,7 @@ public class SelfStoryListController extends BaseController {
         String userid = tokenService.getUserid(token);
         PageData<Story> stories = storyService.getUserStoryList(userid, pageSize, currentPage);
         PageData<StoryResponse> responsePageData = PageData.fromPageData(stories, story ->
-                StoryResponse.create(story, userid, userService, likeService, attractionService, favoriteService));
+                StoryResponse.create(story, userid, storyService, userService, likeService, attractionService, favoriteService));
         return Response.responseSuccess(responsePageData);
     }
 }

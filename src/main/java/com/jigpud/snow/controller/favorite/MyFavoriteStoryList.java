@@ -72,7 +72,7 @@ public class MyFavoriteStoryList extends BaseController {
                 storyService::getStory
         );
         PageData<StoryResponse> responsePageData = PageData.fromPageData(favoriteStoryList, story ->
-                StoryResponse.create(story, userid, userService, likeService, attractionService, favoriteService));
+                StoryResponse.create(story, userid, storyService, userService, likeService, attractionService, favoriteService));
         return Response.responseSuccess(responsePageData);
     }
 }
