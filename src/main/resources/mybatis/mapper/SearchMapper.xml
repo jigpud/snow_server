@@ -34,6 +34,7 @@
               attraction.description LIKE #{pattern}
            OR
               attraction.location LIKE #{pattern}
-           OR attraction.tags LIKE #{pattern}
+           OR
+              EXISTS(SELECT * FROM attraction_tag WHERE attraction_tag.attraction_id = attraction.attraction_id AND attraction_tag.tag LIKE #{pattern})
     </select>
 </mapper>
