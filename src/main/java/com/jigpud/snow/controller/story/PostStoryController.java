@@ -48,8 +48,9 @@ public class PostStoryController extends BaseController {
             List<String> pictures = postStoryRequest.getPictures();
             String authorId = tokenService.getUserid(getToken(request));
             String attractionId = postStoryRequest.getAttractionId();
-            String storyId = storyService.postStory(title, content, pictures, authorId, attractionId);
+            String storyId = storyService.postStory(title, content, authorId, attractionId);
             if (storyService.getStory(storyId) != null) {
+                pictures.forEach(picture -> storyService.addPicture(storyId, authorId, picture));
                 log.debug("post story success!");
                 return Response.responseSuccess();
             } else {

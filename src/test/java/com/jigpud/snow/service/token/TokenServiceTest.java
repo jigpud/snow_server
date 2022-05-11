@@ -23,11 +23,13 @@ public class TokenServiceTest {
     @Test
     void testCreateToken() {
         String userid = "123456789";
-        String token = tokenService.createToken(userid);
-        log.debug("token          ===> " + token);
-        log.debug("userid         ===> " + tokenService.getUserid(token));
-        log.debug("isExpiration   ===> " + tokenService.isExpiration(token));
-        log.debug("isAvailable    ===> " + tokenService.verify(token));
+        String refreshToken = tokenService.createRefreshToken(userid);
+        String token = tokenService.createToken(refreshToken);
+        log.debug("refreshToken   ===> {}", refreshToken);
+        log.debug("token          ===> {}", token);
+        log.debug("userid         ===> {}", tokenService.getUserid(token));
+        log.debug("isExpiration   ===> {}", tokenService.isExpiration(token));
+        log.debug("isAvailable    ===> {}", tokenService.verify(token));
     }
 
     @Test

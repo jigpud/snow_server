@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS user(
     username VARCHAR(255) NOT NULL UNIQUE,
     nickname VARCHAR(255) NOT NULL DEFAULT '',
     password MEDIUMTEXT NOT NULL,
-    signature VARCHAR(255) NOT NULL DEFAULT '',
+    signature TINYTEXT NOT NULL,
     salt VARCHAR(255) NOT NULL,
     avatar VARCHAR(2083) NOT NULL DEFAULT '',
     userid VARCHAR(255) NOT NULL UNIQUE,
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS comment(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     story_id VARCHAR(255) NOT NULL,
     author_id VARCHAR(255) NOT NULL,
-    comment_id VARCHAR(255) NOT NULL,
+    comment_id VARCHAR(255) NOT NULL UNIQUE,
     pid VARCHAR(255) NOT NULL DEFAULT '',
     content MEDIUMTEXT NOT NULL,
     comment_time BIGINT NOT NULL
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS story_favorite(
 CREATE TABLE IF NOT EXISTS attraction(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     attraction_id VARCHAR(255) NOT NULL UNIQUE,
-    name VARCHAR(255) NOT NULL,
+    name TINYTEXT NOT NULL,
     description MEDIUMTEXT NOT NULL,
     location TINYTEXT NOT NULL
 );
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS attraction_tag(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     attraction_id VARCHAR(255) NOT NULL,
     tag TINYTEXT NOT NULL,
-    tag_md5 VARCHAR(128) NOT NULL,
+    tag_md5 TINYTEXT NOT NULL,
     UNIQUE KEY attraction_tag(attraction_id, tag_md5)
 );
 
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS attraction_score(
 CREATE TABLE IF NOT EXISTS food(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     food_id VARCHAR(255) NOT NULL UNIQUE,
-    name VARCHAR(255) NOT NULL,
+    name TINYTEXT NOT NULL,
     description MEDIUMTEXT NOT NULL
 );
 

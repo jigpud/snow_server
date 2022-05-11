@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @author : jigpud
  */
@@ -43,7 +41,7 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public String postStory(String title, String content, List<String> pictures, String userid, String attractionId) {
+    public String postStory(String title, String content, String userid, String attractionId) {
         String storyId = Encryptor.uuid();
         Story story = new Story();
         story.setTitle(title);
