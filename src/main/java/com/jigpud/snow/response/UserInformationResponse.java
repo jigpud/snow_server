@@ -1,6 +1,7 @@
 package com.jigpud.snow.response;
 
 import com.jigpud.snow.model.User;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
@@ -27,13 +28,15 @@ public class UserInformationResponse {
     private Long following;
     private Boolean followed;
     private Long storyCount;
+    private Long favorites;
 
     public static UserInformationResponse create(
             User user,
             String self,
             FollowService followService,
             LikeService likeService,
-            StoryService storyService
+            StoryService storyService,
+            FavoriteService favoriteService
     ) {
         String userid = user.getUserid();
         UserInformationResponse userInfo = new UserInformationResponse();
@@ -49,6 +52,7 @@ public class UserInformationResponse {
         userInfo.setFollowing(followService.getFollowingCount(userid));
         userInfo.setFollowed(followService.haveFollowedUser(self, userid));
         userInfo.setStoryCount(storyService.userStoryCount(userid));
+        userInfo.setFavorites(favoriteService.storyFavorites(userid));
         return userInfo;
     }
 }

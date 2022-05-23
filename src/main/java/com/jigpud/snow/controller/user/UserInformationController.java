@@ -4,6 +4,7 @@ import com.jigpud.snow.controller.BaseController;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.UserInformationResponse;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.story.StoryService;
@@ -31,6 +32,7 @@ public class UserInformationController extends BaseController {
     private final LikeService likeService;
     private final FollowService followService;
     private final StoryService storyService;
+    private final FavoriteService favoriteService;
 
     @Autowired
     UserInformationController(
@@ -38,13 +40,15 @@ public class UserInformationController extends BaseController {
             TokenService tokenService,
             LikeService likeService,
             FollowService followService,
-            StoryService storyService
+            StoryService storyService,
+            FavoriteService favoriteService
     ) {
         this.userService = userService;
         this.tokenService = tokenService;
         this.likeService = likeService;
         this.followService = followService;
         this.storyService = storyService;
+        this.favoriteService = favoriteService;
     }
 
     @PostMapping(PathConstant.GET_USER_INFORMATION)
@@ -55,7 +59,7 @@ public class UserInformationController extends BaseController {
         String selfUserid = tokenService.getUserid(getToken(request));
         if (userService.haveUseridIs(userid)) {
             User user = userService.getUserByUserid(userid);
-            UserInformationResponse info = UserInformationResponse.create(user, selfUserid, followService, likeService, storyService);
+            UserInformationResponse info = UserInformationResponse.create(user, selfUserid, followService, likeService, storyService, favoriteService);
             log.debug("get user information success! info: {}", info);
             return Response.responseSuccess(info);
         }

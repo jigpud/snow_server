@@ -3,6 +3,7 @@ package com.jigpud.snow.response;
 import com.jigpud.snow.model.User;
 import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.follow.FollowService;
+import com.jigpud.snow.service.like.LikeService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,14 @@ public class SelfInformationResponse {
     private Long favorites;
     private Long followers;
     private Long following;
+    private Long likes;
 
-    public static SelfInformationResponse create(User user, FavoriteService favoriteService, FollowService followService) {
+    public static SelfInformationResponse create(
+            User user,
+            FavoriteService favoriteService,
+            FollowService followService,
+            LikeService likeService
+    ) {
         String userid = user.getUserid();
         SelfInformationResponse selfInfo = new SelfInformationResponse();
         selfInfo.setUsername(user.getUsername());
@@ -40,6 +47,7 @@ public class SelfInformationResponse {
         selfInfo.setFollowers(followService.getUserFollowers(userid));
         selfInfo.setFollowing(followService.getFollowingCount(userid));
         selfInfo.setBackground(user.getBackground());
+        selfInfo.setLikes(likeService.likes(userid));
         return selfInfo;
     }
 }

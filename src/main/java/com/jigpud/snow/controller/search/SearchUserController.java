@@ -5,6 +5,7 @@ import com.jigpud.snow.model.User;
 import com.jigpud.snow.response.PageData;
 import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.UserInformationResponse;
+import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.follow.FollowService;
 import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.search.SearchService;
@@ -32,6 +33,7 @@ public class SearchUserController extends BaseController {
     private final FollowService followService;
     private final LikeService likeService;
     private final StoryService storyService;
+    private final FavoriteService favoriteService;
 
     @Autowired
     SearchUserController(
@@ -39,13 +41,15 @@ public class SearchUserController extends BaseController {
             SearchService searchService,
             FollowService followService,
             LikeService likeService,
-            StoryService storyService
+            StoryService storyService,
+            FavoriteService favoriteService
     ) {
         this.tokenService = tokenService;
         this.searchService = searchService;
         this.followService = followService;
         this.likeService = likeService;
         this.storyService = storyService;
+        this.favoriteService = favoriteService;
     }
 
     @PostMapping(PathConstant.SEARCH_USER)
@@ -62,7 +66,7 @@ public class SearchUserController extends BaseController {
             String userid = tokenService.getUserid(getToken(request));
             PageData<User> userList = searchService.searchUser(keyWords, pageSize, currentPage);
             PageData<UserInformationResponse> userResponseList = PageData.fromPageData(userList, user ->
-                    UserInformationResponse.create(user, userid, followService, likeService, storyService));
+                    UserInformationResponse.create(user, userid, followService, likeService, storyService, favoriteService));
             return Response.responseSuccess(userResponseList);
         } else {
             log.debug("searchUser: keyWords is empty!");

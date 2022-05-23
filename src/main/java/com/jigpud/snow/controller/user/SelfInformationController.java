@@ -6,6 +6,7 @@ import com.jigpud.snow.response.ResponseBody;
 import com.jigpud.snow.response.SelfInformationResponse;
 import com.jigpud.snow.service.favorite.FavoriteService;
 import com.jigpud.snow.service.follow.FollowService;
+import com.jigpud.snow.service.like.LikeService;
 import com.jigpud.snow.service.token.TokenService;
 import com.jigpud.snow.service.user.UserService;
 import com.jigpud.snow.util.constant.PathConstant;
@@ -31,18 +32,21 @@ public class SelfInformationController extends BaseController {
     private final TokenService tokenService;
     private final FavoriteService favoriteService;
     private final FollowService followService;
+    private final LikeService likeService;
 
     @Autowired
     SelfInformationController(
             UserService userService,
             TokenService tokenService,
             FavoriteService favoriteService,
-            FollowService followService
+            FollowService followService,
+            LikeService likeService
     ) {
         this.userService = userService;
         this.tokenService = tokenService;
         this.favoriteService = favoriteService;
         this.followService = followService;
+        this.likeService = likeService;
     }
 
     @GetMapping(PathConstant.GET_USER_INFORMATION)
@@ -54,7 +58,7 @@ public class SelfInformationController extends BaseController {
         String token = getToken(request);
         String userid = tokenService.getUserid(token);
         User user = userService.getUserByUserid(userid);
-        SelfInformationResponse info = SelfInformationResponse.create(user, favoriteService, followService);
+        SelfInformationResponse info = SelfInformationResponse.create(user, favoriteService, followService, likeService);
         log.debug("get self information success! info: {}", info);
         return Response.responseSuccess(info);
     }

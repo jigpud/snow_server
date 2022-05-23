@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-public class MyFavoriteStoryList extends BaseController {
+public class MyFavoriteStoryListController extends BaseController {
     private final FavoriteService favoriteService;
     private final StoryService storyService;
     private final UserService userService;
@@ -40,7 +40,7 @@ public class MyFavoriteStoryList extends BaseController {
     private final AttractionService attractionService;
 
     @Autowired
-    MyFavoriteStoryList(
+    MyFavoriteStoryListController(
             FavoriteService favoriteService,
             StoryService storyService,
             UserService userService,
