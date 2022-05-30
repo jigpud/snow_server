@@ -97,7 +97,6 @@ public class UserRepositoryImpl implements UserRepository {
     private QueryWrapper<User> usernameAndNicknameLikeQueryWrapper(String username, String nickname) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("username", username)
-                .or()
                 .like("nickname", nickname);
         return queryWrapper;
     }
