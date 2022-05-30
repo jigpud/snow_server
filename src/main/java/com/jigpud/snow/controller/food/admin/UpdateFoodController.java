@@ -65,6 +65,9 @@ public class UpdateFoodController extends BaseController {
                 food.setDescription("");
             }
 
+            // update food
+            foodService.updateFood(foodId, food.getName(), food.getDescription());
+
             // update pictures
             List<String> oldPictureList = foodService.getPictureList(foodId, Long.MAX_VALUE, 1).getRecords().stream()
                     .map(FoodPicture::getPicture)
