@@ -108,7 +108,7 @@ public class UpdateAttractionController extends BaseController {
             }
             log.debug("picture list to delete {}", deletePictureList);
             log.debug("picture list to add {}", addPictureList);
-            deletePictureList.forEach(deletePicture -> attractionService.deletePicture(userid, deletePicture));
+            deletePictureList.forEach(deletePicture -> attractionService.deletePicture(attractionId, deletePicture));
             addPictureList.forEach(addPicture -> attractionService.addPicture(attractionId, userid, addPicture));
 
             // update foods
